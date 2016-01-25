@@ -1,0 +1,1 @@
+Our group will be using the Google Java Style guidelines, located at https://google.github.io/styleguide/javaguide.html, and copied (1/25/2016) under coe1186/Reference for convince.
