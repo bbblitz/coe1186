@@ -1,0 +1,22 @@
+The CTC window will be split into 3 sections
+
+A top ribbon that will take 15% of the window's allotted height, and 100% of the alloted width, and will flush with the top of the screen.
+
+A left panel that will take up 60% of the window's width, and 85% of the window's height, the bottom and left edges of this panel will be flush with the bottom and left edges of the window, and the top of this panel will be flush with the top ribbon
+
+A right pane which will contain several smaller panes: the train line visibility toggle box, a train details box, a manual dispatch box, and a message log. The right pane will be 40% of the window, and 85% the height of the window, it's bottom edge will be flush with the bottom edge of the window, it's right edge should be flush with the right edge of the window, it's top edge should be flush should the top ribbon, and it's left edge should be flush with the left pane.
+
+The top ribbon
+  Will contain text labeled drop menus for text labeled buttons (in order from the left):
+    File-
+      Loading a train line schematic from a file(Open)
+      Exiting the window(Exit)
+    Edit-
+      removes the currently selected text and saves it to the clipboard(Cut)
+      creates a copy of the currently selected text and saves it to the clipboard (Copy)
+      inserts the clipboards' text into the currently selected field (Paste)
+    Window-
+      Manually open train line visibility toggle box window (Line Vis.)
+      Manually open train details box window (Details)
+      Manually open manual train dispatch window (Dispatch)
+      Manually open message log window (Message)
