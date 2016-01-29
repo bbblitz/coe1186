@@ -1,10 +1,10 @@
 The CTC window will be split into 3 sections
 
-A top ribbon that will take 15% of the window's allotted height, and 100% of the alloted width, and will flush with the top of the screen.
+A top ribbon that will take 15% of the window's allotted height, and 100% of the allotted width, and will flush with the top of the screen.
 
 A left panel that will take up 60% of the window's width, and 85% of the window's height, the bottom and left edges of this panel will be flush with the bottom and left edges of the window, and the top of this panel will be flush with the top ribbon
 
-A right pane which will contain several smaller panes: the train line visibility toggle box, a train details box, a manual dispatch box, and a message log. The right pane will be 40% of the window, and 85% the height of the window, it's bottom edge will be flush with the bottom edge of the window, it's right edge should be flush with the right edge of the window, it's top edge should be flush should the top ribbon, and it's left edge should be flush with the left pane.
+A right pane which will contain several smaller panes: the train line visibility toggle box, a train details box, a manual dispatch box, a track switch window, and a message log. The right pane will be 40% of the window, and 85% the height of the window, it's bottom edge will be flush with the bottom edge of the window, it's right edge should be flush with the right edge of the window, it's top edge should be flush should the top ribbon, and it's left edge should be flush with the left pane.
 
 The top ribbon
   Will contain text labeled drop menus for text labeled buttons (in order from the left):
@@ -20,3 +20,31 @@ The top ribbon
       Manually open train details box window (Details)
       Manually open manual train dispatch window (Dispatch)
       Manually open message log window (Message)
+      Manually open track switch window (Switch)
+    Help-
+      Opens the user manual in another window(Manuel)
+      Shows team name, and team member's names (About)
+
+The left pane
+  Will show a diagram of train lines
+  Only train lines that are selected in the train line visibility box will be shown
+  The train line diagram will attempt to fill both the width and the height of the window, but will stop at the first limit reached(either the height or the width)
+  Any lines that are visible will also have a diagram of all trains on the line.
+  Trains will be shown as a series of close boxes representing train cars with train engines represented as a box with an arrow inside, the arrow indicating the direction the engine is facing.
+  Segments of the train line will be shown as 2 pixel width lines, and will end 5 feet before, or being 5 feet after what is described in the spreadsheet to easily differentiate different line segments.
+  Segments of the train line that are designated "station" segments will have two 4 pixel lines running on either side of their 2 pixel track
+  Segments of the train line that are designated "switch" segments show the direction the switch currently routing trains in the track's primary color(below), and non-current routings in a faded color(by adding 100 to each the R,G, and B values of the color, if possible)
+  Segments of the train line that are designated "Crossing" will be indicated by a blue(rgb(0,0,255)) 2px border on both sides of the rail.
+  Each line segment will be one of the following colors, indicating it's state:
+    Normal(green, rgb(0,255,0))
+    Broken Rail(grey, rgb(100,100,100))
+    Track Circuit Failure (red, rgb(255,0,0))
+    Power Failure(yellow, rgb(255,255,0))
+    If a section of the track is experiencing more than one failure, the colors will appear in stripes, if 2 failures are experienced at a time, the track will be 20 model feet of alternating colors corresponding to the failures. If the section of track is experiencing 3 failures at a time, the alternating colors will be in 10 model feet increments.
+  A section of track can be selected by clicking on it, and will appear with all it's details in the right pane
+  If the selected section of track is a switch, it will appear in the switch window.
+  If the selected item is a train, it will appear in the dispatch and train information windows.
+
+The right pane
+  The right pane will contain informational, and function windows:
+  Train schedule pane - Allows a selected (see the left pane) train that is at a station to be scheduled, with a depart time. The schedule pane will have a text label that describes the train that is selected, and a label describing the section of track it is currently on. The labels will be 18 pixels tall, and the full width of the pane. There will be a table underneath the two labels that contains the train's current schedule. The table will be formatted with columns: Time Action, where time is the time that the action should take place, and Action

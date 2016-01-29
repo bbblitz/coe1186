@@ -1,0 +1,10 @@
+Risk
+Likelyhood
+Severyity
+Mitigation
+
+Github goes down
+Computer failure
+Team member becomes ill
+Codebase degrades
+Requirements change
