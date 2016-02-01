@@ -1,1 +1,35 @@
+****************************
+TRAIN CONTROLLER USER MANUAL
+****************************
 
+Introduction
+----------------------------
+
+This document outlines all major functions of the Train Controller module, including interactions, updates, and inputs.
+
+
+Screen Layout
+---------------------------
+
+The main screen contains 2 sections: a list of active trains currently in the network, and details about a specific train.  The train list will automatically update when trains enter or leave the active network.  Clicking on a train will populate its live details, most of which are editable and controllable.
+
+
+Editable values
+---------------------------
+
+The current status of editable physical states with 2 discrete values is shown with a toggle switch.  Click the switch to toggle the state value.  The following is a list of 2-value states that are editable
+
+The current status of editable physical states with more than 2 discrete values (eg. current temperature) is shown with either a textbox or plus/minus buttons.  To change the value with plus/minus buttons, simply click the buttons.  To change a value with a textbox, type a new value into the textbox, and the new value will be triggered after a set amount of idle, non-typing time.
+
+
+Non-editable values
+---------------------------
+The log is read-only, for viewing recent changes and updates.
+
+The train's current speed is read-only, as reported by the train model.  It is displayed in green when it is a safe (below the speed allowable by the track) value, and red when it is too high.
+
+
+Firing events
+---------------------------
+
+Some events can be triggered, simulating real-life events, including system failures and braking.  Clicking the "Emergency Brake" button activates the emergency brake, and the button will be disabled until the emergency brake is disengaged after the train has come to a complete stop.  System failures are displayed as the status of the individual systems, along with a "Fix" or "Force Failure" button that toggles the state of the failure.
