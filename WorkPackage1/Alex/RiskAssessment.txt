@@ -8,3 +8,5 @@ Computer failure
 Team member becomes ill
 Codebase degrades
 Requirements change
+Code errors
+Unforseen complications
