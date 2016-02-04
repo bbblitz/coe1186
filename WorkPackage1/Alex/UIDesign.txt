@@ -113,12 +113,12 @@ The right pane
   |                       |
   +-----------------------+
 
-  Train dispatch pane - Allows the user to set the authority, and may allow the user to set the speed of the selected train (see left pane)
+  Train dispatch pane - Allows the user to dispatch a train to a specifc station
 
   +-----------------------+
   | Train:      trAin123  |
-  | Authority:  [_______] |
-  | Speed:      [_______] |
+  | Time:       [_______] |
+  | Station:    [_______] |
   |                       |
   |                       |
   +-----------------------+
