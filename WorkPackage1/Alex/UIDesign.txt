@@ -80,7 +80,7 @@ The right pane
     Train schedule pane - Allows a selected (see the left pane) train to be scheduled, with a time. The schedule pane will have a text label that describes the train that is selected. The labels will be 18 pixels tall, and the full width of the pane. There will be a table underneath the label that contains the train's current schedule. The table will be formatted with columns: Time and Action, where time is the time that the action should take place, and Action is the new authority for the train.
     The schedule pane will have an "Add" button at the bottom, that when pressed will display a popup that will allow the user to add parts to the schedule for that train.
 
-    +------------------------+        Popup
+    +------------------------+      Add / Edit
     |Train: trAin123         |    +---------------+
     +--------+---------------+    |Time:[8:30__]  |
     |  Time  | Infrastructure|    |Infra.:[abc___]|
@@ -88,9 +88,9 @@ The right pane
     | 5:30   | Station abcde |    +---------------+
     | 6:00   | Station 12345 |    |     Confirm   |
     |        |               |    +---------------+
-    +--------+-+-------------+
+    +--------+---------------+
     |  Add  |  Edit | Delete |
-    +----------+-------------+
+    +------------------------+
 
   Line visibility toggle pane - Contains a checkbox for each train line with the line name on the right of the checkbox, organized vertically. The pane will show up to as many lines as fit in the box at the users default font. The checkboxes when checked or unchecked hides/unhides lines on the left pane.
 
