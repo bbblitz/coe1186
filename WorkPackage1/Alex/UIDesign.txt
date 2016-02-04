@@ -8,18 +8,18 @@ A right pane which will contain several smaller panes: the train line visibility
 
 
 Overview of the window
-+--------------------------------------------------+
-| Top Ribbon                                       |
-+-----------------------------+--------------------+
-|                             |                    |
-|                             |                    |
-|   Right pane                |   Left pane        |
-|                             |                    |
-|                             |                    |
-|                             |                    |
-|                             |                    |
-|                             |                    |
-+-----------------------------+--------------------+
+╭──────────────────────────────────────────────────╮
+│ Top Ribbon                                       │
+├─────────────────────────────┬────────────────────┤
+│                             │                    │
+│                             │                    │
+│   Right pane                │   Left pane        │
+│                             │                    │
+│                             │                    │
+│                             │                    │
+│                             │                    │
+│                             │                    │
+╰─────────────────────────────┴────────────────────╯
 
 The top ribbon
   Each label for the dropdown menu will be the full height of the top ribbon, and 8 default font-widths.
@@ -42,16 +42,16 @@ The top ribbon
       Shows team name, and team member's names (About)
 
       The top ribbon with the "window" drop down selected
-      +--------------------------------------------------+
-      | [File  ] [Edit  ] [Window] [Help  ]              |
-      +--------------------------------------------------+
-                          |Schedual      |
-                          |Line Vis.     |
-                          |Details       |
-                          |Dispatch      |
-                          |Message       |
-                          |Switch        |
-                          +--------------+
+      ┌──────────────────────────────────────────────────┐
+      │ [File  ] [Edit  ] [Window] [Help  ]              │
+      └───────────────────┐              ┌───────────────┘
+                          │Schedual      │
+                          │Line Vis.     │
+                          │Details       │
+                          │Dispatch      │
+                          │Message       │
+                          │Switch        │
+                          ╰──────────────╯
 The left pane
   Will show a diagram of train lines
   Only train lines that are selected in the train line visibility box will be shown
@@ -80,71 +80,71 @@ The right pane
     Train schedule pane - Allows a selected (see the left pane) train to be scheduled, with a time. The schedule pane will have a text label that describes the train that is selected. The labels will be 18 pixels tall, and the full width of the pane. There will be a table underneath the label that contains the train's current schedule. The table will be formatted with columns: Time and Action, where time is the time that the action should take place, and Action is the new authority for the train.
     The schedule pane will have an "Add" button at the bottom, that when pressed will display a popup that will allow the user to add parts to the schedule for that train.
 
-    +------------------------+      Add / Edit
-    |Train: trAin123         |    +---------------+
-    +--------+---------------+    |Time:[8:30__]  |
-    |  Time  | Infrastructure|    |Infra.:[abc___]|
-    |--------+---------------|    |Speed:[16_]f/s |
-    | 5:30   | Station abcde |    +---------------+
-    | 6:00   | Station 12345 |    |     Confirm   |
-    |        |               |    +---------------+
-    +--------+---------------+
-    |  Add  |  Edit | Delete |
-    +------------------------+
+    ┌────────────────────────┐      Add / Edit popup
+    │Train: trAin123         │    ┌───────────────┐
+    ├────────┬───────────────┤    │Time:[8:30__]  │
+    │  Time  │ Infrastructure│    │Infra.:[abc___]│
+    ├────────┼───────────────┤    │Speed:[16_]f/s │
+    │ 5:30   │ Station abcde │    ├───────────────┤
+    │ 6:00   │ Station 12345 │    │     Confirm   │
+    │        │               │    └───────────────┘
+    ├───────┬┴──────┬────────┤
+    │  Add  │  Edit │ Delete │
+    └───────┴───────┴────────┘
 
   Line visibility toggle pane - Contains a checkbox for each train line with the line name on the right of the checkbox, organized vertically. The pane will show up to as many lines as fit in the box at the users default font. The checkboxes when checked or unchecked hides/unhides lines on the left pane.
 
-  +---------------+
-  | [ ] Green Line|
-  | [X] Red Line  |
-  |               |
-  |               |
-  +---------------+
+  ┌───────────────┐
+  │  ☐  Green Line│
+  │  ☑  Red Line  │
+  │               │
+  │               │
+  └───────────────┘
 
   Train details pane - Shows throughput and other details, with a label on the left half of the pane, and it's corresponding value on the right hand of the pane. details will include throughput, and may include number of passengers, speed, and authority.
 
-  +-----------------------+
-  | Train:      trAin123  |
-  | Throughput: 11 f/s    |
-  | Passengers: 23        |
-  | Speed:      12 f/s    |
-  | Authority:  200 ft    |
-  |                       |
-  |                       |
-  +-----------------------+
+  ┌───────────────────────┐
+  │ Train:      trAin123  │
+  │ Throughput: 11 f/s    │
+  │ Passengers: 23        │
+  │ Speed:      12 f/s    │
+  │ Authority:  200 ft    │
+  │                       │
+  │                       │
+  └───────────────────────┘
 
   Train dispatch pane - Allows the user to dispatch a train to a specifc station
 
-  +-----------------------+
-  | Train:      trAin123  |
-  |                       |
-  | Station:    [_______] |
-  |                       |
-  |                       |
-  +-----------------------+
-  |        Set            |
-  +-----------------------+
+  ┌───────────────────────┐
+  │ Train:      trAin123  │
+  │                       │
+  │ Station:    [_______] │
+  │                       │
+  │                       │
+  ├───────────────────────┤
+  │        Set            │
+  └───────────────────────┘
 
   Message log pane - A pane that shows messages from different parts of the software, may show: success/failure to set authority, success/failure to open close tracks, success/failure to dispatch trains. The pane shall show up to as many messages as will fit at the users default font in the pane.
 
-  +-----------------------+
-  |                       |
-  | trAin123 departed     |
-  | Switch B modified     |
-  | Track section 33 fail |
-  | ...                   |
-  |                       |
-  |                       |
-  +-----------------------+
+  ┌───────────────────────┐
+  │                       │
+  │ trAin123 departed     │
+  │ Switch B modified     │
+  │ Track section 33 fail │
+  │ ...                   │
+  │                       │
+  │                       │
+  └───────────────────────┘
 
   Track switch pane - Allows the user to activate track switches, the pane will show a graphical representation of the two states, with the color scheme described in left pane (segments). Switching is controlled by clicking on an inactive switch, and then clicking on a 22 pixel conformation button (labeld "Confirm") at the bottom of the window. If no switch will take place based on the user's selection, the "Confirm" button will be faded, and no action will occur if it is clicked.
 
-  +-----------------------+
-  |      |      |         |
-  |      \     /          |
-  |           /           |
-  |          /            |
-  |          |            |
-  +-----------------------+
-  |         Confirm       |
-  +-----------------------+
+  ┌───────────────────────┐
+  │      │      │         │
+  │      ╲     ╱          │
+  │           ╱           │
+  │          ╱            │
+  │          │            │
+  ├───────────────────────┤
+  │         Confirm       │
+  └───────────────────────┘
