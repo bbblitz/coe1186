@@ -1,3 +1,3 @@
 Our group will be using the Google Java Style guidelines, located at https://google.github.io/styleguide/javaguide.html, and copied (1/25/2016) under coe1186/Reference for convenience.
 
-Any code written in html should adhere to the Google HTML/CSS style guidelines, located at https://google.github.io/styleguide/htmlcssguide.xml, and copied(2/4/2016) under coe1186/Refernce for convenience.
+Any code written in html should adhere to the Google HTML/CSS style guidelines, located at https://google.github.io/styleguide/htmlcssguide.xml, and copied(2/4/2016) under coe1186/Refernce for convenience. Automatically generated html, for example from javadoc program is exempt from these requirements.
