@@ -89,7 +89,7 @@ The right pane
     | 6:00   | Station 12345 |    |     Confirm   |
     |        |               |    +---------------+
     +--------+-+-------------+
-    |     Add  |  Delete     |
+    |  Add  |  Edit | Delete |
     +----------+-------------+
 
   Line visibility toggle pane - Contains a checkbox for each train line with the line name on the right of the checkbox, organized vertically. The pane will show up to as many lines as fit in the box at the users default font. The checkboxes when checked or unchecked hides/unhides lines on the left pane.
@@ -117,7 +117,7 @@ The right pane
 
   +-----------------------+
   | Train:      trAin123  |
-  | Time:       [_______] |
+  |                       |
   | Station:    [_______] |
   |                       |
   |                       |
