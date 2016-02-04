@@ -56,6 +56,7 @@ The left pane
   Will show a diagram of train lines
   Only train lines that are selected in the train line visibility box will be shown
   The train line diagram will attempt to fill both the width and the height of the window, but will stop at the first limit reached(either the height or the width)
+  Will contain a black background, so as to easily contrast with the possible colors of the track (See below)
   Any lines that are visible will also have a diagram of all trains on the line.
   Trains will be shown as a series of close boxes representing train cars with train engines represented as a box with an arrow inside, the arrow indicating the direction the engine is facing.
   Segments of the train line will be shown as 2 pixel width lines, and will end 5 model feet before, and 5 model feet after what is described in the spreadsheet to easily differentiate different line segments.
@@ -82,14 +83,14 @@ The right pane
     +------------------------+        Popup
     |Train: trAin123         |    +---------------+
     +--------+---------------+    |Time:[8:30__]  |
-    |  Time  |   Action      |    |Authority:[11_]|
-    |--------+---------------|    +---------------+
-    | 5:30   | Authority = 3 |    |     Confirm   |
-    | 6:00   | Authority = 9 |    +---------------+
-    | 14:45  | Authority = 7 |
-    +--------+---------------+
-    |            Add         |
-    +------------------------+
+    |  Time  | Infrastructure|    |Infra.:[abc___]|
+    |--------+---------------|    |Speed:[16_]f/s |
+    | 5:30   | Station abcde |    +---------------+
+    | 6:00   | Station 12345 |    |     Confirm   |
+    |        |               |    +---------------+
+    +--------+-+-------------+
+    |     Add  |  Delete     |
+    +----------+-------------+
 
   Line visibility toggle pane - Contains a checkbox for each train line with the line name on the right of the checkbox, organized vertically. The pane will show up to as many lines as fit in the box at the users default font. The checkboxes when checked or unchecked hides/unhides lines on the left pane.
 
@@ -144,6 +145,6 @@ The right pane
   |           /           |
   |          /            |
   |          |            |
-  |          |            |
-  |          |            |
+  +-----------------------+
+  |         Confirm       |
   +-----------------------+
