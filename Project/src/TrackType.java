@@ -1,0 +1,10 @@
+
+public enum TrackType{
+  NONE,
+  STATION,
+  TO_YARD,
+  FROM_YARD,
+  SWITCH,
+  UNDERGROUND,
+  RAIL_CROSSING,
+}
