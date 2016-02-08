@@ -17,4 +17,10 @@ public class TrackPane extends JPanel{
   public void tick(){
     System.out.println("I've ticked!");
   }
+  /**
+   * @override
+   */
+  public void paint(Graphics g){
+    
+  }
 }
