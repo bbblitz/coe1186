@@ -1,9 +1,12 @@
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class TrackPane extends JPanel{
-
-  public TrackPane(){
+  DummyLine line;
+  public TrackPane(DummyLine l){
     super();
+    line = l;
   }
   public TrackPane(boolean db){
     super(db);
@@ -20,7 +23,7 @@ public class TrackPane extends JPanel{
   /**
    * @override
    */
-  public void paint(Graphics g){
-    
+  public void paint(Graphics2D g){
+    g.fillRect(0,0,200,200);
   }
 }

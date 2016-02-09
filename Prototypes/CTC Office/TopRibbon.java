@@ -15,6 +15,5 @@ public class TopRibbon extends JPanel{
    */
   public TopRibbon(LayoutManager layout, boolean isDoubleBuffered){
     super(layout,isDoubleBuffered);
-    JButton 
   }
 }

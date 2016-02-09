@@ -12,10 +12,15 @@ public class main{
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setJMenuBar(makeRibbon());
     window.setSize(640,480);
+    window.getContentPane().add(makeTrack());
     //JLabel label = new JLabel("Hello, world!");
     //window.getContentPane().add(label);
     //window.pack();
     window.setVisible(true);
+  }
+
+  public static JPanel makeTrack(){
+    return new TrackPane(new DummyLineOne());
   }
 
   public static JMenuBar makeRibbon(){
