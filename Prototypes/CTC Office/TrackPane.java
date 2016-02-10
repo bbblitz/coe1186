@@ -23,7 +23,9 @@ public class TrackPane extends JPanel{
   /**
    * @override
    */
-  public void paint(Graphics2D g){
-    g.fillRect(0,0,200,200);
+  public void paint(Graphics g){
+    g.setColor(Color.black);
+    Dimension d = getSize();
+    g.fillRect(0,0,d.width,d.height);
   }
 }

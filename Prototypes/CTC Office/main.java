@@ -12,15 +12,42 @@ public class main{
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setJMenuBar(makeRibbon());
     window.setSize(640,480);
-    window.getContentPane().add(makeTrack());
+    JPanel holder = new JPanel();
+    holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
+
+    JPanel tp = makeTrack();
+    JPanel dp = makeDetails();
+
+    Dimension d = new Dimension((int)(640*0.7),480);
+    Dimension d2 = new Dimension((int)(650*0.3),480);
+    tp.setPreferredSize(d);
+    dp.setPreferredSize(d2);
+
+    holder.add(tp);
+    holder.add(dp);
+
+    window.getContentPane().add(holder);
     //JLabel label = new JLabel("Hello, world!");
     //window.getContentPane().add(label);
     //window.pack();
     window.setVisible(true);
   }
 
+  public static JPanel makeDetails(){
+    DetailPane dp = new DetailPane();
+    return dp;
+  }
+
   public static JPanel makeTrack(){
-    return new TrackPane(new DummyLineOne());
+    TrackPane tp = new TrackPane(new DummyLineOne());
+    Dimension d = tp.getSize();
+    System.out.printf("d is: %d,%d\n",d.width,d.height);
+    Dimension d2 = new Dimension();
+    d2.width =(int) (d.width*0.6);
+    d2.height = d.height;
+    tp.setSize(d2);
+    System.out.printf("d2 is: %d,%d\n",d2.width,d2.height);
+    return tp;
   }
 
   public static JMenuBar makeRibbon(){
