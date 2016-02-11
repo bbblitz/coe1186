@@ -1,4 +1,4 @@
-//package system;
+package system;
 /**
  * Temporary class to simulate interaction between train controller and model.  Will be replaced with real model in the future.
  */
