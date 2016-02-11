@@ -42,10 +42,10 @@ public class TrackPane extends JPanel{
         DummyTrackCurved dtc = (DummyTrackCurved)dti;
         g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
 
-        System.out.println("Found curved track");
+        //System.out.println("Found curved track");
       }
       else if(dti instanceof DummyTrackStraight){
-        System.out.println("Found straight track");
+        //System.out.println("Found straight track");
       }
       else if(dti instanceof DummySwitch){
 
@@ -77,11 +77,12 @@ public class TrackPane extends JPanel{
         divendoffx = (int)(ds.length*0.66*Math.cos(ds.dir));
         divendoffy = -(int)(10);
 
+        /*
         System.out.printf("Switch origin at (%d,%d)\n",ds.x,ds.y);
         System.out.printf("\tHead from (%d,%d) to (%d,%d)\n",headstartoffx,headstartoffy,headendoffx,headendoffy);
         System.out.printf("\tSwitch from (%d,%d) to (%d,%d)\n",switchstartoffx,switchstartoffy,switchendoffx,switchendoffy);
         System.out.printf("\tDivergent from (%d,%d) to (%d,%d)\n",divstartoffx,divstartoffy,divendoffx,divendoffy);
-
+        */
         int hsx = ds.x + headstartoffx;
         int hex = ds.x + headendoffx;
         int hsy = ds.y + headstartoffy;
@@ -96,12 +97,12 @@ public class TrackPane extends JPanel{
         int dex = ds.y + divstartoffy;
         int dsy = ds.x + divendoffx;
         int dey = ds.y + divendoffy;
-
+        /*
         System.out.printf("With offsets:\n");
         System.out.printf("\tHead from (%d,%d) to (%d,%d)\n",hsx,hsy,hex,hey);
         System.out.printf("\tSwitch from (%d,%d) to (%d,%d)\n",ssx,ssy,sex,sey);
         System.out.printf("\tDivergent from (%d,%d) to (%d,%d)\n",dsx,dsy,dex,dey);
-
+        */
         g.drawLine(hsx, hsy, hex, hey);
         if(ds.fliped){
           g.setColor(Color.pink);
@@ -115,7 +116,7 @@ public class TrackPane extends JPanel{
           setColorState(g,ds);
         }
         g.drawLine(dsx, dex, dsy, dey);
-        System.out.println("Found switch");
+        //System.out.println("Found switch");
       }
     }
   }
