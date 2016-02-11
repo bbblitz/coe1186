@@ -12,7 +12,7 @@ public class main{
     JFrame window = new JFrame("CTC Office");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setJMenuBar(makeRibbon());
-    window.setSize(640,480);
+    window.setSize(1200,600);
 
     DummyLineOne dlo = new DummyLineOne();
     ArrayList<DummyLine> aldl = new ArrayList<DummyLine>();
@@ -22,8 +22,9 @@ public class main{
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = makeTrack(aldl);
     JPanel dp = makeDetails(aldl);
-    Dimension d = new Dimension((int)(640*0.7),480);
-    Dimension d2 = new Dimension((int)(640*0.3),480);
+    Dimension o = window.getSize();
+    Dimension d = new Dimension((int)(o.width*0.7),o.height);
+    Dimension d2 = new Dimension((int)(o.width*0.3),o.height);
     tp.setPreferredSize(d);
     dp.setPreferredSize(d2);
     holder.add(tp);

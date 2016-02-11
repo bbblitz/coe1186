@@ -11,6 +11,8 @@ public class SchedulePane extends JPanel{
 
   public SchedulePane(){
     super();
+    JLabel l = new JLabel("Schedule:");
+    add(l);
     System.out.println("Createing Schedule");
     bogusSchedule();
     String[][] data = new String[schedule.size()][2];
@@ -28,6 +30,7 @@ public class SchedulePane extends JPanel{
 
     String[] columnnames = {"Time","Station"};
     JTable table = new JTable(data,columnnames);
+    JScrollPane scrollPane = new JScrollPane(table);
     JPanel butpanel = new JPanel();
     JButton addbut = new JButton("Add");
     JButton editbut = new JButton("Edit");
@@ -38,7 +41,7 @@ public class SchedulePane extends JPanel{
     //JScrollPane scrollPane = new JScrollPane(table);
     setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
     butpanel.setLayout(new BoxLayout(butpanel,BoxLayout.X_AXIS));
-    add(table);
+    add(scrollPane);
     butpanel.add(addbut);
     butpanel.add(editbut);
     butpanel.add(delbut);
