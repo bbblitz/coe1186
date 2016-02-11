@@ -24,6 +24,9 @@ del TrackPane$1.class
 del SchedulePane.class
 del LineVisPanel.class
 del TrainDetailPane.class
+del DispatchPane.class
+del MessageLogPane.class
+del TrackSwitchPane.class
 
 rem Remove dependencies:
 rem del TrackInterface.java
