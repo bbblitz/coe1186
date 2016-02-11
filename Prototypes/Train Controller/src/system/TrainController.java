@@ -1,3 +1,5 @@
+package system;
+
 public class TrainController {
 	private int trainID;
 	private TrainModel trainModel;
@@ -88,6 +90,34 @@ public class TrainController {
 	
 	public void turnOffLights() {
 		lightsOn = false;
+	}
+	
+	
+	
+	/**
+	 * Forced failures
+	 */
+	
+	public void forceEngineFailure() {
+		trainModel.setEngineFailure(true);
+	}
+	
+	public void fixEngineFailure() {
+		trainModel.setEngineFailure(false);
+	}
+	public void forceBrakeFailure() {
+		trainModel.setBrakeFailure(true);
+	}
+	
+	public void fixBrakeFailure() {
+		trainModel.setBrakeFailure(false);
+	}
+	public void forceSignalPickupFailure() {
+		trainModel.setSignalPickupFailure(true);
+	}
+	
+	public void fixSignalPickupFailure() {
+		trainModel.setSignalPickupFailure(false);
 	}
 	
 }
