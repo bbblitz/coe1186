@@ -1,7 +1,6 @@
 
 import java.util.*;
 
-
 public abstract class DummyTrackInterface{
   private Infrastructure infra;
   private int blocknum;
@@ -9,6 +8,7 @@ public abstract class DummyTrackInterface{
   private float blockele;
   private int speedlimit;
 
+  private TrackFailState fs;
 
   public abstract DummyTrackInterface goesto(DummyTrackInterface from);
   public Infrastructure getInfrastructure(){
@@ -16,6 +16,12 @@ public abstract class DummyTrackInterface{
   }
   public void setInfrastructure(Infrastructure i){
     infra = i;
+  }
+  public TrackFailState getFailState(){
+    return fs;
+  }
+  public void setFailState(TrackFailState f){
+    fs = f;
   }
   public int getBlockNum(){
     return blocknum;

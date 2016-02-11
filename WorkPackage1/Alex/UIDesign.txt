@@ -65,7 +65,7 @@ The left pane
   Segments of the train line that are designated "Crossing" will be indicated by a blue(rgb(0,0,255)) 2px border on both sides of the rail.
   Each line segment will be one of the following colors, indicating it's state:
     Normal(green, rgb(0,255,0))
-    Broken Rail(grey, rgb(100,100,100))
+    Broken Rail(gray, rgb(100,100,100))
     Track Circuit Failure (red, rgb(255,0,0))
     Power Failure(yellow, rgb(255,255,0))
     If a section of the track is experiencing more than one failure, the colors will appear in stripes, if 2 failures are experienced at a time, the track will be 20 model feet of alternating colors corresponding to the failures. If the section of track is experiencing 3 failures at a time, the alternating colors will be in 10 model feet increments.

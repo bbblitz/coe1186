@@ -2,10 +2,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class DetailPane extends JPanel{
 
-  public DetailPane(){
+  public DetailPane(ArrayList<DummyLine> aldl){
     super();
   }
   public void paint(Graphics g){

@@ -12,7 +12,7 @@ public class DummySwitch extends DummyTrackInterface{
   public int length;
   public DummyTrackInterface tail;
   public DummySection tailto;
-  private boolean fliped;
+  public boolean fliped;
 
   public DummyTrackInterface head;
   public DummySection headto;

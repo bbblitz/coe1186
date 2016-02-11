@@ -5,6 +5,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class main{
   public static void main(String[] args){
@@ -12,17 +13,19 @@ public class main{
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setJMenuBar(makeRibbon());
     window.setSize(640,480);
+
+    DummyLineOne dlo = new DummyLineOne();
+    ArrayList<DummyLine> aldl = new ArrayList<DummyLine>();
+    aldl.add(dlo);
+
     JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
-
-    JPanel tp = makeTrack();
-    JPanel dp = makeDetails();
-
+    JPanel tp = makeTrack(aldl);
+    JPanel dp = makeDetails(aldl);
     Dimension d = new Dimension((int)(640*0.7),480);
-    Dimension d2 = new Dimension((int)(650*0.3),480);
+    Dimension d2 = new Dimension((int)(640*0.3),480);
     tp.setPreferredSize(d);
     dp.setPreferredSize(d2);
-
     holder.add(tp);
     holder.add(dp);
 
@@ -33,13 +36,13 @@ public class main{
     window.setVisible(true);
   }
 
-  public static JPanel makeDetails(){
-    DetailPane dp = new DetailPane();
+  public static JPanel makeDetails(ArrayList<DummyLine> aldl){
+    DetailPane dp = new DetailPane(aldl);
     return dp;
   }
 
-  public static JPanel makeTrack(){
-    TrackPane tp = new TrackPane(new DummyLineOne());
+  public static JPanel makeTrack(ArrayList<DummyLine> aldl){
+    TrackPane tp = new TrackPane(aldl);
     Dimension d = tp.getSize();
     System.out.printf("d is: %d,%d\n",d.width,d.height);
     Dimension d2 = new Dimension();

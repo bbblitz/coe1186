@@ -2,12 +2,12 @@
 import java.util.*;
 
 public class DummyLineOne extends DummyLine{
-  public ArrayList<DummyTrackInterface> line = new ArrayList<DummyTrackInterface>();
+  //public ArrayList<DummyTrackInterface> line = new ArrayList<DummyTrackInterface>();
   public DummyLineOne(){
     DummyTrackCurved p1 = new DummyTrackCurved(0,0,0,270,100);
-    DummySwitch s1 = new DummySwitch(50,50,180,50);
-    DummySwitch s2 = new DummySwitch(150,50,0,50);
-    DummyTrackCurved p2 = new DummyTrackCurved(200,200,90,-270,100);
+    DummySwitch s1 = new DummySwitch(100,100,180,50);
+    DummySwitch s2 = new DummySwitch(150,100,0,50);
+    DummyTrackCurved p2 = new DummyTrackCurved(150,100,90,-270,100);
 
     s1.head = p1;
     s1.headto = DummySection.SEC_TAIL;

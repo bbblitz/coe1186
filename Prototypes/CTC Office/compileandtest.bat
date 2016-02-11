@@ -19,6 +19,8 @@ del Infrastructure.class
 del DummyTrackInterface.class
 del TrackPane.class
 del DetailPane.class
+del TrackFailState.class
+del TrackPane$1.class
 
 rem Remove dependencies:
 rem del TrackInterface.java

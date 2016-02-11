@@ -26,10 +26,10 @@ public class DummyTrackStraight extends DummyTrackInterface{
    *@override
    */
   public DummyTrackInterface goesto(DummyTrackInterface from){
-    if(from == connectedtracks[0]){
-      return connectedtracks[1];
+    if(from == connected[0]){
+      return connected[1];
     }else{
-      return connectedtracks[0];
+      return connected[0];
     }
   }
 }
