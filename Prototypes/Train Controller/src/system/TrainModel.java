@@ -7,13 +7,22 @@ public class TrainModel {
 	private boolean brakeFailure = false;
 	private boolean signalPickupFailure = false;
 	private double currentSpeed;
+	private double mass;
 	
-	public TrainModel() {
-		
+	public TrainModel(double mass) {
+		this.mass = mass;
+	}
+	
+	public double getCurrentSpeed() {
+		return currentSpeed;
 	}
 	
 	public void setCurrentSpeed(double newSpeed) {
 		currentSpeed = newSpeed;
+	}
+	
+	public double getMass() {
+		return mass;
 	}
 	
 	public boolean getEngineFailure() {
@@ -38,5 +47,13 @@ public class TrainModel {
 	
 	public void setSignalPickupFailure(boolean fail) {
 		this.signalPickupFailure = fail;
+	}
+	
+	public void activateEmergencyBrake() {
+		this.currentSpeed = 0;
+	}
+	
+	public void deactivateEmergencyBrake() {
+		
 	}
 }
