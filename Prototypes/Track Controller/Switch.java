@@ -5,6 +5,7 @@ public class Switch extends Track
 	
 	public Switch()
 	{
+		name = "";
 		next = null;
 		prev = null;
 		divergent = null;
@@ -13,8 +14,20 @@ public class Switch extends Track
 		switchPosition = false;
 	}
 	
-	public Switch(Track next, Track previous, Track divergent)
+	public Switch(String name)
 	{
+		this.name = name;
+		next = null;
+		prev = null;
+		divergent = null;
+		light = false;
+		train = false;	
+		switchPosition = false;
+	}
+	
+	public Switch(String name, Track next, Track previous, Track divergent)
+	{
+		this.name = name;
 		this.next = next;
 		this.prev = prev;
 		this.divergent = divergent;

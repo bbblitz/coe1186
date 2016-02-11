@@ -8,6 +8,12 @@ public class Crossing extends Track
 		closed = false;
 	}
 	
+	public Crossing(String name)
+	{
+		this.name = name;
+		closed = false;
+	}
+	
 	public Crossing(Track next, Track previous)
 	{
 		this.next = next;
