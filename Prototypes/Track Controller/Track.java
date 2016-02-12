@@ -1,5 +1,6 @@
 public class Track implements TrackInterface
 {
+	public String name;
 	public TrackInterface next;
 	public TrackInterface prev;
 	public int speedLimit;
@@ -9,14 +10,24 @@ public class Track implements TrackInterface
 	
 	public Track()
 	{
+		name = "";
+		next = null;
+		prev = null;
+		light = false;
+		train = false;
+	}
+	public Track(String name)
+	{
+		this.name = name;
 		next = null;
 		prev = null;
 		light = false;
 		train = false;
 	}
 	
-	public Track(Track next, Track prev)
+	public Track(String name, Track next, Track prev)
 	{
+		this.name = name;
 		this.next = next;
 		this.prev = prev;
 		this.light = light;
@@ -38,5 +49,10 @@ public class Track implements TrackInterface
 	public void checkSpeed()
 	{
 		if(CTCspeed > speedLimit)CTCspeed = speedLimit;
+	}
+	
+	public String toString()
+	{
+		return name;
 	}
 }
