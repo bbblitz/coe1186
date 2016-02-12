@@ -1,50 +1,49 @@
-package system;
+//package system;
 
 public class PIDController {
 	private double Kp;
 	private double Ki;
-	private double Kd;
 	
 	private double ep;	// current error
 	private double ep_prev;
 	private double ei;	// time-weighted past error
+	private double ei_prev;
+	
+	public double _lastPowerCalculation;
 	
 	public PIDController(double trainMass) {
-		Kp = trainMass / 1000.0;
-		Ki = 0.5;
-		Kd = 0.0;
+		//this.Kp = trainMass / 10.0;
+		this.Kp = 10000.0;
+		this.Ki = 10.0;
 		
-		ep = 0;
-		ep_prev = 0;
-		ei = 0;
+		this.ep = 0;
+		this.ep_prev = 0;
+		this.ei = 0;
+		this.ei_prev = 0;
 	}
 	
 	/***
 	 * Calculate the power that should be used to achieve target velocity
 	 * @param currentVelocity The current speed of the train
 	 * @param targetVelocity The target speed of the train
-	 * @param deltaT The amount of time that has passed since last calculation
+	 * @param deltaT Millis since last calculation
 	 * @return The optimal power in watts. Might be more than max train power
 	 */
 	public double calculatePower(double currentVelocity, double targetVelocity, double deltaT) {
 		double power;
+		double deltaTSec = deltaT / 1000.0;
 		
 		// new errors
-		ep_prev = ep;
-		ep = targetVelocity - currentVelocity;
-		ei += ep * deltaT;
+		this.ep_prev = this.ep;
+		this.ei_prev = this.ei;
+		this.ep = targetVelocity - currentVelocity;
+		this.ei = this.ei_prev + (deltaTSec / 2.0) * (this.ep + this.ep_prev);
+		//this.ei += this.ep * (deltaT / 1000.0);
 		
-		power = Kp * ep + Ki * ei + Kd * _getDerivativeError(deltaT);
+		power = this.Kp * this.ep + this.Ki * this.ei;
 		
+		this._lastPowerCalculation = power;
 		return power;
-	}
-	
-	private double _getDerivativeError(double deltaT) {
-		if (deltaT == 0) {
-			return 0.0;
-		} else {
-			return (ep - ep_prev) / deltaT;
-		}
 	}
 	
 }
