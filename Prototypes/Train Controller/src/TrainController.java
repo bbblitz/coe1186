@@ -1,7 +1,6 @@
 //package system;
 
 public class TrainController {
-	private int trainID;
 	private TrainModel trainModel;
 	public PIDController pidController;
 	
@@ -23,8 +22,7 @@ public class TrainController {
 	private double odometer;
 	double _lastPowerCommand;
 	
-	public TrainController(int trainID, TrainModel trainModel) {
-		this.trainID = trainID;
+	public TrainController(TrainModel trainModel) {
 		this.trainModel = trainModel;
 		this.pidController = new PIDController(trainModel.getMass());
 		
@@ -114,6 +112,14 @@ public class TrainController {
 		} else {
 			return true;
 		}
+	}
+	
+	public void receiveSignalFromRail(byte[] signalPackage) {
+		
+	}
+	
+	public void receiveBeacon(byte[] beaconPackage) {
+		
 	}
 	
 	public void openDoorsLeft() {

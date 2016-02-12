@@ -1,4 +1,5 @@
-Inputs: speed, auth
-Output: power
+Each TrainModel should initialize a TrainController with its constructor
 
-p_max = 120kW
+	public TrainController(TrainModel trainModel);
+
+passing a reference to itself as the trainModel.
