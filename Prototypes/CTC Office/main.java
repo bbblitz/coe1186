@@ -29,7 +29,7 @@ public class main{
     JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = makeTrack(aldl);
-    JPanel dp = makeDetails(aldl);
+    JPanel dp = makeDetails(config);
     Dimension o = window.getSize();
     Dimension d = new Dimension((int)(o.width*0.7),o.height);
     Dimension d2 = new Dimension((int)(o.width*0.3),o.height);
@@ -46,12 +46,12 @@ public class main{
     window.setVisible(true);
   }
 
-  public static JPanel makeDetails(ArrayList<DummyLine> aldl){
-    DetailPane dp = new DetailPane(aldl);
+  public static JPanel makeDetails(Config config){
+    DetailPane dp = new DetailPane(config);
     return dp;
   }
 
-  public static JPanel makeTrack(ArrayList<DummyLine> aldl){
+  public static JPanel makeTrack(Config config){
     TrackPane tp = new TrackPane(config);
     Dimension d = tp.getSize();
     System.out.printf("d is: %d,%d\n",d.width,d.height);

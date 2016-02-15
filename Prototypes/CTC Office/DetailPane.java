@@ -6,7 +6,7 @@ import java.util.*;
 
 public class DetailPane extends JPanel{
 
-  public DetailPane(ArrayList<DummyLine> aldl){
+  public DetailPane(Config config){
     super();
     JPanel lh = new JPanel();
     JPanel rh = new JPanel();
@@ -43,7 +43,7 @@ public class DetailPane extends JPanel{
 
     lh.add(n1);
     rh.add(n2);
-    
+
     lh.add(sp);
     lh.add(lp);
     lh.add(tp);

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class DetailPane extends JPanel{
 
-  public DetailPane(ArrayList<DummyLine> aldl){
+  public DetailPane(Config config){
     super();
     JPanel lh = new JPanel();
     JPanel rh = new JPanel();
@@ -17,7 +17,7 @@ public class DetailPane extends JPanel{
     rh.setLayout(new BoxLayout(rh,BoxLayout.Y_AXIS));
     setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
     SchedulePane sp = new SchedulePane();
-    LineVisPanel lp = new LineVisPanel(aldl);
+    LineVisPanel lp = new LineVisPanel(config);
     TrainDetailPane tp = new TrainDetailPane();
     DispatchPane dp = new DispatchPane();
     MessageLogPane mp = new MessageLogPane();
@@ -43,7 +43,7 @@ public class DetailPane extends JPanel{
 
     lh.add(n1);
     rh.add(n2);
-    
+
     lh.add(sp);
     lh.add(lp);
     lh.add(tp);
