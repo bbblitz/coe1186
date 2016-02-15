@@ -8,25 +8,15 @@ rem cp "..\Track Controller\Crossing.java" .
 rem Compile and run the thing:
 javac main.java
 java main
-del main.class
-del DummyLine.class
-del DummyLineOne.class
-del DummySection.class
-del DummySwitch.class
-del DummyTrackCurved.class
-del DummyTrackStraight.class
-del Infrastructure.class
-del DummyTrackInterface.class
-del TrackPane.class
-del DetailPane.class
-del TrackFailState.class
-del TrackPane$1.class
-del SchedulePane.class
-del LineVisPanel.class
-del TrainDetailPane.class
-del DispatchPane.class
-del MessageLogPane.class
-del TrackSwitchPane.class
+del *.class
+
+rem Compile the javadoc
+rem javadoc -header "<h1>BitsPlease CTC Documents</h1>" *.java
+rem cp *.html ./doc/
+rem cp stylesheet.css ./doc/
+rem cp package-list ./doc/
+rem cp script.js ./doc/
+
 
 rem Remove dependencies:
 rem del TrackInterface.java

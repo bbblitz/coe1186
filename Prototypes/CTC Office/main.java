@@ -8,15 +8,23 @@ import java.awt.event.*;
 import java.util.*;
 
 public class main{
+  public static Config config;
   public static void main(String[] args){
+    config = new Config();
+    config.windowDim = new Dimension(1200,600);
+
     JFrame window = new JFrame("CTC Office");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setJMenuBar(makeRibbon());
-    window.setSize(1200,600);
+    window.setSize(config.windowDim.width,config.windowDim.height);
 
     DummyLineOne dlo = new DummyLineOne();
     ArrayList<DummyLine> aldl = new ArrayList<DummyLine>();
     aldl.add(dlo);
+    config.aldl = aldl;
+    System.out.println("DummyLineOneID:" + dlo.lineid);
+    config.vislines = new ArrayList<Boolean>(10);
+    config.vislines.add(dlo.lineid,true);
 
     JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
@@ -31,6 +39,7 @@ public class main{
     holder.add(dp);
 
     window.getContentPane().add(holder);
+    ((DetailPane)dp).createComponent();
     //JLabel label = new JLabel("Hello, world!");
     //window.getContentPane().add(label);
     window.pack();
@@ -43,7 +52,7 @@ public class main{
   }
 
   public static JPanel makeTrack(ArrayList<DummyLine> aldl){
-    TrackPane tp = new TrackPane(aldl);
+    TrackPane tp = new TrackPane(config);
     Dimension d = tp.getSize();
     System.out.printf("d is: %d,%d\n",d.width,d.height);
     Dimension d2 = new Dimension();

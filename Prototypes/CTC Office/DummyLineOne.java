@@ -4,6 +4,7 @@ import java.util.*;
 public class DummyLineOne extends DummyLine{
   //public ArrayList<DummyTrackInterface> line = new ArrayList<DummyTrackInterface>();
   public DummyLineOne(){
+    lineid = 0;
     name = "DummyLineOne";
     DummyTrackCurved p1 = new DummyTrackCurved(0,0,0,270,100);
     DummySwitch s1 = new DummySwitch(100,100,180,50);

@@ -5,22 +5,17 @@ import java.util.*;
 
 public class TrackPane extends JPanel{
   ArrayList<DummyLine> lines;
-  public TrackPane(ArrayList<DummyLine> l){
+  ArrayList<Boolean> vislines;
+  public TrackPane(Config c){
     super();
-    lines = l;
+    vislines = c.vislines;
+    lines = c.aldl;
   }
-  public TrackPane(boolean db){
-    super(db);
-  }
-  public TrackPane(LayoutManager lm){
-    super(lm);
-  }
-  public TrackPane(LayoutManager lm, boolean db){
-    super(lm,db);
-  }
+
   public void tick(){
     System.out.println("I've ticked!");
   }
+
   /**
    * @override
    */
@@ -29,7 +24,7 @@ public class TrackPane extends JPanel{
     Dimension d = getSize();
     g.fillRect(0,0,d.width,d.height);
     for(DummyLine dl : lines){
-      if(true){//Check if this line should be visible
+      if(vislines.get(dl.lineid)){//Check if this line should be visible
         drawLine(g,dl);
       }
     }
