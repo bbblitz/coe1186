@@ -33,7 +33,7 @@ public class main{
     window.getContentPane().add(holder);
     //JLabel label = new JLabel("Hello, world!");
     //window.getContentPane().add(label);
-    //window.pack();
+    window.pack();
     window.setVisible(true);
   }
 
