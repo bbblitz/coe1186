@@ -5,21 +5,30 @@ import java.util.*;
 
 
 public class LineVisPanel extends JPanel implements ItemListener{
+  ArrayList<Checkbox> alc = new ArrayList<Checkbox>();
+  Config config;
   public LineVisPanel(Config config){
     super();
+    this.config = config;
     JLabel lm = new JLabel("Line Visibility:");
     add(lm);
     setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
     for(DummyLine l : config.aldl){
-      add(new Checkbox(l.name,true));
+      Checkbox c = new Checkbox(l.name,true);
+      c.addItemListener(this);
+      alc.add(l.lineid,c);
+      add(c);
     }
   }
 
   public void itemStateChanged(ItemEvent e) {
-    int index = 0;
-    char c = '-';
     Object source = e.getItemSelectable();
     System.out.println("Checkbox ticked");
+    for(int i = 0; i < alc.size(); i++){
+      if(source == alc.get(i)){
+        System.out.println("Checkbox:" + config.aldl.get(i).lineid);
+      }
+    }
     /*
     if (source == chinButton) {
         index = 0;
