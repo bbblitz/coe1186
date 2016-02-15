@@ -2,7 +2,7 @@
 
 public class TrainController {
 	private TrainModel trainModel;
-	public PIDController pidController;
+	public PowerController powerController;
 	
 	private final double MAX_TRAIN_POWER = 120000;	// 120kW
 	private final double AUTHORITY_BUFFER = 10;	// give some buffer to make sure train will never exceed authority
@@ -22,9 +22,13 @@ public class TrainController {
 	private double odometer;
 	double _lastPowerCommand;
 	
+	/**
+	 * Create the TrainController
+	 * @param trainModel TrainModel The train model that this controller is installed on
+	 */
 	public TrainController(TrainModel trainModel) {
 		this.trainModel = trainModel;
-		this.pidController = new PIDController(trainModel.getMass());
+		this.powerController = new PowerController(trainModel.getMass());
 		
 		// train status
 		this.velocitySI = this.trainModel.getCurrentVelocitySI();
@@ -38,7 +42,7 @@ public class TrainController {
 	
 	/**
 	 * Update train's odometer and authority, and send a new power command to train
-	 * @param deltaT
+	 * @param deltaT double Milliseconds since last update
 	 */
 	public void tick(double deltaT) {
 		// deltaX = 0.5 * (v + v0) * deltaT
@@ -64,6 +68,11 @@ public class TrainController {
 		this.trainModel.receivePowerCommand(power);
 	}
 	
+	/**
+	 * Calculate the best power to send to the train based on velocity and authority
+	 * @param deltaT double Milliseconds since last calculation
+	 * @return double Power in watts
+	 */
 	public double calculatePower(double deltaT) {
 		double power;
 		
@@ -85,7 +94,7 @@ public class TrainController {
 				double targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
 				
 				// calculate new power
-				double calculatedPower = pidController.calculatePower(this.velocitySI, targetVelocity, deltaT);
+				double calculatedPower = powerController.calculatePower(this.velocitySI, targetVelocity, deltaT);
 				
 				// abs(power) should never be more than max train power
 				power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
@@ -101,7 +110,7 @@ public class TrainController {
 	
 	/**
 	 * If the service brake is applied now and the train is slowed at 1.2 m/s^2, will it stop within authority limits?
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private boolean haveEnoughAuthority() {
 		// v^2 = 0 = v0^2 + 2*a*deltaX
@@ -122,51 +131,51 @@ public class TrainController {
 		
 	}
 	
-	public void openDoorsLeft() {
+	private void openDoorsLeft() {
 		this.doorsOpenLeft = true;
 	}
 	
-	public void openDoorsRight() {
+	private void openDoorsRight() {
 		this.doorsOpenRight = true;
 	}
 	
-	public void closeDoorsLeft() {
+	private void closeDoorsLeft() {
 		this.doorsOpenLeft = false;
 	}
 	
-	public void closeDoorsRight() {
+	private void closeDoorsRight() {
 		this.doorsOpenRight = false;
 	}
 	
-	public void turnOnLights() {
+	private void turnOnLights() {
 		this.lightsOn = true;
 	}
 	
-	public void turnOffLights() {
+	private void turnOffLights() {
 		this.lightsOn = false;
 	}
 	
-	public void activateEmergencyBrake() {
+	private void activateEmergencyBrake() {
 		this.trainModel.activateEmergencyBrake();
 	}
 	
-	public void deactivateEmergencyBrake() {
+	private void deactivateEmergencyBrake() {
 		this.trainModel.deactivateEmergencyBrake();
 	}
 	
-	public void activateServiceBrake() {
+	private void activateServiceBrake() {
 		this.trainModel.activateServiceBrake();
 	}
 	
-	public void deactivateServiceBrake() {
+	private void deactivateServiceBrake() {
 		this.trainModel.deactivateServiceBrake();
 	}
 	
-	public double getAuthorityFromCTC() {
-		return authorityFromCTC;
+	private double getAuthorityFromCTC() {
+		return this.authorityFromCTC;
 	}
 		
-	public void announceStation() {
+	private void announceStation() {
 		System.out.println("NEXT STATION: " + this.nextStation);
 	}
 	
@@ -221,19 +230,19 @@ public class TrainController {
 	
 	
 
-	public double millisToSeconds(double millis) {
+	private double millisToSeconds(double millis) {
 		return millis / 1000.0;
 	}
 	
-	public double secondsToMillis(double seconds) {
+	private double secondsToMillis(double seconds) {
 		return seconds * 1000.0;
 	}
 	
-	public double metersToFeet(double meters) {
+	private double metersToFeet(double meters) {
 		return meters * 3.28084;
 	}
 	
-	public double feetToMeters(double feet) {
+	private double feetToMeters(double feet) {
 		return feet * 0.3048;
 	}
 	

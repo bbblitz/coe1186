@@ -12,9 +12,9 @@ public class Main {
 		System.out.println("*********************************************");
 		
 		TrainModel trainModel = new TrainModel();	// train mass
-		TrainController trainController = new TrainController(1, trainModel);
+		TrainController trainController = new TrainController(trainModel);
 
-		long TIME_INTERVAL_MILLIS = 1000;
+		long TIME_INTERVAL_MILLIS = 100;
 		
 		// fake the train already moving
 		double CURRENT_SPEED = 1.0;
@@ -22,7 +22,7 @@ public class Main {
 		
 		// fake some speed+auth commands
 		double TARGET_SPEED = 10.0;
-		double AUTH = 300.0;
+		double AUTH = 300000.0;
 		trainController.hackVelocityFromCTC(TARGET_SPEED);
 		trainController.hackVelocityFromTrainOperator(TARGET_SPEED);
 		trainController.hackAuthorityFromCTC(AUTH);
