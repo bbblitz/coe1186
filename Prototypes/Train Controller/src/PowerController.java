@@ -1,6 +1,6 @@
 //package system;
 
-public class PIDController {
+public class PowerController {
 	private double Kp;
 	private double Ki;
 	
@@ -11,7 +11,7 @@ public class PIDController {
 	
 	public double _lastPowerCalculation;
 	
-	public PIDController(double trainMass) {
+	public PowerController(double trainMass) {
 		//this.Kp = trainMass / 10.0;
 		this.Kp = 10000.0;
 		this.Ki = 10.0;
