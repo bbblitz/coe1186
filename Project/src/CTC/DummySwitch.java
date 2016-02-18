@@ -24,6 +24,7 @@ public class DummySwitch extends DummyTrackInterface{
     y = ty;
     dir = d;
     length = l;
+    super.setFailState(TrackFailState.FS_NORMAL);
   }
 
   public DummyTrackInterface goesto(DummyTrackInterface from){
