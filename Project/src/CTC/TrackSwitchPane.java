@@ -1,19 +1,17 @@
+/*The pane used to flip the direction of a switch on the track*/
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TrackSwitchPane extends JPanel{
+public class TrackSwitchPane extends TrackPane implements ActionListener{
 
-  public TrackSwitchPane(){
-    super();
+  public TrackSwitchPane(Config c){
+    super(c);
     JLabel l = new JLabel("Track Switch:");
     add(l);
   }
 
-  public void paint(Graphics g){
-    g.setColor(Color.black);
-    Dimension d = getSize();
-    g.fillRect(0,0,d.width,d.height);
-    System.out.printf("Size is (%d,%d)",d.width,d.height);
+  public void actionPerformed(ActionEvent e){
+    System.out.println("Action!");
   }
 }

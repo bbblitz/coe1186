@@ -1,4 +1,4 @@
-
+/*Holds are the stuff on the right side of the window*/
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -21,7 +21,7 @@ public class DetailPane extends JPanel{
     TrainDetailPane tp = new TrainDetailPane();
     DispatchPane dp = new DispatchPane();
     MessageLogPane mp = new MessageLogPane();
-    TrackSwitchPane wp = new TrackSwitchPane();
+    TrackSwitchPane wp = new TrackSwitchPane(config);
 
     ((JPanel)wp).setPreferredSize(paneDim);
     ((JPanel)dp).setPreferredSize(paneDim);

@@ -1,5 +1,7 @@
 @echo off
 rem Dependencies:
+rem cp "..\Track"
+
 rem cp "..\Track Controller\TrackInterface.java" .
 rem cp "..\Track Controller\Track.java" .
 rem cp "..\Track Controller\Switch.java" .
@@ -12,11 +14,15 @@ java main
 del *.class
 
 rem Compile the javadoc
-rem javadoc -header "<h1>BitsPlease CTC Documents</h1>" *.java
-rem cp *.html ./doc/
-rem cp stylesheet.css ./doc/
-rem cp package-list ./doc/
-rem cp script.js ./doc/
+set /P CTC_JAVADOC="Do you want to compile the javadoc?(Y/N)"
+if "%CTC_JAVADOC%" == "Y"(
+  del ./doc/*
+  javadoc -header "<h1>BitsPlease CTC Documents</h1>" *.java
+  cp *.html ./doc/
+  cp stylesheet.css ./doc/
+  cp package-list ./doc/
+  cp script.js ./doc/
+)
 
 
 rem Remove dependencies:
