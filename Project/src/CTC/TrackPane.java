@@ -78,6 +78,7 @@ public class TrackPane extends JPanel{
         drawSegment(g,ds.head,cn);
         drawSegment(g,ds.divergent,ct);
       }
+      drawSegment(g,ds.tail,ct);
       /*
       int headstartoffx = 0;
       int headendoffx = 0;
