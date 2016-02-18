@@ -27,6 +27,8 @@ public class LineVisPanel extends JPanel implements ItemListener{
     for(int i = 0; i < alc.size(); i++){
       if(source == alc.get(i)){
         System.out.println("Checkbox:" + config.aldl.get(i).lineid);
+        config.vislines.set(i,((java.awt.Checkbox)source).getState());
+        config.trackpane.repaint();
       }
     }
     /*

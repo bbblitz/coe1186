@@ -31,7 +31,7 @@ public class DetailPane extends JPanel{
     ((JPanel)sp).setPreferredSize(paneDim);
 
     Dimension hsize = new Dimension((int)(1200/2),600);
-    lh.setPreferredSize(hsize);
+    lh=.setPreferredSize(hsize);
     rh.setPreferredSize(hsize);
     System.out.printf("Attempting to set prefered size to (%d,%d)\n",d.width,d.height);
 

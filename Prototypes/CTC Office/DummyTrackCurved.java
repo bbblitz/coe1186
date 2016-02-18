@@ -21,7 +21,9 @@ public class DummyTrackCurved extends DummyTrackInterface{
     startang = sa;
     endang = ea;
     radius = r;
+    super.setFailState(FS_NORMAL);
   }
+
   public DummyTrackInterface goesto(DummyTrackInterface from){
     if(from == connected[0]){
       return connected[1];

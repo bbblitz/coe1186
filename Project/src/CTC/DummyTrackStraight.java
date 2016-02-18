@@ -4,7 +4,7 @@ public class DummyTrackStraight extends DummyTrackInterface{
   public DummySection[] connectedto = new DummySection[2];
 
   //How long the track is
-  public int tracklength;
+  public int length;
 
   //The x offset from some origin
   public int x;
@@ -15,8 +15,8 @@ public class DummyTrackStraight extends DummyTrackInterface{
   //The direction the track is faceing (in degrees)
   public int direction;
 
-  public DummyTrackStraight(int length, int tx, int ty, int dir){
-    tracklength = length;
+  public DummyTrackStraight(int tx, int ty, int dir, int length){
+    this.length = length;
     x = tx;
     y = ty;
     direction = dir;

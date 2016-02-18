@@ -17,6 +17,7 @@ public class main{
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setJMenuBar(makeRibbon());
     window.setSize(config.windowDim.width,config.windowDim.height);
+    config.window = window;
 
     DummyLineOne dlo = new DummyLineOne();
     ArrayList<DummyLine> aldl = new ArrayList<DummyLine>();
@@ -29,6 +30,7 @@ public class main{
     JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = makeTrack(config);
+    config.trackpane = tp;
     JPanel dp = makeDetails(config);
     Dimension o = window.getSize();
     Dimension d = new Dimension((int)(o.width*0.7),o.height);

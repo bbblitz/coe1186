@@ -6,6 +6,7 @@ rem cp "..\Track Controller\Switch.java" .
 rem cp "..\Track Controller\Crossing.java" .
 
 rem Compile and run the thing:
+javac Config.java
 javac main.java
 java main
 del *.class

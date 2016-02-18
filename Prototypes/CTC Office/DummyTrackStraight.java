@@ -20,6 +20,8 @@ public class DummyTrackStraight extends DummyTrackInterface{
     x = tx;
     y = ty;
     direction = dir;
+    super.setFailState(FS_NORMAL);
+    System.out.println("Super failstate is:" + super.getFailState());
   }
 
   /**
