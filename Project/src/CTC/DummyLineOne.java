@@ -65,6 +65,11 @@ public class DummyLineOne extends DummyLine{
     s2t.headto = DummySection.SEC_TAIL;
     s2t.tail = s1t;
 
+    p2.head = s2s;
+    p2.headto = DummySection.SEC_HEAD;
+    p2.tail = s2d;
+    p2.tailto = DummySection.SEC_TAIL;
+
 
 
     /*
