@@ -1,7 +1,9 @@
 
 public class DummyTrackStraight extends DummyTrackInterface{
-  public DummyTrackInterface[] connected = new DummyTrackInterface[2];
-  public DummySection[] connectedto = new DummySection[2];
+  public DummyTrackInterface head;
+  public DummyTrackInterface tail;
+  public DummySection headto;
+  public DummySection tailto;
 
   //How long the track is
   public int length;
@@ -27,10 +29,10 @@ public class DummyTrackStraight extends DummyTrackInterface{
    *@override
    */
   public DummyTrackInterface goesto(DummyTrackInterface from){
-    if(from == connected[0]){
-      return connected[1];
+    if(from == head){
+      return tail;
     }else{
-      return connected[0];
+      return head;
     }
   }
 }

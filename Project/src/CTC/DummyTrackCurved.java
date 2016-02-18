@@ -1,7 +1,9 @@
 
 public class DummyTrackCurved extends DummyTrackInterface{
-  public DummyTrackInterface[] connected = new DummyTrackInterface[2];
-  public DummySection[] connectedto = new DummySection[2];
+  public DummyTrackInterface head;
+  public DummyTrackInterface tail;
+  public DummySection headto;
+  public DummySection tailto;
 
   public int x;
   public int y;
@@ -24,10 +26,10 @@ public class DummyTrackCurved extends DummyTrackInterface{
     super.setFailState(TrackFailState.FS_NORMAL);
   }
   public DummyTrackInterface goesto(DummyTrackInterface from){
-    if(from == connected[0]){
-      return connected[1];
+    if(from == head){
+      return tail;
     }else{
-      return connected[0];
+      return head;
     }
   }
 }

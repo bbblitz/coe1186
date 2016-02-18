@@ -7,10 +7,12 @@ public class DummyLineOne extends DummyLine{
     lineid = 0;
     name = "DummyLineOne";
     DummyTrackCurved p1 = new DummyTrackCurved(0,0,0,270,100);
+
     DummySwitch s1 = new DummySwitch(100,100,180,50);
     DummyTrackCurved s1u = new DummyTrackCurved(100,0,-180,90,100);
     DummyTrackStraight s1s = new DummyTrackStraight(150,100,180,100);
     DummyTrackStraight s1t = new DummyTrackStraight(100,100,0,50);
+
     //DummySwitch s2 = new DummySwitch(150,100,0,50);
     //DummyTrackCurved p2 = new DummyTrackCurved(150,100,90,-270,100);
 
@@ -20,11 +22,20 @@ public class DummyLineOne extends DummyLine{
     s1.divergentto =  DummySection.SEC_HEAD;
     s1.tail = s1t;
     s1.tailto =  DummySection.SEC_HEAD;
+    s1u.tail = p1;
+    s1u.tailto = DummySection.SEC_TAIL;
+    s1u.head = s1;
+    s1u.headto = DummySection.SEC_DIVERGENT;
+    s1s.head = p1;
+    s1s.headto = DummySection.SEC_HEAD;
+    s1s.tail = s1;
+    s1s.tailto = DummySection.SEC_HEAD;
 
-    p1.connected[0] = s1;
-    p1.connectedto[0] =  DummySection.SEC_TAIL;
-    p1.connected[1] = s1;
-    p1.connectedto[1] =  DummySection.SEC_TAIL;
+    p1.head = s1s;
+    p1.headto = DummySection.SEC_HEAD;
+    p1.tail = s1u;
+    p1.tailto = DummySection.SEC_TAIL;
+
     /*
     s2.head = p2;
     s2.headto =  DummySection.SEC_TAIL;
