@@ -31,6 +31,7 @@ public class main{
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = makeTrack(config);
     config.trackpane = tp;
+    System.out.println("config.trackpane is: " + config.trackpane);
     JPanel dp = makeDetails(config);
     Dimension o = window.getSize();
     Dimension d = new Dimension((int)(o.width*0.7),o.height);

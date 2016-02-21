@@ -5,17 +5,54 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class TrackPane extends JPanel{
+public class TrackPane extends JPanel implements MouseListener {
   ArrayList<DummyLine> lines;
   ArrayList<Boolean> vislines;
+  Config c;
   public TrackPane(Config c){
     super();
+    this.c = c;
     vislines = c.vislines;
     lines = c.aldl;
+    addMouseListener(this);
   }
 
   public void tick(){
     System.out.println("I've ticked!");
+  }
+
+  public void mousePressed(MouseEvent e) {
+   System.out.println("Mouse pressed; # of clicks: " + e.getClickCount());
+  }
+
+  public void mouseReleased(MouseEvent e) {
+    //System.out.println("Mouse released; # of clicks: " + e.getClickCount());
+  }
+
+  public void mouseEntered(MouseEvent e) {
+    //System.out.println("Mouse entered");
+  }
+
+  public void mouseExited(MouseEvent e) {
+    //System.out.println("Mouse exited");
+  }
+
+  public void mouseClicked(MouseEvent e) {
+    System.out.printf("Looking for switches at (%d,%d)\n", e.getX(), e.getY());
+    System.out.println("config.trackpane is: " + c.trackpane);
+    for(int i = 0; i < lines.size(); i++){
+      if(vislines.get(i)){
+        for(DummyTrackInterface dti : lines.get(i).line){
+          if(dti instanceof DummySwitch){
+            DummySwitch dts = (DummySwitch)dti;
+            System.out.printf("Found switch at (%d,%d)\n",dts.x,dts.y);
+            c.selected = dti;
+            c.switchpane.repaint();
+            return;
+          }
+        }
+      }
+    }
   }
 
   /**

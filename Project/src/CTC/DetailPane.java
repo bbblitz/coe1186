@@ -23,6 +23,8 @@ public class DetailPane extends JPanel{
     MessageLogPane mp = new MessageLogPane();
     TrackSwitchPane wp = new TrackSwitchPane(config);
 
+    config.switchpane = wp;
+
     ((JPanel)wp).setPreferredSize(paneDim);
     ((JPanel)dp).setPreferredSize(paneDim);
     ((JPanel)mp).setPreferredSize(paneDim);
