@@ -1,4 +1,7 @@
+import java.util.*;
+
 public class Route {
-	Block destination;
-	long targetTime;
+	public DummyTrackInterface destination;
+	public ArrayList<DummyTrackInterface> route;
+	public long targetTime;
 }

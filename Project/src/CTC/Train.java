@@ -1,4 +1,4 @@
 public class Train {
-	Block currentBlock;
-	Route route;
+	public DummyTrackInterface currentBlock;
+	public Route route;
 }
