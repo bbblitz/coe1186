@@ -33,15 +33,35 @@ public class TrackSwitchPane extends JPanel implements MouseListener {
      System.out.println("Mouse clicked (# of clicks: " + e.getClickCount() + ")");
   }
 
-  public int findoffx(DummyTrackInterface ds){
-    if(ds instanceof DummyTrackStraight){
-      return (Math.cos(ds.direction)*ds.length) + ds.x;
-    }else if(ds instanceof DummyTrackCurved){
-      
+  public int findoffx(BlockInterface ds){
+    if(ds instanceof BlockStraight){
+      BlockStraight dts = (BlockStraight)ds;
+      return (int)((Math.cos(dts.direction)*dts.length) + dts.x);
+    }else if(ds instanceof BlockCurved){
+      BlockCurved dtc = (BlockCurved)ds;
+      int startang = dtc.startang;
+      int endang = startang + dtc.endang;
+      boolean startisleftmost = true;
+      if(Math.cos(endang) < Math.cos(startang)){
+        startisleftmost = false;
+      }
+      int output = (int)(Math.cos(startisleftmost?startang:endang)*dtc.radius);
+      System.out.println("Returning " + output);
+      return output;
+    }else if(ds instanceof BlockSwitch){
+      BlockSwitch dds = (BlockSwitch)ds;
+      return (int) Math.min(
+        Math.min(
+          findoffx(dds.head),
+          findoffx(dds.tail)
+        ),
+        findoffx(dds.divergent)
+      );
     }
+    return 0;
   }
 
-  public void findoffy(DummyTrackInterface ds){
+  public void findoffy(BlockInterface ds){
 
   }
 
@@ -53,7 +73,7 @@ public class TrackSwitchPane extends JPanel implements MouseListener {
     g.setColor(Color.black);
     Dimension d = getSize();
     g.fillRect(0,0,d.width,d.height);
-    if(this.c.selected instanceof DummySwitch){
+    if(this.c.selected instanceof BlockSwitch){
       //Find the top-left most corner
     }
   }

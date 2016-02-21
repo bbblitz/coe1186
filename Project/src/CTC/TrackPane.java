@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.*;
 
 public class TrackPane extends JPanel implements MouseListener {
-  ArrayList<DummyLine> lines;
+  ArrayList<Line> lines;
   ArrayList<Boolean> vislines;
   Config c;
   public TrackPane(Config c){
@@ -42,9 +42,9 @@ public class TrackPane extends JPanel implements MouseListener {
     System.out.println("config.trackpane is: " + c.trackpane);
     for(int i = 0; i < lines.size(); i++){
       if(vislines.get(i)){
-        for(DummyTrackInterface dti : lines.get(i).line){
-          if(dti instanceof DummySwitch){
-            DummySwitch dts = (DummySwitch)dti;
+        for(BlockInterface dti : lines.get(i).line){
+          if(dti instanceof BlockSwitch){
+            BlockSwitch dts = (BlockSwitch)dti;
             System.out.printf("Found switch at (%d,%d)\n",dts.x,dts.y);
             c.selected = dti;
             c.switchpane.repaint();
@@ -65,30 +65,30 @@ public class TrackPane extends JPanel implements MouseListener {
     g.setColor(Color.black);
     Dimension d = getSize();
     g.fillRect(0,0,d.width,d.height);
-    for(DummyLine dl : lines){
+    for(Line dl : lines){
       if(vislines.get(dl.lineid)){//Check if this line should be visible
         drawLine(g,dl);
       }
     }
   }
 
-  public void drawLine(Graphics g, DummyLine dl){
-    for(DummyTrackInterface dti : dl.line){
+  public void drawLine(Graphics g, Line dl){
+    for(BlockInterface dti : dl.line){
       drawSegment(g,dti);
     }
   }
 
-  public void drawSegment(Graphics g, DummyTrackInterface dti){
+  public void drawSegment(Graphics g, BlockInterface dti){
     Color c = getColorState(g,dti);
     drawSegment(g,dti,c);
   }
 
-  public void drawInfrastructure(Graphics g, DummyTrackStraight track, Color c){
+  public void drawInfrastructure(Graphics g, BlockStraight track, Color c){
 
   }
 
-  public void drawStraightTrack(Graphics g, DummyTrackStraight track, Color c){
-    DummyTrackStraight ts = track;
+  public void drawStraightTrack(Graphics g, BlockStraight track, Color c){
+    BlockStraight ts = track;
     int sx = ts.x;
     int sy = ts.y;
     System.out.println("Cos of " + ts.direction + " is " + Math.cos(Math.toRadians(ts.direction)));
@@ -105,22 +105,22 @@ public class TrackPane extends JPanel implements MouseListener {
     }
   }
 
-  public void drawSegment(Graphics g, DummyTrackInterface dti, Color c){
+  public void drawSegment(Graphics g, BlockInterface dti, Color c){
     g.setColor(c);
-    if(dti instanceof DummyTrackCurved){
-      DummyTrackCurved dtc = (DummyTrackCurved)dti;
+    if(dti instanceof BlockCurved){
+      BlockCurved dtc = (BlockCurved)dti;
       g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
 
       //System.out.println("Found curved track");
     }
-    else if(dti instanceof DummyTrackStraight){
+    else if(dti instanceof BlockStraight){
       //System.out.println("Found straight track");
-      drawStraightTrack(g,(DummyTrackStraight)dti,c);
+      drawStraightTrack(g,(BlockStraight)dti,c);
     }
-    else if(dti instanceof DummySwitch){
+    else if(dti instanceof BlockSwitch){
 
 
-      DummySwitch ds = (DummySwitch)dti;
+      BlockSwitch ds = (BlockSwitch)dti;
       Color cn = c.darker();
       if(ds.fliped){
         drawSegment(g,ds.head,c);
@@ -133,7 +133,7 @@ public class TrackPane extends JPanel implements MouseListener {
     }
   }
 
-  public Color getColorState(Graphics g, DummyTrackInterface track){
+  public Color getColorState(Graphics g, BlockInterface track){
     if(track.getFailState() == null){
       //g.setColor(Color.white);
       System.out.println("Found a track with null failstate:");

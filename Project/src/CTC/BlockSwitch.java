@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class DummySwitch extends DummyTrackInterface{
+public class BlockSwitch extends BlockInterface{
   //.
   //(0,0)         /---------- Head
   //Tail--------/     Direction->
@@ -10,16 +10,16 @@ public class DummySwitch extends DummyTrackInterface{
   public int y;
   public int dir;
   public int length;
-  public DummyTrackInterface tail;
-  public DummySection tailto;
+  public BlockInterface tail;
+  public BlockPart tailto;
   public boolean fliped;
 
-  public DummyTrackInterface head;
-  public DummySection headto;
-  public DummyTrackInterface divergent;
-  public DummySection divergentto;
+  public BlockInterface head;
+  public BlockPart headto;
+  public BlockInterface divergent;
+  public BlockPart divergentto;
 
-  public DummySwitch(int tx, int ty, int d, int l){
+  public BlockSwitch(int tx, int ty, int d, int l){
     x = tx;
     y = ty;
     dir = d;
@@ -27,7 +27,7 @@ public class DummySwitch extends DummyTrackInterface{
     super.setFailState(TrackFailState.FS_NORMAL);
   }
 
-  public DummyTrackInterface goesto(DummyTrackInterface from){
+  public BlockInterface goesto(BlockInterface from){
     if(from == head || from == divergent){
       return tail;
     }else{

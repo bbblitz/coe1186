@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Config{
   public Dimension windowDim;
-  public ArrayList<DummyLine> aldl;
+  public ArrayList<Line> aldl;
   public ArrayList<Boolean> vislines;
   public JFrame window;
   public JPanel trackpane;

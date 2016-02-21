@@ -19,11 +19,11 @@ public class main{
     window.setSize(config.windowDim.width,config.windowDim.height);
     config.window = window;
 
-    DummyLineOne dlo = new DummyLineOne();
-    ArrayList<DummyLine> aldl = new ArrayList<DummyLine>();
+    LineOne dlo = new LineOne();
+    ArrayList<Line> aldl = new ArrayList<Line>();
     aldl.add(dlo);
     config.aldl = aldl;
-    System.out.println("DummyLineOneID:" + dlo.lineid);
+    System.out.println("LineOneID:" + dlo.lineid);
     config.vislines = new ArrayList<Boolean>(10);
     config.vislines.add(dlo.lineid,true);
 

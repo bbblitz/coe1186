@@ -1,9 +1,9 @@
 
-public class DummyTrackStraight extends DummyTrackInterface{
-  public DummyTrackInterface head;
-  public DummyTrackInterface tail;
-  public DummySection headto;
-  public DummySection tailto;
+public class BlockStraight extends BlockInterface{
+  public BlockInterface head;
+  public BlockInterface tail;
+  public BlockPart headto;
+  public BlockPart tailto;
 
   //How long the track is
   public int length;
@@ -17,7 +17,7 @@ public class DummyTrackStraight extends DummyTrackInterface{
   //The direction the track is faceing (in degrees)
   public int direction;
 
-  public DummyTrackStraight(int tx, int ty, int dir, int length){
+  public BlockStraight(int tx, int ty, int dir, int length){
     this.length = length;
     x = tx;
     y = ty;
@@ -28,7 +28,7 @@ public class DummyTrackStraight extends DummyTrackInterface{
   /**
    *@override
    */
-  public DummyTrackInterface goesto(DummyTrackInterface from){
+  public BlockInterface goesto(BlockInterface from){
     if(from == head){
       return tail;
     }else{

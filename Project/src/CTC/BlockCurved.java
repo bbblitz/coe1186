@@ -1,9 +1,9 @@
 
-public class DummyTrackCurved extends DummyTrackInterface{
-  public DummyTrackInterface head;
-  public DummyTrackInterface tail;
-  public DummySection headto;
-  public DummySection tailto;
+public class BlockCurved extends BlockInterface{
+  public BlockInterface head;
+  public BlockInterface tail;
+  public BlockPart headto;
+  public BlockPart tailto;
 
   public int x;
   public int y;
@@ -17,7 +17,7 @@ public class DummyTrackCurved extends DummyTrackInterface{
 
   //All curved track peices have heads at the clockwise-most edge, and tails at the counter-clockwise-most edge
 
-  public DummyTrackCurved(int tx, int ty, int sa, int ea, int r){
+  public BlockCurved(int tx, int ty, int sa, int ea, int r){
     x = tx;
     y = ty;
     startang = sa;
@@ -25,7 +25,7 @@ public class DummyTrackCurved extends DummyTrackInterface{
     radius = r;
     super.setFailState(TrackFailState.FS_NORMAL);
   }
-  public DummyTrackInterface goesto(DummyTrackInterface from){
+  public BlockInterface goesto(BlockInterface from){
     if(from == head){
       return tail;
     }else{
