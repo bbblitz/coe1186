@@ -7,6 +7,6 @@ public class Train {
 		this.route = route;
 
 		// create the actual train
-		TrainModel newTrain = new TrainModel(id);
+		TrainModel newTrain = new TrainModel(/*id*/);
 	}
 }

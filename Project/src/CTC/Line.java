@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Line{
-  public ArrayList<BlockInterface> blocks = null;
+  public ArrayList<BlockInterface> line = null;
   public String name = "Line";
   public int lineid;
   public Line(){
