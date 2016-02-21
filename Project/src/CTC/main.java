@@ -19,6 +19,7 @@ public class main{
     window.setSize(config.windowDim.width,config.windowDim.height);
     config.window = window;
 
+    /*
     LineOne dlo = new LineOne();
     ArrayList<Line> aldl = new ArrayList<Line>();
     aldl.add(dlo);
@@ -26,6 +27,7 @@ public class main{
     System.out.println("LineOneID:" + dlo.lineid);
     config.vislines = new ArrayList<Boolean>(10);
     config.vislines.add(dlo.lineid,true);
+    */
 
     JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
