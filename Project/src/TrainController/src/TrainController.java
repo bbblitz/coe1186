@@ -1,3 +1,5 @@
+import java.util.BitSet;
+
 //package system;
 
 public class TrainController {
@@ -45,6 +47,7 @@ public class TrainController {
 	 * @param deltaT double Milliseconds since last update
 	 */
 	public void tick(double deltaT) {
+		// update odometer
 		// deltaX = 0.5 * (v + v0) * deltaT
 		double oldVelocity = this.velocitySI;
 		double newVelocity = trainModel.getCurrentVelocitySI();
@@ -53,7 +56,7 @@ public class TrainController {
 		this.velocitySI = newVelocity;
 		this.odometer += deltaX;
 		this.authorityFromCTC -= deltaX;
-		this.authorityFromCTC = Math.max(0, this.authorityFromCTC);
+		this.authorityFromCTC = Math.max(0, this.authorityFromCTC);	// no negative authorities
 		
 		double power = calculatePower(deltaT);
 		if (power < 0) {
@@ -94,7 +97,7 @@ public class TrainController {
 				double targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
 				
 				// calculate new power
-				double calculatedPower = powerController.calculatePower(this.velocitySI, targetVelocity, deltaT);
+				double calculatedPower = this.powerController.calculatePower(this.velocitySI, targetVelocity, deltaT);
 				
 				// abs(power) should never be more than max train power
 				power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
@@ -123,8 +126,19 @@ public class TrainController {
 		}
 	}
 	
-	public void receiveSignalFromRail(byte[] signalPackage) {
+	/**
+	 * First 5 bits are speed, the rest is authority
+	 * @see http://docs.oracle.com/javase/7/docs/api/java/util/BitSet.html
+	 * @param signalPackage
+	 */
+	public void receiveSignalFromRail(BitSet signalPackage) {
+		BitSet bitSpeed = signalPackage.get(0, 5);	// bits 0-4 are speed
+		BitSet bitAuthority = signalPackage.get(5, signalPackage.length());	// the rest is authority
+		int speed = this.bitsetToInt(bitSpeed);
+		int authority = this.bitsetToInt(bitAuthority);
 		
+		this.velocityFromCTC = speed;
+		this.authorityFromCTC = authority;
 	}
 	
 	public void receiveBeacon(byte[] beaconPackage) {
@@ -246,6 +260,15 @@ public class TrainController {
 		return feet * 0.3048;
 	}
 	
+	private int bitsetToInt(BitSet bitset) {
+		int value = 0;
+		for (int i = 0; i < 64; i++) {	// max 64 bits
+			if (bitset.get(i)) {
+				value |= (1 << i);
+			}
+		}
+		return value;
+	}
 	
 	
 	
