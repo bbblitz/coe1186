@@ -4,8 +4,8 @@ import java.awt.event.*;
 import java.util.*;
 
 public class DispatchPane extends JPanel{
-
-  public DispatchPane() {
+  Config config;
+  public DispatchPane(Config c) {
     JLabel l = new JLabel("Dispatch:");
     JLabel trainname = new JLabel("Train:");
     JTextField station = new JTextField();
@@ -15,6 +15,7 @@ public class DispatchPane extends JPanel{
     add(trainname);
     add(station);
     add(dispatchbutton);
+    config = c;
 
     // dispatch a dummy train
     int id = 15;

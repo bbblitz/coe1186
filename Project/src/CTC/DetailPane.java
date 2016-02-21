@@ -19,7 +19,7 @@ public class DetailPane extends JPanel{
     SchedulePane sp = new SchedulePane();
     LineVisPanel lp = new LineVisPanel(config);
     TrainDetailPane tp = new TrainDetailPane();
-    DispatchPane dp = new DispatchPane();
+    DispatchPane dp = new DispatchPane(config);
     MessageLogPane mp = new MessageLogPane();
     TrackSwitchPane wp = new TrackSwitchPane(config);
 
