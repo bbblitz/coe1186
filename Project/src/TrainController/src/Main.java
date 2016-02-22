@@ -36,7 +36,7 @@ public class Main {
 			trainModel.tick(TIME_INTERVAL_MILLIS);
 			trainController.tick(TIME_INTERVAL_MILLIS);
 						
-			System.out.println("t=" + t + ": velocity = " + (Math.round(trainModel.getCurrentVelocitySI() * 10000.0) / 10000.0) + "m/s, powerCommand = " + (Math.round(trainController._getLastPowerCommand() * 10000.0) / 10000.0) + ", authority = " + (Math.round(trainController.getAuthorityFromCTC() * 100.0) / 100.0) + "m.");
+			//System.out.println("t=" + t + ": velocity = " + (Math.round(trainModel.getCurrentVelocitySI() * 10000.0) / 10000.0) + "m/s, powerCommand = " + (Math.round(trainController._getLastPowerCommand() * 10000.0) / 10000.0) + ", authority = " + (Math.round(trainController.getAuthorityFromCTC() * 100.0) / 100.0) + "m.");
 			//Thread.sleep(TIME_INTERVAL_MILLIS);
 		}
 	}
