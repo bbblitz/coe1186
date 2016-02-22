@@ -19,9 +19,16 @@ public class Route {
 		Line line = destinationBlock.getLine();
 		BlockInterface currentBlock = line.blocks.get(0);
 		
+		Stack<BlockInterface> searcher = new Stack<BlockInterface>();
+		
+		// push the first block (yard block)
+		searcher.push(currentBlock);
+		currentBlock = currentBlock.getNext();
+		
 		// traverse the line until we find the destination
-		while (currentBlock == destinationBlock) {
-			
+		while (currentBlock != destinationBlock) {
+			searcher.push(currentBlock);
+			currentBlock = currentBlock.getNext();
 		}
 		return route;
 	}
