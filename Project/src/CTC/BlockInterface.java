@@ -16,7 +16,7 @@ public abstract class BlockInterface{
   private int speedLimit;
   private TrackFailState failState;
   private ArrayList<BlockInterface> adjacentBlocks;
-  String stationName;	// only set for BlockStation types
+  private Line line;
 
   /**
    * Given a Block `from`, return the Block after this one
@@ -24,6 +24,14 @@ public abstract class BlockInterface{
    * @return
    */
   public abstract BlockInterface goesto(BlockInterface from);
+  
+  /**
+   * Get the next block. Returns the first block in its adjacentBlocks ArrayList, so only use if you're certain it has only 1 connected block (e.g. from the yard)
+   * @return
+   */
+  public BlockInterface getNext() {
+	  return this.adjacentBlocks.get(0);
+  }
   
   /**
    * Get the next block (or blocks, if this is a switch), given a previous block.
@@ -86,5 +94,11 @@ public abstract class BlockInterface{
   }
   public void setAdjacentBlocks(ArrayList<BlockInterface> adjacentBlocks) {
 	  this.adjacentBlocks = adjacentBlocks;
+  }
+  public Line getLine() {
+	  return this.line;
+  }
+  public void setLine(Line line) {
+	  this.line = line;
   }
 }

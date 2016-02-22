@@ -22,7 +22,8 @@ public class Config{
     for (Line line : this.aldl) {
       for (BlockInterface block : line.blocks) {
     	  if (block instanceof BlockStation) {
-    		  if (block.stationName == stationName) {
+    		  BlockStation station = (BlockStation) block;
+    		  if (station.getStationName() == stationName) {
     			  return block;
     		  }
     	  }

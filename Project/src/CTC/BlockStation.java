@@ -18,6 +18,7 @@ public class BlockStation extends BlockInterface{
   //The direction the track is faceing (in degrees)
   public int direction;
 
+  
   public BlockStation(int tx, int ty, int dir, int length){
     this.length = length;
     x = tx;
@@ -35,5 +36,9 @@ public class BlockStation extends BlockInterface{
     }else{
       return head;
     }
+  }
+  
+  public String getStationName() {
+	  return this.stationName;
   }
 }

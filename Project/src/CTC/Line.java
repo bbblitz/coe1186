@@ -8,7 +8,7 @@ public class Line{
     blocks = new ArrayList<BlockInterface>();
   }
 
-  public void add(BlockInterface trackpart){
-    blocks.add(trackpart);
+  public void add(BlockInterface block){
+    blocks.add(block);
   }
 }
