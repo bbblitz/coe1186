@@ -35,13 +35,13 @@ public abstract class BlockInterface{
   
   /**
    * Get the next block (or blocks, if this is a switch), given a previous block.
-   * @param prev BlockInterface previous block
-   * @return ArrayList<BlockInterface> The next block(s)
+   * @param exclude ArrayList<BlockInterface> Blocks to exclude from the search (e.g. the previous block)
+   * @return ArrayList<BlockInterface> The next block(s) minus excluded blocks
    */
-  public ArrayList<BlockInterface> getNext(BlockInterface prev) {
+  public ArrayList<BlockInterface> getNext(ArrayList<BlockInterface> exclude) {
 	  ArrayList<BlockInterface> nextBlocks = new ArrayList<BlockInterface>();
 	  for (BlockInterface block : this.adjacentBlocks) {
-		  if (block != prev) {
+		  if (!exclude.contains(block)) {
 			  nextBlocks.add(block);
 		  }
 	  }
