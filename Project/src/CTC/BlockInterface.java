@@ -14,10 +14,9 @@ public abstract class BlockInterface{
   private float grade;
   private float elevation;
   private int speedLimit;
-
   private TrackFailState failState;
-  
   private ArrayList<BlockInterface> adjacentBlocks;
+  String stationName;	// only set for BlockStation types
 
   /**
    * Given a Block `from`, return the Block after this one
@@ -25,6 +24,26 @@ public abstract class BlockInterface{
    * @return
    */
   public abstract BlockInterface goesto(BlockInterface from);
+  
+  /**
+   * Get the next block (or blocks, if this is a switch), given a previous block.
+   * @param prev BlockInterface previous block
+   * @return ArrayList<BlockInterface> The next block(s)
+   */
+  public ArrayList<BlockInterface> getNext(BlockInterface prev) {
+	  ArrayList<BlockInterface> nextBlocks = new ArrayList<BlockInterface>();
+	  for (BlockInterface block : this.adjacentBlocks) {
+		  if (block != prev) {
+			  nextBlocks.add(block);
+		  }
+	  }
+	  return nextBlocks;
+  }
+  
+  
+  /**
+   * Getters and setters
+   */
   
   public ArrayList<Infrastructure> getInfrastructure(){
     return this.infrastructure;

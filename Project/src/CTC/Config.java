@@ -21,13 +21,14 @@ public class Config{
   public BlockInterface getBlockFromStationName(String stationName) {
     for (Line line : this.aldl) {
       for (BlockInterface block : line.blocks) {
-        if (block.infra.contains(Infrastructure.INFR_STATION)) {
-          if (block.stationName == stationName) {
-            return block;
-          }
-        }
+    	  if (block instanceof BlockStation) {
+    		  if (block.stationName == stationName) {
+    			  return block;
+    		  }
+    	  }
       }
     }
+    // station not found :(
     return null;
   }
 }
