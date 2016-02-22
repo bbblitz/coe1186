@@ -30,6 +30,9 @@ public class Route {
 			searcher.push(currentBlock);
 			currentBlock = currentBlock.getNext();
 		}
+		
+		
+		
 		return route;
 	}
 }

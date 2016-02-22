@@ -30,7 +30,13 @@ public abstract class BlockInterface{
    * @return
    */
   public BlockInterface getNext() {
-	  return this.adjacentBlocks.get(0);
+	  for (BlockInterface block : this.adjacentBlocks) {
+		  if (adjacentBlockCanBeAccessed(block)) {
+			  return block;
+		  }
+	  }
+	  // no adjacent blocks that are accessible - did we end up in a corner?
+	  return null;
   }
   
   /**
@@ -42,10 +48,23 @@ public abstract class BlockInterface{
 	  ArrayList<BlockInterface> nextBlocks = new ArrayList<BlockInterface>();
 	  for (BlockInterface block : this.adjacentBlocks) {
 		  if (!exclude.contains(block)) {
-			  nextBlocks.add(block);
+			  if (adjacentBlockCanBeAccessed(block)) {
+				  nextBlocks.add(block);
+			  }
 		  }
 	  }
 	  return nextBlocks;
+  }
+  
+  /**
+   * From this block, is it possible to go to nextBlock? For example, switches are not bidirectional - an adjacent block might be inbound only
+   * @param nextBlock The block we're trying to go to
+   * @return boolean Is it possible to go to this block?
+   * 
+   * @todo IMPLEMENT THIS
+   */
+  private boolean adjacentBlockCanBeAccessed(BlockInterface nextBlock) {
+	  return true;
   }
   
   
