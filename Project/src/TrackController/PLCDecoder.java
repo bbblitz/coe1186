@@ -12,89 +12,91 @@ public class PLCDecoder
 		Scanner PLCReader;
 		System.out.print("enter the name of a PLC file: ");
 		File filename = new File(keyboard.nextLine());
-		//try
-		//{
-			PLCReader = new Scanner(filename);
-		/*}
-		catch(FileNotFoundException fnfe)
-		{
-			System.out.println("file does not exist");
-		}*/
-		
-		int lineCount = 0;		//reads through once to count number of lines
-		while(PLCReader.hasNextLine())
-		{
-			
-			PLCReader.nextLine();
-			lineCount++;
-		}
-		PLCReader.close();
 		PLCReader = new Scanner(filename);
 		
+		int inputCount = PLCReader.nextInt();
+		int outputCount = PLCReader.nextInt();
+		boolean[] inputs = new boolean[inputCount];
+		boolean[] outputs = new boolean[outputCount];
 		
-		boolean[] inputs = {true,true,true};
-		boolean[] outputs = {false,false,false};
+		for(int i = 0;i<inputCount;i++)
+		{
+			System.out.print("enter a boolean value for input "+i+": ");
+			inputs[i] = keyboard.nextBoolean();
+		}
+		
+		outputs = decode (inputs,filename);
+		
+		for(int i = 0;i<outputCount;i++)
+		{
+			System.out.println("output "+i+" = "+outputs[i]);
+		}
+	}
+		
+	public static boolean[] decode(boolean[] inputs, File filename) throws FileNotFoundException
+	{
+		Scanner PLCReader = new Scanner(filename);
+		int inputCount = PLCReader.nextInt();
+		int outputCount = PLCReader.nextInt();
+		PLCReader.nextLine();
+		boolean[] outputs = new boolean[outputCount];
 		
 		
-		//String[] plcode = new String[lineCount];
-		for(int i=0;i<lineCount;i++)
+		for(int i=0;i<outputCount;i++)
 		{
 			Stack<Boolean> operands = new Stack();
-			System.out.print(i+" = ");
-			
-			//plcode[i] = PLCReader.nextLine();
-			//System.out.println(plcode[i]);
+			//System.out.print(i+" = ");
 			while(true)
 			{
 				String operator;
 				if(PLCReader.hasNextInt())
 				{
-					System.out.println("read input");
 					operands.push(inputs[PLCReader.nextInt()]);
 				}
 				else if (PLCReader.hasNext())
 				{
 					operator = PLCReader.next();
-					System.out.println("operator = "+operator);
+					//System.out.println("operator = "+operator);
 				
 					if(operator.equals("&"))
 					{
-						System.out.print("AND");
+						//System.out.print("AND");
 						boolean A = operands.pop();
 						boolean B = operands.pop();
-						System.out.print(A);
-						System.out.print(B);
+						//System.out.print(A);
+						//System.out.print(B);
 						operands.push(A&&B);
 					}
 					else if(operator.equals("+"))
 					{
-						System.out.print("OR");
+						//System.out.print("OR");
 						boolean A = operands.pop();
 						boolean B = operands.pop();
-						System.out.print(A);
-						System.out.print(B);
+						//System.out.print(A);
+						//System.out.print(B);
 						operands.push(A||B);
 					}
 					else if(operator.equals("!"))
 					{
-						System.out.print("NOT");
+						//System.out.print("NOT");
 						boolean A = operands.pop();
-						System.out.print(A);
+						//System.out.print(A);
 						operands.push(!A);
 					}
 					else if(operator.equals("v"))
 					{
-						System.out.print("Vcc");
+						//System.out.print("Vcc");
 						operands.push(true);
 					}
 					else if(operator.equals("g"))
 					{
-						System.out.print("GND");
+						//System.out.print("GND");
 						operands.push(false);
 					}
 					else if(operator.equals(";"))
 					{
-						System.out.print(operands.pop());
+						outputs[i] = operands.pop();
+						//System.out.println(outputs[i]);
 						break;
 					}
 					else
@@ -104,10 +106,8 @@ public class PLCDecoder
 					}
 				}
 			}
-			System.out.println();
+			//System.out.println();
 		}
-		
-		
+		return outputs;
 	}
-
 }
