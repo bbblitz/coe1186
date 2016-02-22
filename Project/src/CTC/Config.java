@@ -16,4 +16,18 @@ public class Config{
   public Config(){
     //vislines = new ArrayList<Boolean>();
   }
+ 
+  // given a station name, get the block it's on
+  public BlockInterface getBlockFromStationName(String stationName) {
+    for (Line line : this.aldl) {
+      for (BlockInterface block : line.blocks) {
+        if (block.infra.contains(Infrastructure.INFR_STATION)) {
+          if (block.stationName == stationName) {
+            return block;
+          }
+        }
+      }
+    }
+    return null;
+  }
 }
