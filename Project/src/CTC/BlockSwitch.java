@@ -12,7 +12,7 @@ public class BlockSwitch extends BlockInterface{
   public int length;
   public BlockInterface tail;
   public BlockPart tailto;
-  public boolean fliped;
+  public boolean flipped;
 
   public BlockInterface head;
   public BlockPart headto;
@@ -31,7 +31,7 @@ public class BlockSwitch extends BlockInterface{
     if(from == head || from == divergent){
       return tail;
     }else{
-      if(fliped){
+      if(flipped){
         return divergent;
       }else{
         return head;

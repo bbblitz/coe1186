@@ -4,7 +4,7 @@ public class BlockStation extends BlockInterface{
   public BlockInterface tail;
   public BlockPart headto;
   public BlockPart tailto;
-  public string stationName;
+  public String stationName;
 
   //How long the track is
   public int length;

@@ -1,50 +1,71 @@
 
 import java.util.*;
 
+/**
+ * The overarching class for all blocks. All block types extend this class.
+ */
 public abstract class BlockInterface{
-  private ArrayList<Infrastructure> infra;
-  private int blocknum;
-  private float blockgrade;
-  private float blockele;
-  private int speedlimit;
+	/**
+	 * List of the types of infrastructure this block is
+	 * @see Infrastructure 
+	 */
+  private ArrayList<Infrastructure> infrastructure;
+  private int ID;
+  private float grade;
+  private float elevation;
+  private int speedLimit;
 
-  private TrackFailState fs;
+  private TrackFailState failState;
+  
+  private ArrayList<BlockInterface> adjacentBlocks;
 
+  /**
+   * Given a Block `from`, return the Block after this one
+   * @param from
+   * @return
+   */
   public abstract BlockInterface goesto(BlockInterface from);
+  
   public ArrayList<Infrastructure> getInfrastructure(){
-    return infra;
+    return this.infrastructure;
   }
-  public void addInfrastructure(Infrastructure i){
-    infra.add(i);
+  public void addInfrastructure(Infrastructure infrastructure){
+    this.infrastructure.add(infrastructure);
   }
   public TrackFailState getFailState(){
-    return fs;
+    return this.failState;
   }
-  public void setFailState(TrackFailState f){
-    fs = f;
+  public void setFailState(TrackFailState failState){
+    this.failState = failState;
   }
-  public int getBlockNum(){
-    return blocknum;
+  public int getID(){
+    return this.ID;
   }
-  public void setBlockNum(int n){
-    blocknum = n;
+  public void setID(int id){
+    this.ID = id;
   }
-  public float getBlockGrade(){
-    return blockgrade;
+  public float getGrade(){
+    return this.grade;
   }
-  public void setBlockGrade(float f){
-    blockgrade = f;
+  public void setGrade(float grade){
+    this.grade = grade;
   }
-  public float getBlockEle(){
-    return blockele;
+  public float getElevation(){
+    return this.elevation;
   }
-  public void setBlockEle(float f){
-    blockele = f;
+  public void setElevation(float elevation){
+    this.elevation = elevation;
   }
   public int getSpeedLimit(){
-    return speedlimit;
+    return this.speedLimit;
   }
-  public void setSpeedLimit(int i){
-    speedlimit = i;
+  public void setSpeedLimit(int speedLimit){
+    this.speedLimit = speedLimit;
+  }
+  public ArrayList<BlockInterface> getAdjacentBlocks() {
+	  return this.adjacentBlocks;
+  }
+  public void setAdjacentBlocks(ArrayList<BlockInterface> adjacentBlocks) {
+	  this.adjacentBlocks = adjacentBlocks;
   }
 }
