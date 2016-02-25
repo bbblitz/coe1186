@@ -26,9 +26,8 @@ public class DispatchPane extends JPanel implements ActionListener{
     
     // dispatch a dummy train
     Train newTrain = new Train(id, currentBlock);
-    BlockInterface from = newTrain.getBlock();
     BlockInterface to = destinationBlock;
-    Route newRoute = new Route(config, from, to, targetTime);
+    Route newRoute = new Route(config, newTrain, to, targetTime);
     newTrain.setRoute(newRoute);
   }
 

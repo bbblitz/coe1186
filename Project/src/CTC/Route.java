@@ -5,22 +5,28 @@ public class Route {
 	public long targetTime;
 	public Config config;
 
-	public Route(Config config, BlockInterface from, BlockInterface to, long targetTime) {
+	public Route(Config config, Train train, BlockInterface to, long targetTime) {
 		this.targetTime = targetTime;
-		this.route = calculateRoute(from, to);
+		this.route = calculateRoute(train, to);
 		this.config = config;
 	}
 	
-	private ArrayList<BlockInterface> calculateRoute(BlockInterface sourceBlock, BlockInterface destinationBlock) {
+	private ArrayList<BlockInterface> calculateRoute(Train train, BlockInterface destinationBlock) {
 		ArrayList<BlockInterface> route = new ArrayList<BlockInterface>();
 		
+		BlockInterface sourceBlock = train.getCurrentBlock();
+		
 		BlockInterface currentBlock = sourceBlock;
+		BlockInterface previousBlock = train.getPreviousBlock();
 		
 		route.add(currentBlock);
+		
+		currentBlock = currentBlock.goesto(previousBlock);
 		while (currentBlock != destinationBlock) {
-			BlockInterface nextBlock = currentBlock.getNext();
+			BlockInterface nextBlock = currentBlock.goesto(previousBlock);
 			
 			route.add(nextBlock);
+			previousBlock = currentBlock;
 			currentBlock = nextBlock;
 		}
 		
