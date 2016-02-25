@@ -20,7 +20,7 @@ public class DetailPane extends JPanel{
     LineVisPanel lp = new LineVisPanel(config);
     TrainDetailPane tp = new TrainDetailPane();
     DispatchPane dp = new DispatchPane(config);
-    MessageLogPane mp = new MessageLogPane();
+    MessageLogPane mp = new MessageLogPane(config);
     TrackSwitchPane wp = new TrackSwitchPane(config);
 
     config.switchpane = wp;

@@ -8,7 +8,7 @@ import java.time.*;
 public class MessageLogPane extends JPanel{
   JTextArea ml;
 
-  public MessageLogPane(){
+  public MessageLogPane(Config c){
     super();
     JLabel l = new JLabel("Message log:");
     ml = new JTextArea(10,10);
@@ -17,6 +17,7 @@ public class MessageLogPane extends JPanel{
     add(l);
     add(ml);
     log("Message Log Started");
+    c.log = ml;
   }
 
   public void log(String message){

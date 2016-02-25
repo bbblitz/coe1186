@@ -12,11 +12,13 @@ public class Config{
   public JFrame window;
   public JPanel trackpane;
   public JPanel switchpane;
+  //Use log.append to add stuff to the log
+  public JTextArea log;
   public Object selected;
   public Config(){
     //vislines = new ArrayList<Boolean>();
   }
- 
+
   // given a station name, get the block it's on
   public BlockInterface getBlockFromStationName(String stationName) {
     for (Line line : this.aldl) {

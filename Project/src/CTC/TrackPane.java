@@ -42,7 +42,7 @@ public class TrackPane extends JPanel implements MouseListener {
     System.out.println("config.trackpane is: " + c.trackpane);
     for(int i = 0; i < lines.size(); i++){
       if(vislines.get(i)){
-        for(BlockInterface dti : lines.get(i).line){
+        for(BlockInterface dti : lines.get(i).blocks){
           if(dti instanceof BlockSwitch){
             BlockSwitch dts = (BlockSwitch)dti;
             System.out.printf("Found switch at (%d,%d)\n",dts.x,dts.y);
@@ -73,7 +73,7 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void drawLine(Graphics g, Line dl){
-    for(BlockInterface dti : dl.line){
+    for(BlockInterface dti : dl.blocks){
       drawSegment(g,dti);
     }
   }
@@ -122,7 +122,7 @@ public class TrackPane extends JPanel implements MouseListener {
 
       BlockSwitch ds = (BlockSwitch)dti;
       Color cn = c.darker();
-      if(ds.fliped){
+      if(ds.flipped){
         drawSegment(g,ds.head,c);
         drawSegment(g,ds.divergent,cn);
       }else{

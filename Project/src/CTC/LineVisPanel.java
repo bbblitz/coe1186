@@ -13,6 +13,8 @@ public class LineVisPanel extends JPanel implements ItemListener{
     JLabel lm = new JLabel("Line Visibility:");
     add(lm);
     setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+    System.out.println("In LVP, config is " + config);
+    System.out.println("And aldl is " + config.aldl);
     for(Line l : config.aldl){
       Checkbox c = new Checkbox(l.name,true);
       c.addItemListener(this);

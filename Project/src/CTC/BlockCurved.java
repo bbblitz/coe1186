@@ -8,7 +8,7 @@ public class BlockCurved extends BlockInterface{
   public int x;
   public int y;
 
-  //Start and ending angle for the curve
+  //Start and angle length for the curve
   public int startang;
   public int endang;
 
