@@ -7,15 +7,22 @@ public class Route {
 
 	public Route(Config config, BlockInterface from, BlockInterface to, long targetTime) {
 		this.targetTime = targetTime;
-		this.route = calculateRoute(destination);
+		this.route = calculateRoute(from, to);
 		this.config = config;
 	}
 	
-	private ArrayList<BlockInterface> calculateRoute(BlockInterface destinationBlock) {
+	private ArrayList<BlockInterface> calculateRoute(BlockInterface sourceBlock, BlockInterface destinationBlock) {
 		ArrayList<BlockInterface> route = new ArrayList<BlockInterface>();
 		
-		Line line = destinationBlock.getLine();
-		BlockInterface currentBlock = line.blocks.get(0);	// start at the first block (yard?)
+		BlockInterface currentBlock = sourceBlock;
+		
+		route.add(currentBlock);
+		while (currentBlock != destinationBlock) {
+			BlockInterface nextBlock = currentBlock.getNext();
+			
+			route.add(nextBlock);
+			currentBlock = nextBlock;
+		}
 		
 		
 		
