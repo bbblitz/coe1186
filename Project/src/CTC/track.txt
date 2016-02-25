@@ -1,0 +1,7 @@
+#this is a comment!
+/*
+This is a
+Multi-line comment
+*/
+
+LINE GREEN
