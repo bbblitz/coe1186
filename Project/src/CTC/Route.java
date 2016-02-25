@@ -17,7 +17,7 @@ public class Route {
 		ArrayList<BlockInterface> route = new ArrayList<BlockInterface>();
 		
 		Line line = destinationBlock.getLine();
-		BlockInterface currentBlock = line.blocks.get(0);
+		BlockInterface currentBlock = line.blocks.get(0);	// start at the first block (yard?)
 		
 		Stack<BlockInterface> searcher = new Stack<BlockInterface>();
 		
