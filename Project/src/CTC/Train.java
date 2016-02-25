@@ -1,6 +1,7 @@
 public class Train {
-	public BlockInterface currentBlock;
-	public Route route;
+	private BlockInterface currentBlock;
+	private BlockInterface previousBlock;
+	private Route route;
 
 	public Train(int id, BlockInterface currentBlock) {
 		this.currentBlock = currentBlock;
@@ -17,7 +18,11 @@ public class Train {
 		return this.route;
 	}
 	
-	public BlockInterface getBlock() {
+	public BlockInterface getCurrentBlock() {
 		return this.currentBlock;
+	}
+	
+	public BlockInterface getPreviousBlock() {
+		return this.previousBlock;
 	}
 }
