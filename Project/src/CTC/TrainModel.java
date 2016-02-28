@@ -22,7 +22,7 @@ public class TrainModel {
 	private boolean serviceBrakeActive;
 	private boolean emergencyBrakeActive;
 	
-	public TrainModel() {
+	public TrainModel(int id) {
 		this.velocitySI = 1.0;
 		this.positionSI = 1.0;
 		this.serviceBrakeActive = false;

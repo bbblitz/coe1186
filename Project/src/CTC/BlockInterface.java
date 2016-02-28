@@ -11,12 +11,12 @@ public abstract class BlockInterface{
 	 */
   private ArrayList<Infrastructure> infrastructure;
   private int ID;
-  private float grade;
+  private float gradeTailToHead;
   private float elevation;
   private int speedLimit;
   private TrackFailState failState;
-  private ArrayList<BlockInterface> adjacentBlocks;
   private Line line;
+  private double length;
 
   /**
    * Given a Block `from`, return the Block after this one
@@ -25,11 +25,14 @@ public abstract class BlockInterface{
    */
   public abstract BlockInterface goesto(BlockInterface from);
   
+  public abstract BlockInterface getHead();
+  public abstract BlockInterface getTail();
+  
   /**
    * Get the next block. Returns the first block in its adjacentBlocks ArrayList, so only use if you're certain it has only 1 connected block (e.g. from the yard)
    * @return
    */
-  public BlockInterface getNext() {
+  /*public BlockInterface getNext() {
 	  for (BlockInterface block : this.adjacentBlocks) {
 		  if (adjacentBlockCanBeAccessed(block)) {
 			  return block;
@@ -37,14 +40,14 @@ public abstract class BlockInterface{
 	  }
 	  // no adjacent blocks that are accessible - did we end up in a corner?
 	  return null;
-  }
+  }*/
   
   /**
    * Get the next block (or blocks, if this is a switch), given a previous block.
    * @param exclude ArrayList<BlockInterface> Blocks to exclude from the search (e.g. the previous block)
    * @return ArrayList<BlockInterface> The next block(s) minus excluded blocks
    */
-  public ArrayList<BlockInterface> getNext(ArrayList<BlockInterface> exclude) {
+ /* public ArrayList<BlockInterface> getNext(ArrayList<BlockInterface> exclude) {
 	  ArrayList<BlockInterface> nextBlocks = new ArrayList<BlockInterface>();
 	  for (BlockInterface block : this.adjacentBlocks) {
 		  if (!exclude.contains(block)) {
@@ -54,7 +57,7 @@ public abstract class BlockInterface{
 		  }
 	  }
 	  return nextBlocks;
-  }
+  }*/
   
   /**
    * From this block, is it possible to go to nextBlock? For example, switches are not bidirectional - an adjacent block might be inbound only
@@ -63,9 +66,9 @@ public abstract class BlockInterface{
    * 
    * @todo IMPLEMENT THIS
    */
-  private boolean adjacentBlockCanBeAccessed(BlockInterface nextBlock) {
+  /*private boolean adjacentBlockCanBeAccessed(BlockInterface nextBlock) {
 	  return true;
-  }
+  }*/
   
   
   /**
@@ -90,11 +93,11 @@ public abstract class BlockInterface{
   public void setID(int id){
     this.ID = id;
   }
-  public float getGrade(){
-    return this.grade;
+  public float getGradeTailToHead(){
+    return this.gradeTailToHead;
   }
-  public void setGrade(float grade){
-    this.grade = grade;
+  public void setGradeTailToHead(float gradeTailToHead){
+    this.gradeTailToHead = gradeTailToHead;
   }
   public float getElevation(){
     return this.elevation;
@@ -108,16 +111,16 @@ public abstract class BlockInterface{
   public void setSpeedLimit(int speedLimit){
     this.speedLimit = speedLimit;
   }
-  public ArrayList<BlockInterface> getAdjacentBlocks() {
-	  return this.adjacentBlocks;
-  }
-  public void setAdjacentBlocks(ArrayList<BlockInterface> adjacentBlocks) {
-	  this.adjacentBlocks = adjacentBlocks;
-  }
   public Line getLine() {
 	  return this.line;
   }
   public void setLine(Line line) {
 	  this.line = line;
+  }
+  public double getLength() {
+	  return this.length;
+  }
+  public void setLength(double length) {
+	  this.length = length;
   }
 }
