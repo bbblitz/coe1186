@@ -38,6 +38,14 @@ public class BlockStation extends BlockInterface{
     }
   }
   
+  public BlockInterface getHead() {
+	  return this.head;
+  }
+  
+  public BlockInterface getTail() {
+	  return this.tail;
+  }
+  
   public String getStationName() {
 	  return this.stationName;
   }

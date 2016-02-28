@@ -11,7 +11,7 @@ public abstract class BlockInterface{
 	 */
   private ArrayList<Infrastructure> infrastructure;
   private int ID;
-  private float grade;
+  private float gradeTailToHead;
   private float elevation;
   private int speedLimit;
   private TrackFailState failState;
@@ -92,11 +92,11 @@ public abstract class BlockInterface{
   public void setID(int id){
     this.ID = id;
   }
-  public float getGrade(){
-    return this.grade;
+  public float getGradeTailToHead(){
+    return this.gradeTailToHead;
   }
-  public void setGrade(float grade){
-    this.grade = grade;
+  public void setGradeTailToHead(float gradeTailToHead){
+    this.gradeTailToHead = gradeTailToHead;
   }
   public float getElevation(){
     return this.elevation;

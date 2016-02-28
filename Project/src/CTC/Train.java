@@ -32,9 +32,9 @@ public class Train {
 	
 	public double getGrade() {
 		if (isFacingHead()) {
-			return currentBlock.getGrade();
+			return currentBlock.getGradeTailToHead();
 		} else {
-			return (-1 * currentBlock.getGrade());
+			return (-1 * currentBlock.getGradeTailToHead());
 		}
 	}
 }

@@ -32,4 +32,12 @@ public class BlockCurved extends BlockInterface{
       return head;
     }
   }
+  
+  public BlockInterface getHead() {
+	  return this.head;
+  }
+  
+  public BlockInterface getTail() {
+	  return this.tail;
+  }
 }

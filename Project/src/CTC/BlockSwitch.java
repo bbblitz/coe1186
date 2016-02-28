@@ -38,4 +38,12 @@ public class BlockSwitch extends BlockInterface{
       }
     }
   }
+  
+  public BlockInterface getHead() {
+	  return this.head;
+  }
+  
+  public BlockInterface getTail() {
+	  return this.tail;
+  }
 }
