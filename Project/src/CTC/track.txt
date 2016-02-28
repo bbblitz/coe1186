@@ -4,4 +4,41 @@ This is a
 Multi-line comment
 */
 
-LINE GREEN
+/*
+Track formats:
+  Straight track
+    str, x, y, rotation, length, head, tail, headto, tailto, id
+    ex.
+      str 5, 10, 0, 100, 3, 7, TAIL, TAIL, 0
+
+  Curved track
+    cur, x, y, start_angle, angle_length, radius, block_clockwise, block_counterclockwise, block_clockwise_to, block_counterclockwise_to, block_id
+    ex.
+      cur 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2
+
+  Switch track:
+    TODO - Look at the documentation in LineParser.java,
+    It's implemented, just needs an example here.
+
+
+*/
+
+/*
+Example line:
+  1          2      3
+  /-- HEAD -----  --\
+  |             |
+
+
+Head          Tail
+  |4            |5
+
+
+
+  |6     7      |8
+  \--  -----HEAD   --/
+*/
+
+LINE PURPLE
+cur, 50, 50, 90, 90, 100, 2, 4, HEAD, HEAD, 1, 0
+LINE END

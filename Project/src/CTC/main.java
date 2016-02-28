@@ -20,6 +20,7 @@ public class main{
     config.window = window;
 
     ArrayList<Line> aldl = new ArrayList<Line>();
+    config.aldl = aldl;
     LineParser parser = new LineParser("track.txt",config);
     /*
     LineOne dlo = new LineOne();

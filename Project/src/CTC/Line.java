@@ -5,7 +5,7 @@ public class Line{
   public String name = "Line";
   public int lineid;
   public Line(){
-    blocks = new ArrayList<BlockInterface>();
+    blocks = new ArrayList<BlockInterface>(512);
   }
 
   public void add(BlockInterface block){
