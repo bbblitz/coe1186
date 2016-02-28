@@ -15,6 +15,10 @@ public class Config{
   //Use log.append to add stuff to the log
   public JTextArea log;
   public Object selected;
+  
+  public ArrayList<Train> greenLineTrains;
+  public ArrayList<Train> redLineTrains;
+  
   public Config(){
     //vislines = new ArrayList<Boolean>();
   }
