@@ -25,10 +25,7 @@ public class DispatchPane extends JPanel implements ActionListener{
     long targetTime = System.currentTimeMillis() + 240000;  // 4 minutes from now
     
     // dispatch a dummy train
-    Train newTrain = new Train(id, currentBlock);
-    BlockInterface to = destinationBlock;
-    Route newRoute = new Route(config, newTrain, to, targetTime);
-    newTrain.setRoute(newRoute);
+    Train newTrain = new Train(config, id, currentBlock, destinationBlock, targetTime);
   }
 
   public void actionPerformed(ActionEvent e){

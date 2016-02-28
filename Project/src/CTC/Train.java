@@ -3,11 +3,12 @@ public class Train {
 	private BlockInterface previousBlock;
 	private Route route;
 
-	public Train(int id, BlockInterface currentBlock) {
+	public Train(Config config, int id, BlockInterface currentBlock, BlockInterface destinationBlock, long targetTime) {
 		this.currentBlock = currentBlock;
-
+		this.route = new Route(config, this, destinationBlock, targetTime);
+		
 		// create the actual train
-		TrainModel newTrain = new TrainModel(/*id*/);
+		TrainModel newTrain = new TrainModel(id);
 	}
 	
 	public void setRoute(Route route) {
@@ -26,6 +27,10 @@ public class Train {
 		return this.previousBlock;
 	}
 	
+	public BlockInterface getAnticipatedNextBlock() {
+		return currentBlock.goesto(previousBlock);
+	}
+	
 	public boolean isFacingHead() {
 		return (currentBlock.goesto(previousBlock) != currentBlock.getTail());
 	}
@@ -36,5 +41,13 @@ public class Train {
 		} else {
 			return (-1 * currentBlock.getGradeTailToHead());
 		}
+	}
+	
+	public double distanceToNextStation() {
+		return route.distanceToNextStation();
+	}
+	
+	public double distanceToNextStationOrSwitch() {
+		return route.distanceToNextStationOrSwitch();
 	}
 }
