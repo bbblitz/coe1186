@@ -16,6 +16,7 @@ public abstract class BlockInterface{
   private int speedLimit;
   private TrackFailState failState;
   private Line line;
+  private double length;
 
   /**
    * Given a Block `from`, return the Block after this one
@@ -115,5 +116,11 @@ public abstract class BlockInterface{
   }
   public void setLine(Line line) {
 	  this.line = line;
+  }
+  public double getLength() {
+	  return this.length;
+  }
+  public void setLength(double length) {
+	  this.length = length;
   }
 }

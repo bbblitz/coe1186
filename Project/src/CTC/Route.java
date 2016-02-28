@@ -4,11 +4,13 @@ public class Route {
 	public ArrayList<BlockInterface> route;
 	public long targetTime;
 	public Config config;
+	public Train train;
 
 	public Route(Config config, Train train, BlockInterface to, long targetTime) {
 		this.targetTime = targetTime;
 		this.route = calculateRoute(train, to);
 		this.config = config;
+		this.train = train;
 	}
 	
 	private ArrayList<BlockInterface> calculateRoute(Train train, BlockInterface destinationBlock) {
@@ -33,6 +35,48 @@ public class Route {
 		
 		
 		return route;
+	}
+
+	public double distanceToBlockAlongRoute(BlockInterface to) {
+		double distance = 0;
+		
+		BlockInterface previousBlock = train.getPreviousBlock();
+		BlockInterface currentBlock = train.getCurrentBlock();
+		while (currentBlock != to) {
+			distance += currentBlock.getLength();
+			previousBlock = currentBlock;
+			currentBlock = currentBlock.goesto(previousBlock);
+		}
+		return distance;
+	}
+	
+	public BlockInterface getNextStationBlock() {
+		for (int i = 0; i < route.size(); i++) {
+			if (route.get(i) instanceof BlockStation) {
+				return route.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public double distanceToNextStation() {
+		double distance = 0;
+		for (int i = 0; i < route.size(); i++) {
+			if (!(route.get(i) instanceof BlockStation)) {
+				distance += route.get(i).getLength();
+			}
+		}
+		return distance;
+	}
+	
+	public double distanceToNextStationOrSwitch() {
+		double distance = 0;
+		for (int i = 0; i < route.size(); i++) {
+			if (!(route.get(i) instanceof BlockStation) && !(route.get(i) instanceof BlockSwitch)) {
+				distance += route.get(i).getLength();
+			}
+		}
+		return distance;
 	}
 
 	/*
