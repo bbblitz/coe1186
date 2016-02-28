@@ -70,4 +70,18 @@ public class Config{
 	  return allTrains;
   }
   
+  // TODO: implement this
+  public BlockInterface getBlockFromTrackControllerOccupancyArray(int i) {
+	  BlockInterface block = null;
+	  
+	  return block;
+  }
+  
+  // TODO: implement this
+  public BlockSwitch getBlockFromTrackControllerSwitchArray(int i) {
+	  BlockSwitch block = null;
+	  
+	  return block;
+  }
+  
 }

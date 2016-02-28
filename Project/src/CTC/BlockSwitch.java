@@ -46,4 +46,12 @@ public class BlockSwitch extends BlockInterface{
   public BlockInterface getTail() {
 	  return this.tail;
   }
+  
+  public void setFlipped(boolean flipped) {
+	  this.flipped = flipped;
+  }
+  
+  public boolean getFlipped() {
+	  return this.flipped;
+  }
 }
