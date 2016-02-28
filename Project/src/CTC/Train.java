@@ -25,4 +25,16 @@ public class Train {
 	public BlockInterface getPreviousBlock() {
 		return this.previousBlock;
 	}
+	
+	public boolean isFacingHead() {
+		return (currentBlock.goesto(previousBlock) != currentBlock.getTail());
+	}
+	
+	public double getGrade() {
+		if (isFacingHead()) {
+			return currentBlock.getGrade();
+		} else {
+			return (-1 * currentBlock.getGrade());
+		}
+	}
 }

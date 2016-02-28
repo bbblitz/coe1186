@@ -15,7 +15,6 @@ public abstract class BlockInterface{
   private float elevation;
   private int speedLimit;
   private TrackFailState failState;
-  private ArrayList<BlockInterface> adjacentBlocks;
   private Line line;
 
   /**
@@ -25,11 +24,14 @@ public abstract class BlockInterface{
    */
   public abstract BlockInterface goesto(BlockInterface from);
   
+  public abstract BlockInterface getHead();
+  public abstract BlockInterface getTail();
+  
   /**
    * Get the next block. Returns the first block in its adjacentBlocks ArrayList, so only use if you're certain it has only 1 connected block (e.g. from the yard)
    * @return
    */
-  public BlockInterface getNext() {
+  /*public BlockInterface getNext() {
 	  for (BlockInterface block : this.adjacentBlocks) {
 		  if (adjacentBlockCanBeAccessed(block)) {
 			  return block;
@@ -37,14 +39,14 @@ public abstract class BlockInterface{
 	  }
 	  // no adjacent blocks that are accessible - did we end up in a corner?
 	  return null;
-  }
+  }*/
   
   /**
    * Get the next block (or blocks, if this is a switch), given a previous block.
    * @param exclude ArrayList<BlockInterface> Blocks to exclude from the search (e.g. the previous block)
    * @return ArrayList<BlockInterface> The next block(s) minus excluded blocks
    */
-  public ArrayList<BlockInterface> getNext(ArrayList<BlockInterface> exclude) {
+ /* public ArrayList<BlockInterface> getNext(ArrayList<BlockInterface> exclude) {
 	  ArrayList<BlockInterface> nextBlocks = new ArrayList<BlockInterface>();
 	  for (BlockInterface block : this.adjacentBlocks) {
 		  if (!exclude.contains(block)) {
@@ -54,7 +56,7 @@ public abstract class BlockInterface{
 		  }
 	  }
 	  return nextBlocks;
-  }
+  }*/
   
   /**
    * From this block, is it possible to go to nextBlock? For example, switches are not bidirectional - an adjacent block might be inbound only
@@ -63,9 +65,9 @@ public abstract class BlockInterface{
    * 
    * @todo IMPLEMENT THIS
    */
-  private boolean adjacentBlockCanBeAccessed(BlockInterface nextBlock) {
+  /*private boolean adjacentBlockCanBeAccessed(BlockInterface nextBlock) {
 	  return true;
-  }
+  }*/
   
   
   /**
@@ -107,12 +109,6 @@ public abstract class BlockInterface{
   }
   public void setSpeedLimit(int speedLimit){
     this.speedLimit = speedLimit;
-  }
-  public ArrayList<BlockInterface> getAdjacentBlocks() {
-	  return this.adjacentBlocks;
-  }
-  public void setAdjacentBlocks(ArrayList<BlockInterface> adjacentBlocks) {
-	  this.adjacentBlocks = adjacentBlocks;
   }
   public Line getLine() {
 	  return this.line;
