@@ -35,4 +35,12 @@ public class Config{
     return null;
   }
   
+  public Line getRedLine() {
+	  return aldl.get(0);
+  }
+  
+  public Line getGreenLine() {
+	  return aldl.get(1);
+  }
+  
 }
