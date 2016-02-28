@@ -55,4 +55,19 @@ public class Config{
 	  return aldl.get(1);
   }
   
+  public ArrayList<Train> getAllTrains() {
+	  ArrayList<Train> allTrains = new ArrayList<Train>();
+	  
+	  for (Train train : this.greenLineTrains) {
+		  allTrains.add(train);
+	  
+	  }
+	  
+	  for (Train train : this.redLineTrains) {
+		  allTrains.add(train);
+	  }
+	  
+	  return allTrains;
+  }
+  
 }
