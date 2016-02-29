@@ -69,12 +69,21 @@ public class LineParser{
   public void resolveblocks(){
     System.out.println("Finished parseing line, resolveing blocks...");
     System.out.println("Heads is:");
-    for(int i = 0; i < heads.size()-1; i++){
+    for(int i = 0; i < 8; i++){
       System.out.printf("\t%3d : %d\n",i,heads.get(i));
     }
     System.out.println("Tails is:");
-    for(int i = 0; i < tails.size() - 1; i++){
+    for(int i = 0; i < 8; i++){
       System.out.printf("\t%3d : %d\n",i,tails.get(i));
+    }
+    System.out.println("Line is:");
+    for(int i = 0; i < 8; i++){
+      if(curline.blocks.get(i) == null){
+        System.out.println("\tBlock " + i + " is null!");
+      }else{
+        System.out.printf("\t%3d :",i);
+        System.out.printf("%3s\n", curline.blocks.get(i).toString());
+      }
     }
 
     //Resolve all the pointers
@@ -219,7 +228,7 @@ public class LineParser{
       heads.add(blockid,headid);
       tails.add(blockid,tailid);
 
-      curline.blocks.add(newblock);
+      curline.blocks.add(blockid,newblock);
 
     }else if(blockstring.substring(0,3).equals("swi")){//This block should be a switch
       System.out.println("Detected switch block");
