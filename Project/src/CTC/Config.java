@@ -10,8 +10,7 @@ public class Config{
   public ArrayList<Train> greenLineTrains;
   public ArrayList<Train> redLineTrains;
 
-  //public ArrayList<TrackController> greenLineTrackControllers;
-  //public ArrayList<TrackController> redLineTrackControllers;
+  public TrackControllerManager trackControllerManager;
 
 
   /*
