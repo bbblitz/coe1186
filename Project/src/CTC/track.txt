@@ -1,0 +1,51 @@
+#this is a comment!
+/*
+This is a
+Multi-line comment
+*/
+
+/*
+Track formats:
+  Straight track
+    str, x, y, rotation, length, head, tail, headto, tailto, id, trackcontroler_id
+    ex.
+      str 5, 10, 0, 100, 3, 7, TAIL, TAIL, 0, 0
+
+  Curved track
+    cur, x, y, start_angle, angle_length, radius, block_clockwise, block_counterclockwise, block_clockwise_to, block_counterclockwise_to, block_id, trackcontroller_id
+    ex.
+      cur 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2, 0
+
+  Switch track:
+    TODO - Look at the documentation in LineParser.java,
+    It's implemented, just needs an example here.
+
+
+*/
+
+/*
+Example line:
+  1          2      3
+  /-- HEAD -----  --\
+  |             |
+
+
+Head          Tail
+  |4            |5
+
+
+
+  |6     7      |8
+  \--  -----HEAD   --/
+*/
+
+LINE PURPLE
+cur, 50,    50,   90,  90, 100, 2, 4, HEAD, HEAD, 1, 0
+str, 100,   50,    0,  50,   1, 3, HEAD, TAIL, 2, 0
+cur, 100,   50,   90, -90, 100, 5, 2, TAIL, TAIL, 3, 0
+str, 50,    100,   90,  50,   1, 6, TAIL, HEAD, 4, 0
+str, 200,   150,  -90,  50,   8, 3, TAIL, HEAD, 5, 0
+cur, 50,   100,  180,  90, 100, 7, 4, TAIL, TAIL, 6, 0
+str, 100,   200,    0,  50,   8, 6, HEAD, TAIL, 7, 0
+cur, 100,  100,    0, -90, 100, 7, 5, HEAD, HEAD, 8, 0
+LINE END

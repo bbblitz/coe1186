@@ -19,13 +19,15 @@ public class DispatchPane extends JPanel implements ActionListener{
     config = c;
 
     // dummy values
+    /*
     int id = 15;
     BlockInterface currentBlock = config.aldl.get(0).blocks.get(0);    // the first block in the red line is right outside the yard
     BlockInterface destinationBlock = config.aldl.get(0).blocks.get(7);    // go to the 7th block in the red line
     long targetTime = System.currentTimeMillis() + 240000;  // 4 minutes from now
-    
+
     // dispatch a dummy train
     Train newTrain = new Train(config, id, currentBlock, destinationBlock, targetTime);
+    */
   }
 
   public void actionPerformed(ActionEvent e){

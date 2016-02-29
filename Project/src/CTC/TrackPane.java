@@ -73,12 +73,16 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void drawLine(Graphics g, Line dl){
+    System.out.println("Drawing line:");
+    System.out.println(dl.toString());
     for(BlockInterface dti : dl.blocks){
       drawSegment(g,dti);
     }
   }
 
   public void drawSegment(Graphics g, BlockInterface dti){
+    //System.out.println("Drawing segment:" + (dti!=null?dti.toString():"Null dti"));
+    if(dti == null) return;
     Color c = getColorState(g,dti);
     drawSegment(g,dti,c);
   }

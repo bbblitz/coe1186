@@ -1,6 +1,9 @@
 @echo off
 rem Dependencies:
 rem cp "..\Track"
+cp "..\TrackController\TrackController.java" .
+cp "..\TrackController\PLCDecoder.java" .
+cp "..\TrackController\LineController.java" .
 
 rem cp "..\Track Controller\TrackInterface.java" .
 rem cp "..\Track Controller\Track.java" .
@@ -12,6 +15,7 @@ javac Config.java
 javac main.java
 java main
 del *.class
+rem del TrackController.java
 
 rem Compile the javadoc
 set /P CTC_JAVADOC="Do you want to compile the javadoc?(Y/N)"

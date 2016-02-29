@@ -19,6 +19,9 @@ public class main{
     window.setSize(config.windowDim.width,config.windowDim.height);
     config.window = window;
 
+    ArrayList<Line> aldl = new ArrayList<Line>();
+    config.aldl = aldl;
+    LineParser parser = new LineParser("track.txt",config);
     /*
     LineOne dlo = new LineOne();
     ArrayList<Line> aldl = new ArrayList<Line>();

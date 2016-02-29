@@ -7,7 +7,7 @@ import java.util.*;
 public abstract class BlockInterface{
 	/**
 	 * List of the types of infrastructure this block is
-	 * @see Infrastructure 
+	 * @see Infrastructure
 	 */
   private ArrayList<Infrastructure> infrastructure;
   private int ID;
@@ -24,10 +24,10 @@ public abstract class BlockInterface{
    * @return
    */
   public abstract BlockInterface goesto(BlockInterface from);
-  
+
   public abstract BlockInterface getHead();
   public abstract BlockInterface getTail();
-  
+
   /**
    * Get the next block. Returns the first block in its adjacentBlocks ArrayList, so only use if you're certain it has only 1 connected block (e.g. from the yard)
    * @return
@@ -41,7 +41,7 @@ public abstract class BlockInterface{
 	  // no adjacent blocks that are accessible - did we end up in a corner?
 	  return null;
   }*/
-  
+
   /**
    * Get the next block (or blocks, if this is a switch), given a previous block.
    * @param exclude ArrayList<BlockInterface> Blocks to exclude from the search (e.g. the previous block)
@@ -58,23 +58,23 @@ public abstract class BlockInterface{
 	  }
 	  return nextBlocks;
   }*/
-  
+
   /**
    * From this block, is it possible to go to nextBlock? For example, switches are not bidirectional - an adjacent block might be inbound only
    * @param nextBlock The block we're trying to go to
    * @return boolean Is it possible to go to this block?
-   * 
+   *
    * @todo IMPLEMENT THIS
    */
   /*private boolean adjacentBlockCanBeAccessed(BlockInterface nextBlock) {
 	  return true;
   }*/
-  
-  
+
+
   /**
    * Getters and setters
    */
-  
+
   public ArrayList<Infrastructure> getInfrastructure(){
     return this.infrastructure;
   }
@@ -123,4 +123,9 @@ public abstract class BlockInterface{
   public void setLength(double length) {
 	  this.length = length;
   }
+
+	/*Overload this in each type of track*/
+	public String toString(){
+		return String.format("Block interface string should not be used!");
+	}
 }

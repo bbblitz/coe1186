@@ -35,12 +35,17 @@ public class BlockStraight extends BlockInterface{
       return head;
     }
   }
-  
+
   public BlockInterface getHead() {
 	  return this.head;
   }
-  
+
   public BlockInterface getTail() {
 	  return this.tail;
+  }
+
+  /*Prints out a string representation of this block.*/
+  public String toString(){
+    return String.format("x:%3d y:%3d length:%3d head:%3d tail:%3d direction:%3d", x, y, length, head != null?head.getID():-1, tail != null?tail.getID():-1, direction);
   }
 }
