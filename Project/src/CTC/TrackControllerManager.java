@@ -30,45 +30,38 @@ public class TrackControllerManager {
 		  return trackController;
 	  }
 	  
-	  public ArrayList<BlockInterface> getBlocksInTrackControllerSection(TrackController trackController) {
+	  public ArrayList<BlockInterface> getBlocksInSection(TrackController trackController) {
 		  ArrayList<BlockInterface> blocks = new ArrayList<BlockInterface>();
 		  
 		  return blocks;
 	  }
 	  
 	  // TODO: implement this
-	  public BlockInterface getBlockFromTrackControllerOccupancyArray(TrackController trackController, int i) {
+	  public BlockInterface getBlockFromOccupancyArray(TrackController trackController, int i) {
 		  BlockInterface block = null;
 		  
 		  return block;
 	  }
 	  
 	  // TODO: implement this
-	  public BlockSwitch getBlockFromTrackControllerSwitchArray(TrackController trackController, int i) {
+	  public BlockSwitch getBlockFromSwitchArray(TrackController trackController, int i) {
 		  BlockSwitch block = null;
 		  
 		  return block;
 	  }
 	  
-	  /*
-	  public ArrayList<Train> getTrainsInTrackControllerSection(TrackController trackController) {
-		  ArrayList<Train> allTrains = getAllTrains();
-		  ArrayList<Train> trainsInSection = new ArrayList<Train>();
-		  ArrayList<BlockInterface> blocksInSection = getBlocksInTrackControllerSection(trackController);
+	  // TODO: implement this
+	  private int getOccupancyArrayIndexFromBlock(TrackController trackController, BlockInterface block) {
 		  
-		  for (Train train : allTrains) {
-			  if (blocksInSection.contains(train.getCurrentBlock())) {
-				  trainsInSection.add(train);
-			  }
-		  }
-		  
-		  return trainsInSection;
+		  return 0;
 	  }
-	  */
 	  
+	  // TODO: this has lots of nested searches :(
 	  public boolean isBlockOccupied(BlockInterface block) {
 		  TrackController trackController = getTrackControllerFromBlock(block);
+		  ArrayList<Boolean> occupancies = trackController.getBlockOccupancies();
 		  
-		  return false;
+		  int blockIndex = getOccupancyArrayIndexFromBlock(trackController, block);
+		  return occupancies.get(blockIndex);
 	  }
 }

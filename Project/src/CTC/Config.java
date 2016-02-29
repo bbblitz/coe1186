@@ -12,7 +12,6 @@ public class Config{
 
   public TrackControllerManager trackControllerManager;
 
-
   /*
    * UI STUFF
    */

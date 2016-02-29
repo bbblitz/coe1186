@@ -11,7 +11,7 @@ public class CTCWindow {
 	
 	public void tick(double deltaT) {
 		ArrayList<Train> allTrains = config.getAllTrains();
-		ArrayList<TrackController> allTrackControllers = config.getAllTrackControllers();
+		ArrayList<TrackController> allTrackControllers = config.trackControllerManager.getAllTrackControllers();
 
 		// flip all switches to correct position
 		for (TrackController trackController : allTrackControllers) {
@@ -19,9 +19,8 @@ public class CTCWindow {
 			// process arrays
 			ArrayList<Boolean> switchStates = trackController.getSwitchStates();
 			for (int i = 0; i < switchStates.size(); i++) {
-				// get BlockSwitch from i
-				// set this BlockSwitch to switched or unswitched
-				BlockSwitch blockSwitch = config.trackControllerManager.getBlockFromTrackControllerSwitchArray(trackController, i);
+				// turn index into BlockSwitch, then set it flipped or unflipped
+				BlockSwitch blockSwitch = config.trackControllerManager.getBlockFromSwitchArray(trackController, i);
 				boolean flipped = switchStates.get(i);
 				blockSwitch.setFlipped(flipped);
 			}
