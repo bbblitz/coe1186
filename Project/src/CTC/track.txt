@@ -7,14 +7,14 @@ Multi-line comment
 /*
 Track formats:
   Straight track
-    str, x, y, rotation, length, head, tail, headto, tailto, id
+    str, x, y, rotation, length, head, tail, headto, tailto, id, trackcontroler_id
     ex.
-      str 5, 10, 0, 100, 3, 7, TAIL, TAIL, 0
+      str 5, 10, 0, 100, 3, 7, TAIL, TAIL, 0, 0
 
   Curved track
-    cur, x, y, start_angle, angle_length, radius, block_clockwise, block_counterclockwise, block_clockwise_to, block_counterclockwise_to, block_id
+    cur, x, y, start_angle, angle_length, radius, block_clockwise, block_counterclockwise, block_clockwise_to, block_counterclockwise_to, block_id, trackcontroller_id
     ex.
-      cur 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2
+      cur 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2, 0
 
   Switch track:
     TODO - Look at the documentation in LineParser.java,
@@ -40,5 +40,12 @@ Head          Tail
 */
 
 LINE PURPLE
-cur, 50, 50, 90, 90, 100, 2, 4, HEAD, HEAD, 1, 0
+cur, 50,    50,   90,  90, 100, 2, 4, HEAD, HEAD, 1, 0
+str, 50,     0,    0,  50,   1, 3, HEAD, TAIL, 2, 0
+cur, 100,   50,   90, -90, 100, 5, 2, TAIL, TAIL, 3, 0
+str, 0,    100,   90,  50,   1, 6, TAIL, HEAD, 4, 0
+str, 150,   50,  -90,  50,   8, 3, TAIL, HEAD, 5, 0
+cur, 50,   100,  180,  90, 100, 7, 4, TAIL, TAIL, 6, 0
+str, 50,   150,    0,  50,   8, 6, HEAD, TAIL, 7, 0
+cur, 100,  100,    0, -90, 100, 7, 5, HEAD, HEAD, 8, 0
 LINE END

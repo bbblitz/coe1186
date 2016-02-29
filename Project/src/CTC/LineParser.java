@@ -68,12 +68,22 @@ public class LineParser{
 
   public void resolveblocks(){
     System.out.println("Finished parseing line, resolveing blocks...");
+    System.out.println("Heads is:");
+    for(int i = 0; i < heads.size()-1; i++){
+      System.out.printf("\t%3d : %d\n",i,heads.get(i));
+    }
+    System.out.println("Tails is:");
+    for(int i = 0; i < tails.size() - 1; i++){
+      System.out.printf("\t%3d : %d\n",i,tails.get(i));
+    }
+
     //Resolve all the pointers
     //Now we need to hook all the blocks up
     for(int i = 0; i < curline.blocks.size(); i++){
       System.out.println("\tResolveing block " + i);
       BlockInterface block = curline.blocks.get(i);
       if(block instanceof BlockStraight){
+        System.out.println("Blocks is 2");
         BlockStraight blockstr = (BlockStraight)block;
         if(curline.blocks.get(heads.get(i)) == null){
           System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
@@ -83,7 +93,7 @@ public class LineParser{
         }
 
         if(curline.blocks.get(tails.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockstr.tail = curline.blocks.get(tails.get(i));
@@ -102,7 +112,7 @@ public class LineParser{
         }
 
         if(curline.blocks.get(tails.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockcur.tail = curline.blocks.get(tails.get(i));
@@ -117,14 +127,14 @@ public class LineParser{
         }
 
         if(curline.blocks.get(tails.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockswi.tail = curline.blocks.get(tails.get(i));
         }
 
         if(curline.blocks.get(divergents.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error: While parseing %s, track section %d's divergent is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockswi.divergent = curline.blocks.get(divergents.get(i));
@@ -172,15 +182,15 @@ public class LineParser{
       for(int i = 0; i < vs.length; i++){
         vs[i] = vs[i].trim();
       }
-      int x = Integer.parseInt(vs[0]);
-      int y = Integer.parseInt(vs[1]);
-      int direction = Integer.parseInt(vs[2]);
-      int length = Integer.parseInt(vs[3]);
-      int headid = Integer.parseInt(vs[4]);
-      int tailid = Integer.parseInt(vs[5]);
-      BlockPart headto = parsePart(vs[6]);
-      BlockPart tailto = parsePart(vs[7]);
-      int blockid = Integer.parseInt(vs[8]);
+      int x = Integer.parseInt(vs[1]);
+      int y = Integer.parseInt(vs[2]);
+      int direction = Integer.parseInt(vs[3]);
+      int length = Integer.parseInt(vs[4]);
+      int headid = Integer.parseInt(vs[5]);
+      int tailid = Integer.parseInt(vs[6]);
+      BlockPart headto = parsePart(vs[7]);
+      BlockPart tailto = parsePart(vs[8]);
+      int blockid = Integer.parseInt(vs[9]);
       BlockStraight newblock = new BlockStraight(x,y,direction,length);
       heads.add(blockid, headid);
       tails.add(blockid, tailid);
