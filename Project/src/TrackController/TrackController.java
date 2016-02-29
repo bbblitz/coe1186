@@ -6,6 +6,7 @@ public class TrackController
 	File PLCFile;
 	boolean[] inputs;
 	boolean[] outputs;
+	int switchCount;
 	
 	public TrackController()
 	{
@@ -25,7 +26,7 @@ public class TrackController
 		}
 		catch(FileNotFoundException fnfe)
 		{
-			System.out.println("you done messed up");
+			System.out.println("PLC file invalid or missing");
 			return;
 		}
 	}
@@ -36,9 +37,39 @@ public class TrackController
 		decode();
 	}
 	
+	public boolean[] getBlockOccupancies()
+	{
+		return inputs;
+	}
+	
+	public boolean[] getSwitchStates()
+	{
+		boolean[] out = new boolean[switchCount];
+		for(int i=0;i<switchCount;i++)
+		{
+			out[i] = outputs[i];
+		}
+		return out;
+	}
+	
 	public void loadFile(File PLCFile)
 	{
 		this.PLCFile = PLCFile;
+	}
+	
+	public void relayAuthority(int authority, int blockID)
+	{
+		
+	}
+	
+	public void zeroAuthority(int blockID)
+	{
+		relayAuthority(0, blockID);
+	}
+	
+	public void relaySpeed()
+	{
+		
 	}
 	
 	public static void main(String[] args)
@@ -49,12 +80,12 @@ public class TrackController
 		TCA.updateInputs(new boolean[] {true, true, true});
 		for(int i=0;i<TCA.outputs.length;i++)
 		{
-			System.out.println(TCA.outputs[i]);
+			System.out.println("TCA["+i+"] = "+TCA.outputs[i]);
 		}
 		TCB.updateInputs(new boolean[] {true, true, true, true, true});
 		for(int i=0;i<TCB.outputs.length;i++)
 		{
-			System.out.println(TCB.outputs[i]);
+			System.out.println("TCB["+i+"] = "+TCB.outputs[i]);
 		}
 	}
 	
