@@ -36,7 +36,11 @@ public class CTCWindow {
 			// if train.getCurrentBlock() is not occupied according to track controller(s)
 			// then move train forward one block
 			BlockInterface trainCurrentBlock = train.getCurrentBlock();
-			
+			boolean trainBlockOccupied = config.trackControllerManager.isBlockOccupied(trainCurrentBlock);
+			if (!trainBlockOccupied) {
+				// this train must have moved forward one block since its last known block is not occupied
+				train.moveForwardOneBlock();
+			}
 		}
 		
 		
