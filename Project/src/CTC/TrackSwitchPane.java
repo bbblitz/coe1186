@@ -73,8 +73,10 @@ public class TrackSwitchPane extends JPanel implements MouseListener {
     g.setColor(Color.black);
     Dimension d = getSize();
     g.fillRect(0,0,d.width,d.height);
+    /*
     if(this.c.selected instanceof BlockSwitch){
       //Find the top-left most corner
     }
+    */
   }
 }

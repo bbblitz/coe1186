@@ -28,7 +28,7 @@ public class Config{
 
 
   public Config(){
-    //vislines = new ArrayList<Boolean>();
+    vislines = new ArrayList<Boolean>();
   }
 
   // given a station name, get the block it's on

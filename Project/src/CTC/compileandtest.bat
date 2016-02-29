@@ -1,7 +1,9 @@
 @echo off
 rem Dependencies:
 rem cp "..\Track"
-rem cp "..\TrackController\TrackController.java" .
+cp "..\TrackController\TrackController.java" .
+cp "..\TrackController\PLCDecoder.java" .
+cp "..\TrackController\LineController.java" .
 
 rem cp "..\Track Controller\TrackInterface.java" .
 rem cp "..\Track Controller\Track.java" .

@@ -89,7 +89,6 @@ public class LineParser{
     //Resolve all the pointers
     //Now we need to hook all the blocks up
     for(int i = 0; i < curline.blocks.size(); i++){
-      System.out.println("\tResolveing block " + i);
       BlockInterface block = curline.blocks.get(i);
       if(block instanceof BlockStraight){
         System.out.println("Blocks is 2");
@@ -149,10 +148,9 @@ public class LineParser{
           blockswi.divergent = curline.blocks.get(divergents.get(i));
         }
       }
-
-
-
     }
+    c.aldl.add(curline);
+    c.vislines.add(true);
   }
 
   public void parseLine(String blockstring){

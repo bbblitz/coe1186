@@ -14,4 +14,14 @@ public class Line{
   public void add(BlockInterface block){
     blocks.add(block);
   }
+
+  public String toString(){
+    String output = "";
+    for(int i = 0; i < blocks.size()-1;i++){
+      if(blocks.get(i) != null){
+        output += blocks.get(i).toString();
+      }
+    }
+    return output;
+  }
 }
