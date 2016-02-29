@@ -23,6 +23,12 @@ public class Train {
 		return this.currentBlock;
 	}
 	
+	public void moveForwardOneBlock() {
+		BlockInterface nextBlock = this.currentBlock.goesto(previousBlock);
+		this.previousBlock = this.currentBlock;
+		this.currentBlock = nextBlock;
+	}
+	
 	public BlockInterface getPreviousBlock() {
 		return this.previousBlock;
 	}
