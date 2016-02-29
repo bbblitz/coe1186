@@ -21,7 +21,7 @@ public class CTCWindow {
 			for (int i = 0; i < switchStates.size(); i++) {
 				// get BlockSwitch from i
 				// set this BlockSwitch to switched or unswitched
-				BlockSwitch blockSwitch = config.getBlockFromTrackControllerSwitchArray(trackController, i);
+				BlockSwitch blockSwitch = config.trackControllerManager.getBlockFromTrackControllerSwitchArray(trackController, i);
 				boolean flipped = switchStates.get(i);
 				blockSwitch.setFlipped(flipped);
 			}
@@ -35,6 +35,8 @@ public class CTCWindow {
 		for (Train train : allTrains) {
 			// if train.getCurrentBlock() is not occupied according to track controller(s)
 			// then move train forward one block
+			BlockInterface trainCurrentBlock = train.getCurrentBlock();
+			
 		}
 		
 		
