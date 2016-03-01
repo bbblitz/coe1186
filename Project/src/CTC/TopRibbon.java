@@ -4,8 +4,12 @@
  * @since 2016/02/08
  * The top ribbon panel
  */
-
-import javax.swing.*;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+//import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -92,21 +96,24 @@ public class TopRibbon extends JMenuBar implements MenuListener{
     this.add(helpmenu);
 
     filemenu.addMenuListener(this);
+    editmenu.addMenuListener(this);
+    windowmenu.addMenuListener(this);
+    helpmenu.addMenuListener(this);
   }
 
   @Override
    public void menuSelected(MenuEvent e) {
-       System.out.println("menuSelected");
+      System.out.printf("Selected, source:%s", ((JMenuItem)e.getSource()).getText());
    }
 
    @Override
    public void menuDeselected(MenuEvent e) {
-       System.out.println("menuDeselected");
+       System.out.printf("Deselected, source:%s", ((JMenuItem)e.getSource()).getText());
    }
 
    @Override
    public void menuCanceled(MenuEvent e) {
-       System.out.println("menuCanceled");
+       System.out.printf("Canceled, source:%s", ((JMenuItem)e.getSource()).getText());
    }
 
 /*

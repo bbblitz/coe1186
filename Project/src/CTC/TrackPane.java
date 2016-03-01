@@ -38,14 +38,14 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void mouseClicked(MouseEvent e) {
-    System.out.printf("Looking for switches at (%d,%d)\n", e.getX(), e.getY());
-    System.out.println("config.trackpane is: " + c.trackpane);
+    //System.out.printf("Looking for switches at (%d,%d)\n", e.getX(), e.getY());
+    //System.out.println("config.trackpane is: " + c.trackpane);
     for(int i = 0; i < lines.size(); i++){
       if(vislines.get(i)){
         for(BlockInterface dti : lines.get(i).blocks){
           if(dti instanceof BlockSwitch){
             BlockSwitch dts = (BlockSwitch)dti;
-            System.out.printf("Found switch at (%d,%d)\n",dts.x,dts.y);
+            //System.out.printf("Found switch at (%d,%d)\n",dts.x,dts.y);
             c.selected = dti;
             c.switchpane.repaint();
             return;
@@ -59,9 +59,11 @@ public class TrackPane extends JPanel implements MouseListener {
    * @override
    */
   public void paint(Graphics g){
+    /*
     for(Boolean b : vislines){
       System.out.print(b + "\t");
     }
+    */
     g.setColor(Color.black);
     Dimension d = getSize();
     g.fillRect(0,0,d.width,d.height);
@@ -73,8 +75,8 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void drawLine(Graphics g, Line dl){
-    System.out.println("Drawing line:");
-    System.out.println(dl.toString());
+    //System.out.println("Drawing line:");
+    //System.out.println(dl.toString());
     for(BlockInterface dti : dl.blocks){
       drawSegment(g,dti);
     }
@@ -95,12 +97,12 @@ public class TrackPane extends JPanel implements MouseListener {
     BlockStraight ts = track;
     int sx = ts.x;
     int sy = ts.y;
-    System.out.println("Cos of " + ts.direction + " is " + Math.cos(Math.toRadians(ts.direction)));
+    //System.out.println("Cos of " + ts.direction + " is " + Math.cos(Math.toRadians(ts.direction)));
     int exoff = (int)(Math.cos(Math.toRadians(ts.direction))*ts.length);
     int eyoff = (int)(Math.sin(Math.toRadians(ts.direction))*ts.length);
     int ex = exoff+sx;
     int ey = eyoff+sy;
-    System.out.printf("Line from (%d,%d)+(%d,%d) to (%d,%d)\n",sx,sy,exoff,eyoff,ex,ey);
+    //System.out.printf("Line from (%d,%d)+(%d,%d) to (%d,%d)\n",sx,sy,exoff,eyoff,ex,ey);
     g.drawLine(sx,sy,ex,ey);
     ArrayList<Infrastructure> allinfra = track.getInfrastructure();
     if(allinfra == null) return;
