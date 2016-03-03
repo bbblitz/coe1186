@@ -34,7 +34,7 @@ public class LineParser{
     }
     while(s.hasNextLine()){
       String blockstring = s.nextLine();
-      /*
+
       System.out.println("Parseing: " + blockstring);
       System.out.printf("State is:\n");
       if(curline != null && curline.name != null)
@@ -42,7 +42,7 @@ public class LineParser{
       System.out.printf("\tfname:%s\n",fname);
       System.out.printf("\tlinenumber:%d\n",linenumber);
       System.out.printf("\tincomment:%d\n",incomment?1:0);
-      */
+
       linenumber++;
       parseLine(blockstring);
     }
@@ -53,6 +53,8 @@ public class LineParser{
     if(curline != null){
       System.out.printf("Error: while parseing %s, hit endf of file while createing line %s\n",fname, curline.name);
     }
+    System.out.println("Block parser finished");
+    resolveblocks();
     //config.aldl.add(linenum,newline);
   }
 
@@ -168,6 +170,10 @@ public class LineParser{
     }
     if(incomment){
       return;
+    }
+    if(blockstring.length() < 4){
+      System.out.printf("Error parseing file %s on line %d: Incorrect syntax\n",fname,linenumber);
+      System.exit(0);
     }
 
     //Seperateing lines:

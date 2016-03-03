@@ -4,6 +4,7 @@
  * @since 2016/02/08
  * The top ribbon panel
  */
+ 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;

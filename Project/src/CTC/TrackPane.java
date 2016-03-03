@@ -59,6 +59,10 @@ public class TrackPane extends JPanel implements MouseListener {
    * @override
    */
   public void paint(Graphics g){
+    if(lines == null){
+      System.out.println("TrackPane.java No lines found!");
+      System.exit(0);
+    }
     /*
     for(Boolean b : vislines){
       System.out.print(b + "\t");
