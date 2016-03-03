@@ -119,20 +119,34 @@ public class TopRibbon extends JMenuBar implements /*MenuListener,*/ ActionListe
        System.out.printf("Canceled, source:%s", ((JMenuItem)e.getSource()).getText());
    }
    */
+   /*TODO: Finish this method*/
    @Override
-   public void actionPerformed(ActionEvent e){
-     System.out.printf("Source:" + ((JMenuItem)e.getSource()).getText());
-     JMenuItem s = (JMenuItem)(e.getSource());
-     if(s == exititem){
-       System.out.println("Bye!");
-       System.exit(0);
-     }
-   }
-/*
-  public void menuSelected(MenuEvent  e){
-    if(e.getSource() == exititem){
-      System.exit(0);
+  public void actionPerformed(ActionEvent e){
+    System.out.printf("Source:" + ((JMenuItem)e.getSource()).getText());
+    JMenuItem s = (JMenuItem)(e.getSource());
+    if(s == exititem){
+     System.out.println("Bye!");
+     System.exit(0);
+    }else if(s == copyitem){
+
+    }else if(s == cutitem){
+
+    }else if(s == pasteitem){
+
+    }else if(s == linevisitem){
+
+    }else if(s == detailsitem){
+
+    }else if(s == dispatchitem){
+
+    }else if(s == messageitem){
+
+    }else if(s == switchitem){
+
+    }else if(s == aboutitem){
+
+    }else if(s == helpitem){
+
     }
   }
-*/
 }
