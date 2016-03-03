@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class TopRibbon extends JMenuBar implements MenuListener{
+public class TopRibbon extends JMenuBar implements /*MenuListener,*/ ActionListener{
   //File
   JMenuItem exititem;
   //Edit
@@ -43,6 +43,7 @@ public class TopRibbon extends JMenuBar implements MenuListener{
     filemenu.getAccessibleContext().setAccessibleDescription("Items dealing with files");
     exititem = new JMenuItem("Exit",KeyEvent.VK_E);
     exititem.getAccessibleContext().setAccessibleDescription("Exits the CTC window");
+    exititem.addActionListener(this);
     filemenu.add(exititem);
 
     JMenu editmenu = new JMenu("Edit");
@@ -95,12 +96,14 @@ public class TopRibbon extends JMenuBar implements MenuListener{
     this.add(windowmenu);
     this.add(helpmenu);
 
+    /*
     filemenu.addMenuListener(this);
     editmenu.addMenuListener(this);
     windowmenu.addMenuListener(this);
     helpmenu.addMenuListener(this);
+    */
   }
-
+  /*
   @Override
    public void menuSelected(MenuEvent e) {
       System.out.printf("Selected, source:%s", ((JMenuItem)e.getSource()).getText());
@@ -115,7 +118,16 @@ public class TopRibbon extends JMenuBar implements MenuListener{
    public void menuCanceled(MenuEvent e) {
        System.out.printf("Canceled, source:%s", ((JMenuItem)e.getSource()).getText());
    }
-
+   */
+   @Override
+   public void actionPerformed(ActionEvent e){
+     System.out.printf("Source:" + ((JMenuItem)e.getSource()).getText());
+     JMenuItem s = (JMenuItem)(e.getSource());
+     if(s == exititem){
+       System.out.println("Bye!");
+       System.exit(0);
+     }
+   }
 /*
   public void menuSelected(MenuEvent  e){
     if(e.getSource() == exititem){
