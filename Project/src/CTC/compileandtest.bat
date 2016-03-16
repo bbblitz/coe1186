@@ -15,17 +15,23 @@ javac Config.java
 javac main.java
 java main
 del *.class
-rem del TrackController.java
+del TrackController.java
+del PLCDecoder.java
+del LineController.java
 
 rem Compile the javadoc
 set /P CTC_JAVADOC="Do you want to compile the javadoc?(Y/N)"
 if "%CTC_JAVADOC%" == "Y"(
-  del ./doc/*
+  del doc/*
   javadoc -header "<h1>BitsPlease CTC Documents</h1>" *.java
-  cp *.html ./doc/
-  cp stylesheet.css ./doc/
-  cp package-list ./doc/
-  cp script.js ./doc/
+  cp *.html doc/
+  cp stylesheet.css doc/
+  cp package-list doc/
+  cp script.js doc/
+  del *.html
+  del stylesheet.css
+  del package-list
+  del script.js
 )
 
 

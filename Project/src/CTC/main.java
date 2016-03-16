@@ -72,6 +72,8 @@ public class main{
   }
 
   public static JMenuBar makeRibbon(){
+    return new TopRibbon();
+    /*
     JMenuBar menubar = new JMenuBar();
 
     JMenu filemenu = new JMenu("File");
@@ -132,5 +134,6 @@ public class main{
     menubar.add(helpmenu);
 
     return menubar;
+    */
   }
 }
