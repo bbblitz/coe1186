@@ -166,8 +166,14 @@
       </span>
     </span></div>
     <span id="s3.2"><h4>Software errors</h4><div>
-      <p>Software errors? Never heard of such a thing!</p><br>
-      <small>This section may (and probably will) be expanded as the project progresses</small>
+      <p>These may require parts of the software to be rewritten</p><br>
+      <p>These are serious software errors that may force portion of the software to be re-written</p>
+      <span id="s3.2.1"><h5>Errors in track file parseing</h5><div>
+        <p>Error 1xx - Parser errors
+        <p>Error 101 - The parser hit the end of the file while in a comment block, place a */ before the end of the file to close the block
+        <p>Error 102 - The parse hit the end of the file while createing a line, place <code>LINE END</code> on the last line of the file to designate the end of the line
+        <p>Error 103 - A line in the track file does not use the correct syntax for a segment of track
+        <p>Error 104 - A block is supposed to be connected to a track segment that was never created, be sure the block head/tail is correct
     </span></div>
   </span></div>
 </section>
