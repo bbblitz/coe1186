@@ -1,0 +1,7 @@
+test						pass/fail	fix date	test date
+load a PLC file
+move train one block
+set train authority to 0
+set stopped train to 1 authority
+move 3 trains around upper green line loop
+route a train to divergent section of
