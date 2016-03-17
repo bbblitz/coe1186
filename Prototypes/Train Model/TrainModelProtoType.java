@@ -12,8 +12,8 @@ public class TrainModelProtoType{
 	private JTextField text = new JTextField("Max 120");
 	private final int WIDTH = 800;
 	private final int HEIGHT =600;
-	private double startTime = System.currentTimeMillis() / 1000;
-	private double currentTime = (System.currentTimeMillis() / 1000) - startTime;
+	private double startTime = System.currentTimeMillis() / 1000.0;
+	private double currentTime = (System.currentTimeMillis() / 1000.0) - startTime;
 	private double position;
 	private double velocity;
 	private double acceleration;
@@ -76,7 +76,7 @@ public class TrainModelProtoType{
 		
 		//ActionListener for Timer 
 		
-		int delay = 1000; //how often to update (ms), 1000 updates once per second (best possible), 2000 every 2 seconds, etc.
+		int delay = 50; //how often to update (ms), 1000 updates once per second (best possible), 2000 every 2 seconds, etc.
 		ActionListener taskPerformer = new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				
@@ -85,11 +85,11 @@ public class TrainModelProtoType{
 				
 				//if loop prevents variables updating before train started
 				if(start != 0){
-					currentTime = (System.currentTimeMillis() / 1000) - startTime;
+					currentTime = (System.currentTimeMillis() / 1000.0) - startTime;
 					
 					//math to move train
 					
-					force = power * 1000 / velocity;
+					force = power * 1000.0 / velocity;
 					acceleration = force / mass;
 					
 					double vConstant = velocity - (acceleration * (currentTime-1));
@@ -138,7 +138,7 @@ public class TrainModelProtoType{
 				if(acceleration == 0 && position == 0){
 					velocity = 1;  //must have starting velocity due to way equations set up...needs fixed to start from 0m/s
 				}
-				startTime = System.currentTimeMillis() / 1000;
+				startTime = System.currentTimeMillis() / 1000.0;
 				
 				//set start to 1 so that labels begin updating on Timer
 				
