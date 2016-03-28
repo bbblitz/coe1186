@@ -80,8 +80,24 @@ public class LineParser{
     for(int i = 0; i < 8; i++){
       System.out.printf("\t%3d : %d\n",i,tails.get(i));
     }
-    System.out.println("Line is:");
+    System.out.println("Lines are:");
+    for(int i = 0; i < all.count(); i++){
+      Line thisline = all.get(i);
+      for(int j = 0; thisline.blocks.get(j) != null; j++){
+        System.out.printf("\t%3d : ",j);
+        System.out.printf("%3s\n",thisline.blocks.get(j).toString());
+      }
+    }
+    /*
     for(int i = 0; i < 8; i++){
+      if(curline == null){
+        System.out.println("\tCurrent line does not exist!");
+        System.exit(1);
+      }
+      if(curline.blocks == null){
+        System.out.println("\tNo blocks detected.");
+        System.exit(1);
+      }
       if(curline.blocks.get(i) == null){
         System.out.println("\tBlock " + i + " is null!");
       }else{
@@ -89,11 +105,67 @@ public class LineParser{
         System.out.printf("%3s\n", curline.blocks.get(i).toString());
       }
     }
-
+    */
     //Resolve all the pointers
     //Now we need to hook all the blocks up
-    for(int i = 0; i < curline.blocks.size(); i++){
-      BlockInterface block = curline.blocks.get(i);
+    for(int i = 0; i < all.count(); i++){
+      Line thisline = all.get(i);
+      for(int j = 0; j < thisline.blocks.count(); j++){
+        BlockInterface block = thisline.blocks.count();
+        if(block instanceof BlockStraight){
+          BlockStraight blockstr = (BlockStraight)block;
+          if(curline.blocks.get(heads.get(i)) == null){
+            System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+            return;
+          }else{
+            blockstr.head = curline.blocks.get(heads.get(i));
+          }
+
+          if(curline.blocks.get(tails.get(i)) == null){
+            System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+            return;
+          }else{
+            blockstr.tail = curline.blocks.get(tails.get(i));
+          }
+        }else if(block instanceof BlockCurved){
+          BlockCurved blockcur = (BlockCurved)block;
+          System.out.println("Size of heads is " + heads.size() + " and i is " + i + " and curline.blocks size is " + curline.blocks.size());
+          System.out.println("i is " + i);
+          System.out.println("heads.get(i) is " + heads.get(i));
+          //System.out.println("curline.blocks.get(heads.get(i)) is " + curline.blocks.get(heads.get(i)));
+          if(heads.size() < i || curline.blocks.size() < heads.get(i) || heads.get(i) == -1 || curline.blocks.get(heads.get(i)) == null){
+            System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+            return;
+          }else{
+            blockcur.head = curline.blocks.get(heads.get(i));
+          }
+        }else if(block instanceof BlockSwitch){
+          BlockSwitch blockswi = (BlockSwitch)block;
+          if(curline.blocks.get(heads.get(i)) == null){
+            System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+            return;
+          }else{
+            blockswi.head = curline.blocks.get(heads.get(i));
+          }
+
+          if(curline.blocks.get(tails.get(i)) == null){
+            System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+            return;
+          }else{
+            blockswi.tail = curline.blocks.get(tails.get(i));
+          }
+
+          if(curline.blocks.get(divergents.get(i)) == null){
+            System.out.printf("Error: While parseing %s, track section %d's divergent is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+            return;
+          }else{
+            blockswi.divergent = curline.blocks.get(divergents.get(i));
+          }
+        }
+        c.aldl.add(thisline);
+        c.vislines.add(true);
+      }
+      /*
       if(block instanceof BlockStraight){
         System.out.println("Blocks is 2");
         BlockStraight blockstr = (BlockStraight)block;
@@ -151,10 +223,10 @@ public class LineParser{
         }else{
           blockswi.divergent = curline.blocks.get(divergents.get(i));
         }
-      }
+      }*/
     }
-    c.aldl.add(curline);
-    c.vislines.add(true);
+    //c.aldl.add(curline);
+    //c.vislines.add(true);
   }
 
   public void parseLine(String blockstring){
@@ -187,6 +259,7 @@ public class LineParser{
         all.add(curline);
         curline = null;
       }else{
+        System.out.println("\nLine created");
         curline = new Line();
         curline.name = vs[1];
       }

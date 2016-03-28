@@ -49,8 +49,3 @@ cur, 50,   100,  180,  90, 100, 7, 4, TAIL, TAIL, 6, 0
 str, 100,   200,    0,  50,   8, 6, HEAD, TAIL, 7, 0
 cur, 100,  100,    0, -90, 100, 7, 5, HEAD, HEAD, 8, 0
 LINE END
-
-LINE GREEN
-str
-
-LINE END
