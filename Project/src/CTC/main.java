@@ -8,8 +8,10 @@ import java.awt.event.*;
 import java.util.*;
 
 public class main{
-  public static Config config;
+  //public static Config config;
   public static void main(String[] args){
+    CTCWindow ctcw = new CTCWindow(null);
+    /*
     config = new Config();
     config.windowDim = new Dimension(1200,600);
 
@@ -31,7 +33,7 @@ public class main{
     config.vislines = new ArrayList<Boolean>(10);
     config.vislines.add(dlo.lineid,true);
     */
-
+    /*
     JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = makeTrack(config);
@@ -52,6 +54,7 @@ public class main{
     //window.getContentPane().add(label);
     window.pack();
     window.setVisible(true);
+    */
   }
 
   public static JPanel makeDetails(Config config){

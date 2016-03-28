@@ -1,14 +1,47 @@
 import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
+public class CTCWindow extends JFrame{
 
-public class CTCWindow {
-	
 	private Config config;
-	
-	public CTCWindow() {
-		
+	private final int WIDTH = 1200;
+	private final int HEIGHT = 600;
+
+	public CTCWindow(TrackControllerManager tcm) {
+		super("CTC Office");
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setJMenuBar(new TopRibbon());
+
+		config = new Config();
+		config.windowDim = new Dimension(WIDTH,HEIGHT);
+		config.trackControllerManager = tcm;
+
+		LineParser parser = new LineParser("track.txt",config);
+
+		JPanel holder = new JPanel();
+    holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
+    JPanel tp = new TrackPane(config);
+    config.trackpane = tp;
+    System.out.println("config.trackpane is: " + config.trackpane);
+    JPanel dp = new DetailPane(config);
+    Dimension d = new Dimension((int)(WIDTH*0.7),HEIGHT);
+    Dimension d2 = new Dimension((int)(WIDTH*0.3),HEIGHT);
+    tp.setPreferredSize(d);
+    dp.setPreferredSize(d2);
+    holder.add(tp);
+    holder.add(dp);
+
+    super.getContentPane().add(holder);
+    ((DetailPane)dp).createComponent();
+    //JLabel label = new JLabel("Hello, world!");
+    //window.getContentPane().add(label);
+    super.pack();
+    super.setVisible(true);
 	}
-	
+
 	public void tick(double deltaT) {
 		ArrayList<Train> allTrains = config.getAllTrains();
 		ArrayList<TrackController> allTrackControllers = config.trackControllerManager.getAllTrackControllers();
@@ -17,7 +50,11 @@ public class CTCWindow {
 		for (TrackController trackController : allTrackControllers) {
 			// get occupancy+switchstate arrays
 			// process arrays
-			ArrayList<Boolean> switchStates = trackController.getSwitchStates();
+			boolean[] tcgss = trackController.getSwitchStates();
+			ArrayList<Boolean> switchStates = new ArrayList<Boolean>(tcgss.length);
+			for(int i = 0; i < tcgss.length; i++){
+				switchStates.set(i,tcgss[i]);
+			}
 			for (int i = 0; i < switchStates.size(); i++) {
 				// turn index into BlockSwitch, then set it flipped or unflipped
 				BlockSwitch blockSwitch = config.trackControllerManager.getBlockFromSwitchArray(trackController, i);
@@ -25,11 +62,11 @@ public class CTCWindow {
 				blockSwitch.setFlipped(flipped);
 			}
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 		// move trains forward if their current block is no longer occupied
 		for (Train train : allTrains) {
 			// if train.getCurrentBlock() is not occupied according to track controller(s)
@@ -41,11 +78,11 @@ public class CTCWindow {
 				train.moveForwardOneBlock();
 			}
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 	}
-	
+
 }

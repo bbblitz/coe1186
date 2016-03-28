@@ -51,10 +51,11 @@ public class LineParser{
       return;
     }
     if(curline != null){
-      System.out.printf("Error: while parseing %s, hit endf of file while createing line %s\n",fname, curline.name);
+      System.out.printf("Error: while parseing %s, hit end of file while createing line %s\n",fname, curline.name);
+      return;
     }
     System.out.println("Block parser finished");
-    resolveblocks();
+    //resolveblocks();
     //config.aldl.add(linenum,newline);
   }
 
@@ -71,6 +72,7 @@ public class LineParser{
   }
 
   public void resolveblocks(){
+    /*
     System.out.println("Finished parseing line, resolveing blocks...");
     System.out.println("Heads is:");
     for(int i = 0; i < 8; i++){
@@ -81,14 +83,15 @@ public class LineParser{
       System.out.printf("\t%3d : %d\n",i,tails.get(i));
     }
     System.out.println("Lines are:");
-    for(int i = 0; i < all.count(); i++){
+    for(int i = 0; i < all.size(); i++){
       Line thisline = all.get(i);
       for(int j = 0; thisline.blocks.get(j) != null; j++){
         System.out.printf("\t%3d : ",j);
         System.out.printf("%3s\n",thisline.blocks.get(j).toString());
       }
     }
-    /*
+    */
+
     for(int i = 0; i < 8; i++){
       if(curline == null){
         System.out.println("\tCurrent line does not exist!");
@@ -105,13 +108,14 @@ public class LineParser{
         System.out.printf("%3s\n", curline.blocks.get(i).toString());
       }
     }
-    */
+
     //Resolve all the pointers
     //Now we need to hook all the blocks up
-    for(int i = 0; i < all.count(); i++){
+    /*
+    for(int i = 0; i < all.size(); i++){
       Line thisline = all.get(i);
-      for(int j = 0; j < thisline.blocks.count(); j++){
-        BlockInterface block = thisline.blocks.count();
+      for(int j = 0; j < thisline.blocks.size(); j++){
+        BlockInterface block = thisline.blocks.get(j);
         if(block instanceof BlockStraight){
           BlockStraight blockstr = (BlockStraight)block;
           if(curline.blocks.get(heads.get(i)) == null){
@@ -165,7 +169,9 @@ public class LineParser{
         c.aldl.add(thisline);
         c.vislines.add(true);
       }
-      /*
+      */
+    for(int i = 0; i < curline.blocks.size(); i++){
+      BlockInterface block = curline.blocks.get(i);
       if(block instanceof BlockStraight){
         System.out.println("Blocks is 2");
         BlockStraight blockstr = (BlockStraight)block;
@@ -223,10 +229,10 @@ public class LineParser{
         }else{
           blockswi.divergent = curline.blocks.get(divergents.get(i));
         }
-      }*/
+      }
     }
-    //c.aldl.add(curline);
-    //c.vislines.add(true);
+    c.aldl.add(curline);
+    c.vislines.add(true);
   }
 
   public void parseLine(String blockstring){
