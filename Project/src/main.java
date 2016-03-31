@@ -2,17 +2,17 @@
 public class main{
 
   //TODO:Finish this method
-  TrackModel createTrackModel(){
+  static TrackModel createTrackModel(){
 
   }
 
   //TODO:Finish this method
-  TrackControllerManager createTrackControllers(TrackModel tm){
+  static TrackControllerManager createTrackControllers(TrackModel tm){
 
   }
 
   //TODO:Finish this method
-  CTCWindow createCTC(TrackControllerManager tcm){
+  static CTCWindow createCTC(TrackControllerManager tcm){
 
   }
 

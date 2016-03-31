@@ -1,5 +1,5 @@
 
-javac -sourcepath . -sourcepath .\CTC main.java
+javac -sourcepath . -sourcepath .\CTC main.java -sourcepath .\TrackController
 java main
 
 del main.class
