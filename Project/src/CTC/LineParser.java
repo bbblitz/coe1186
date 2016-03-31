@@ -108,68 +108,6 @@ public class LineParser{
         System.out.printf("%3s\n", curline.blocks.get(i).toString());
       }
     }
-
-    //Resolve all the pointers
-    //Now we need to hook all the blocks up
-    /*
-    for(int i = 0; i < all.size(); i++){
-      Line thisline = all.get(i);
-      for(int j = 0; j < thisline.blocks.size(); j++){
-        BlockInterface block = thisline.blocks.get(j);
-        if(block instanceof BlockStraight){
-          BlockStraight blockstr = (BlockStraight)block;
-          if(curline.blocks.get(heads.get(i)) == null){
-            System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
-            return;
-          }else{
-            blockstr.head = curline.blocks.get(heads.get(i));
-          }
-
-          if(curline.blocks.get(tails.get(i)) == null){
-            System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
-            return;
-          }else{
-            blockstr.tail = curline.blocks.get(tails.get(i));
-          }
-        }else if(block instanceof BlockCurved){
-          BlockCurved blockcur = (BlockCurved)block;
-          System.out.println("Size of heads is " + heads.size() + " and i is " + i + " and curline.blocks size is " + curline.blocks.size());
-          System.out.println("i is " + i);
-          System.out.println("heads.get(i) is " + heads.get(i));
-          //System.out.println("curline.blocks.get(heads.get(i)) is " + curline.blocks.get(heads.get(i)));
-          if(heads.size() < i || curline.blocks.size() < heads.get(i) || heads.get(i) == -1 || curline.blocks.get(heads.get(i)) == null){
-            System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
-            return;
-          }else{
-            blockcur.head = curline.blocks.get(heads.get(i));
-          }
-        }else if(block instanceof BlockSwitch){
-          BlockSwitch blockswi = (BlockSwitch)block;
-          if(curline.blocks.get(heads.get(i)) == null){
-            System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
-            return;
-          }else{
-            blockswi.head = curline.blocks.get(heads.get(i));
-          }
-
-          if(curline.blocks.get(tails.get(i)) == null){
-            System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
-            return;
-          }else{
-            blockswi.tail = curline.blocks.get(tails.get(i));
-          }
-
-          if(curline.blocks.get(divergents.get(i)) == null){
-            System.out.printf("Error: While parseing %s, track section %d's divergent is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
-            return;
-          }else{
-            blockswi.divergent = curline.blocks.get(divergents.get(i));
-          }
-        }
-        c.aldl.add(thisline);
-        c.vislines.add(true);
-      }
-      */
     for(int i = 0; i < curline.blocks.size(); i++){
       BlockInterface block = curline.blocks.get(i);
       if(block instanceof BlockStraight){
@@ -338,7 +276,29 @@ public class LineParser{
       heads.add(blockid, headid);
       tails.add(blockid, tailid);
       divergents.add(blockid, divergentid);
-    }else{
+    }else if(blockstring.substring(0,3).equals("sta")){
+      System.out.println("Detected station block");
+      String[] vs = blockstring.split(",");
+      for(int i = 0; i < vs.length; i++){
+        vs[i] = vs[i].trim();
+      }
+      int x = Integer.parseInt(vs[1]);
+      int y = Integer.parseInt(vs[2]);
+      int direction = Integer.parseInt(vs[3]);
+      int length = Integer.parseInt(vs[4]);
+      int headid = Integer.parseInt(vs[5]);
+      int tailid = Integer.parseInt(vs[6]);
+      BlockPart headto = parsePart(vs[7]);
+      BlockPart tailto = parsePart(vs[8]);
+      int blockid = Integer.parseInt(vs[9]);
+      String stationname = vs[10];
+      BlockStation newblock = new BlockStation(x,y,direction,length, stationname);
+      heads.add(blockid, headid);
+      tails.add(blockid, tailid);
+      curline.blocks.add(blockid, newblock);
+
+    }
+    else{
       System.out.printf("Unable to parse line: %d in %s\n",linenumber, fname);
     }
   }

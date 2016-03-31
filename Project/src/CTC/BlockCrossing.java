@@ -1,10 +1,9 @@
 
-public class BlockStation extends BlockInterface{
+public class BlockStraight extends BlockInterface{
   public BlockInterface head;
   public BlockInterface tail;
   public BlockPart headto;
   public BlockPart tailto;
-  public String stationName;
 
   //How long the track is
   public int length;
@@ -18,8 +17,7 @@ public class BlockStation extends BlockInterface{
   //The direction the track is faceing (in degrees)
   public int direction;
 
-
-  public BlockStation(int tx, int ty, int dir, int length, String stationname){
+  public BlockCrossing(int tx, int ty, int dir, int length){
     this.length = length;
     x = tx;
     y = ty;
@@ -46,7 +44,8 @@ public class BlockStation extends BlockInterface{
 	  return this.tail;
   }
 
-  public String getStationName() {
-	  return this.stationName;
+  /*Prints out a string representation of this block.*/
+  public String toString(){
+    return String.format("x:%3d y:%3d length:%3d head:%3d tail:%3d direction:%3d", x, y, length, head != null?head.getID():-1, tail != null?tail.getID():-1, direction);
   }
 }
