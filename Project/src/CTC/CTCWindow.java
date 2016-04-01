@@ -10,7 +10,7 @@ public class CTCWindow extends JFrame{
 	private final int WIDTH = 1200;
 	private final int HEIGHT = 600;
 
-	public CTCWindow(TrackControllerManager tcm) {
+	public CTCWindow(TrackModel tc, TrackControllerManager tcm) {
 		super("CTC Office");
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		super.setJMenuBar(new TopRibbon());
