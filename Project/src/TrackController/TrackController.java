@@ -7,6 +7,7 @@ public class TrackController
 	boolean[] inputs;
 	boolean[] outputs;
 	int switchCount;
+	int crossingCount;
 	
 	public TrackController()
 	{
@@ -18,20 +19,41 @@ public class TrackController
 		this.PLCFile = PLCFile;
 	}
 	
-	public void decode()
+	public void decode() throws Exception
 	{
+		boolean[] outputsRedundant;
 		try
 		{
 			outputs = PLCDecoder.decode(inputs, PLCFile);
+			outputsRedundant = PLCDecoder.decode(inputs, PLCFile);
 		}
 		catch(FileNotFoundException fnfe)
 		{
 			System.out.println("PLC file invalid or missing");
 			return;
 		}
+		catch(Exception e)
+		{
+			System.out.println("something went wrong");
+			return;
+		}
+		/*if(outputs != outputsRedundant)
+		{
+			throw new Exception("Error With PLC Decoder");
+		}*/
 	}
 	
-	public void updateInputs(boolean[] inputs)
+	public void Tick(double deltaT)
+	{
+		//get inputs from track model
+		//update inputs
+		//send switch positions to track model
+		//zero authority on all true tracks?
+		//send speed to all blocks where speed changes?
+		//relay occupancies to CTC
+	}
+	
+	public void updateInputs(boolean[] inputs) throws Exception
 	{
 		this.inputs = inputs;
 		decode();
@@ -59,7 +81,7 @@ public class TrackController
 	
 	public void relayAuthority(int authority, int blockID)
 	{
-		
+		//tell track model to send authority signal to block
 	}
 	
 	public void zeroAuthority(int blockID)
@@ -67,25 +89,35 @@ public class TrackController
 		relayAuthority(0, blockID);
 	}
 	
-	public void relaySpeed()
+	public void relaySpeed(float speed, int blockID)
 	{
-		
+		//tell track model to send speed signal to block
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		TrackController TCA = new TrackController(new File("test1.plc"));
-		TrackController TCB = new TrackController(new File("test2.plc"));
+		TrackController GA = new TrackController(new File("GreenLoopTop.plc"));
+		TrackController GB = new TrackController(new File("GreenLoopBottom.plc"));
 		
-		TCA.updateInputs(new boolean[] {true, true, true});
-		for(int i=0;i<TCA.outputs.length;i++)
+		boolean[] GAInputs = new boolean[28];
+		GAInputs[27] = true;
+		GAInputs[20] = true;
+		GAInputs[0] = true;
+		
+		boolean[] GBInputs = new boolean[24];
+		GBInputs[3] = true;
+		GBInputs[23] = true;
+		
+		GA.updateInputs(GAInputs);
+		for(int i=0;i<GA.outputs.length;i++)
 		{
-			System.out.println("TCA["+i+"] = "+TCA.outputs[i]);
+			System.out.println("GA["+i+"] = "+GA.outputs[i]);
 		}
-		TCB.updateInputs(new boolean[] {true, true, true, true, true});
-		for(int i=0;i<TCB.outputs.length;i++)
+		
+		GB.updateInputs(GBInputs);
+		for(int i=0;i<GB.outputs.length;i++)
 		{
-			System.out.println("TCB["+i+"] = "+TCB.outputs[i]);
+			System.out.println("GB["+i+"] = "+GB.outputs[i]);
 		}
 	}
 	
