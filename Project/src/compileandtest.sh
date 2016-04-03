@@ -17,6 +17,9 @@ cp ./main.java ./build
 # Actually compile the whole program
 javac -sourcepath ./build main.java -d ./bin
 
+# Copy track.txt to current directory
+cp CTC/track.txt ./bin
+
 # Run the program
 java -classpath ./bin main
 
@@ -35,3 +38,4 @@ fi
 #Delete everything, so we don't get any conflicts after the first compile
 rm -rf ./bin
 rm -rf ./build
+rm -f track.txt
