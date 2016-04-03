@@ -18,7 +18,7 @@ cp ./main.java ./build
 javac -sourcepath ./build main.java -d ./bin
 
 # Copy track.txt to current directory
-cp CTC/track.txt ./bin
+cp CTC/track.txt .
 
 # Run the program
 java -classpath ./bin main
