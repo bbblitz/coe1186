@@ -1,5 +1,5 @@
 
-public class BlockStraight extends BlockInterface{
+public class BlockCrossing extends BlockInterface{
   public BlockInterface head;
   public BlockInterface tail;
   public BlockPart headto;

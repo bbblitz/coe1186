@@ -1,39 +1,57 @@
 
+import java.awt.Toolkit;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class main{
 
-  //TODO:Finish this method
-  TrackModel createTrackModel(){
+  static TrackModel trackModel;
+  static CTCWindow ctc;
 
+  static long deltaT = 100;
+
+  //TODO:Finish this method
+  static TrackModel createTrackModel(){
+
+    return new TrackModel();
   }
 
   //TODO:Finish this method
-  TrackControllerManager createTrackControllers(TrackModel tm){
+  static TrackControllerManager createTrackControllers(TrackModel tm){
 
+    return new TrackControllerManager(tm);
   }
 
   //TODO:Finish this method
-  CTCWindow createCTC(TrackControllerManager tcm){
+  static CTCWindow createCTC(TrackControllerManager tcm, TrackModel tm){
 
+    return new CTCWindow(tm, tcm);
   }
 
   public static void main(String[] args){
     //Order is important!
-    TrackModel tm = createTrackModel();
-    TrackControllerManager tcm = createTrackControllers(tm);
-    createCTC(tm,tcm);
+    trackModel = createTrackModel();
+    TrackControllerManager tcm = createTrackControllers(trackModel);
+    ctc = createCTC(tcm,trackModel);
 
-    System.out.println("About to start running");
-    for(int i = 0; i < 100; i++)
-      new timertest((long)5000);
-    System.out.println("Done");
+    //Run the simulation
+    System.out.println("Starting the program, ticking every " + String.valueOf(deltaT) + " milliseconds...");
+
+    Timer timer = new Timer();
+    timer.schedule(new Ticker(), deltaT);
   }
 
-  class RemindTask extends TimerTask {
+  static class Ticker extends TimerTask {
     public void run() {
-      System.out.println("Time's up!");
-      toolkit.beep();
-      timer.cancel(); //Not necessary because we call System.exit
+      System.out.println("tick");
+
+      //trackModel.tick(deltaT);
+      //ctc.tick(deltaT);
+
+
       //System.exit(0); //Stops the AWT thread (and everything else)
+      Timer timer = new Timer();
+      timer.schedule(new Ticker(), deltaT);
     }
   }
 }
