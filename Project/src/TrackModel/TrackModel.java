@@ -6,4 +6,8 @@ public class TrackModel{
   public TrackModel(){
 
   }
+
+  public void tick(long deltaT) {
+  	
+  }
 }
