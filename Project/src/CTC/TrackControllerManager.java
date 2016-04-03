@@ -7,6 +7,10 @@ public class TrackControllerManager {
 	  public ArrayList<TrackController> greenLineTrackControllers;
 	  public ArrayList<TrackController> redLineTrackControllers;
 
+	  public TrackControllerManager(TrackModel tm) {
+
+
+	  }
 
 	  public ArrayList<TrackController> getAllTrackControllers() {
 		  ArrayList<TrackController> allTrackControllers = new ArrayList<TrackController>();

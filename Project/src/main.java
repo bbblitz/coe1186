@@ -19,22 +19,20 @@ public class main{
   //TODO:Finish this method
   static TrackControllerManager createTrackControllers(TrackModel tm){
 
-    //return new TrackControllerManager();
-    return null;
+    return new TrackControllerManager(tm);
   }
 
   //TODO:Finish this method
   static CTCWindow createCTC(TrackControllerManager tcm, TrackModel tm){
 
-    //return new CTCWindow(tm, tcm);
-    return null;
+    return new CTCWindow(tm, tcm);
   }
 
   public static void main(String[] args){
     //Order is important!
-    TrackModel tm = createTrackModel();
-    TrackControllerManager tcm = createTrackControllers(tm);
-    createCTC(tcm,tm);
+    trackModel = createTrackModel();
+    TrackControllerManager tcm = createTrackControllers(trackModel);
+    ctc = createCTC(tcm,trackModel);
 
     //Run the simulation
     System.out.println("Starting the program, ticking every " + String.valueOf(deltaT) + " milliseconds...");
