@@ -15,7 +15,9 @@ public class TrainController {
 	private double velocityFromCTC;
 	private double authorityFromCTC;
 
+	/* intermediate values to display on UI */
 	private double targetVelocity;
+	private double powerCommand;
 	
 	/* train status */
 	private double velocitySI;
@@ -62,7 +64,8 @@ public class TrainController {
 		this.authorityFromCTC -= deltaX;
 		this.authorityFromCTC = Math.max(0, this.authorityFromCTC);	// no negative authorities
 		
-		double power = calculatePower(deltaT);
+		this.powerCommand = calculatePower(deltaT);
+		double power = this.powerCommand;
 		if (power < 0) {
 			// best action is to slow down
 			power = 0;
@@ -255,6 +258,10 @@ public class TrainController {
 
 	public double getCurrentVelocitySI() {
 		return this.velocitySI;
+	}
+
+	public double getPowerCommand() {
+		return this.powerCommand;
 	}
 
 	public double getAuthorityFromCTC() {

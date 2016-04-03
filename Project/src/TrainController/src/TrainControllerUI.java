@@ -11,6 +11,7 @@ public class TrainControllerUI {
 	public JPanel contentPane;
 	public JLabel targetSpeedLabel;
 	public JLabel currentSpeedLabel;
+	public JLabel currentPowerLabel;
 	public JLabel currentAuthorityLabel;
 	
 	public TrainControllerUI(TrainController trainController) {
@@ -32,20 +33,26 @@ public class TrainControllerUI {
       	this.contentPane.setLayout(null);
 
       	this.targetSpeedLabel = new JLabel("Target speed: ");
-      	this.currentSpeedLabel = new JLabel("Current speed: ");
-      	this.currentAuthorityLabel = new JLabel("Current authority: ");
-
       	this.targetSpeedLabel.setSize(300, 30);
-      	this.currentSpeedLabel.setSize(300, 30);
-      	this.currentAuthorityLabel.setSize(300, 30);
-
       	this.targetSpeedLabel.setLocation(5, 5);
-      	this.currentSpeedLabel.setLocation(5, 35);
-      	this.currentAuthorityLabel.setLocation(5, 65);
-
       	this.contentPane.add(this.targetSpeedLabel);
+
+      	this.currentSpeedLabel = new JLabel("Current speed: ");
+      	this.currentSpeedLabel.setSize(300, 30);
+      	this.currentSpeedLabel.setLocation(5, 25);
       	this.contentPane.add(this.currentSpeedLabel);
+
+      	this.currentPowerLabel = new JLabel("Calculated power command: ");
+      	this.currentPowerLabel.setSize(300, 30);
+      	this.currentPowerLabel.setLocation(5, 45);
+      	this.contentPane.add(this.currentPowerLabel);
+
+      	this.currentAuthorityLabel = new JLabel("Current authority: ");
+      	this.currentAuthorityLabel.setSize(300, 30);
+      	this.currentAuthorityLabel.setLocation(5, 65);
       	this.contentPane.add(this.currentAuthorityLabel);
+
+
 
 		this.mainFrame.setContentPane(this.contentPane);
 		this.mainFrame.setSize(400, 400);
@@ -74,6 +81,10 @@ class RefreshTask extends TimerTask {
 		double currentSpeed = Math.round(trainController.getCurrentVelocitySI() * 100.0) / 100.0;
 		String currentSpeedText = "Current speed: " + String.valueOf(currentSpeed);
 		trainControllerUI.currentSpeedLabel.setText(currentSpeedText);
+
+		double currentPower = Math.round(trainController.getPowerCommand() * 100.0) / 100.0;
+		String currentPowerText = "Calculated power command: " + String.valueOf(currentPower);
+		trainControllerUI.currentPowerLabel.setText(currentPowerText);
 
 		double currentAuthority = Math.round(trainController.getAuthorityFromCTC() * 100.0) / 100.0;
 		String currentAuthorityText = "Current authority: " + String.valueOf(currentAuthority);

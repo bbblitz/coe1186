@@ -4,6 +4,7 @@ import java.util.TimerTask;
 public final class Main extends TimerTask {
 
 	static long TIME_INTERVAL_MILLIS = 100;
+	static int speedup = 1;
 
 	static TrainModel trainModel;
 	static TrainController trainController;
@@ -42,8 +43,8 @@ public final class Main extends TimerTask {
 
 	@Override
 	public void run() {
-		trainModel.tick(TIME_INTERVAL_MILLIS);
-		trainController.tick(TIME_INTERVAL_MILLIS);
+		trainModel.tick(TIME_INTERVAL_MILLIS * speedup);
+		trainController.tick(TIME_INTERVAL_MILLIS * speedup);
 	}
 
 }
