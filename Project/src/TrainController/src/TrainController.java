@@ -4,7 +4,8 @@ import java.util.BitSet;
 
 public class TrainController {
 	private TrainModel trainModel;
-	public PowerController powerController;
+	private PowerController powerController;
+	private TrainControllerUI ui;
 	
 	private final double MAX_TRAIN_POWER = 120000;	// 120kW
 	private final double AUTHORITY_BUFFER = 10;	// give some buffer to make sure train will never exceed authority
@@ -13,6 +14,8 @@ public class TrainController {
 	private double velocityFromTrainOperator;
 	private double velocityFromCTC;
 	private double authorityFromCTC;
+
+	private double targetVelocity;
 	
 	/* train status */
 	private double velocitySI;
@@ -31,6 +34,7 @@ public class TrainController {
 	public TrainController(TrainModel trainModel) {
 		this.trainModel = trainModel;
 		this.powerController = new PowerController(trainModel.getMass());
+		this.ui = new TrainControllerUI(this);
 		
 		// train status
 		this.velocitySI = this.trainModel.getCurrentVelocitySI();
@@ -94,10 +98,10 @@ public class TrainController {
 				this.trainModel.deactivateServiceBrake();
 				
 				// decide best velocity to target
-				double targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
+				this.targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
 				
 				// calculate new power
-				double calculatedPower = this.powerController.calculatePower(this.velocitySI, targetVelocity, deltaT);
+				double calculatedPower = this.powerController.calculatePower(this.velocitySI, this.targetVelocity, deltaT);
 				
 				// abs(power) should never be more than max train power
 				power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
@@ -144,6 +148,10 @@ public class TrainController {
 	public void receiveBeacon(byte[] beaconPackage) {
 		
 	}
+
+	/**
+	 * Methods to change physical train properties
+	 */
 	
 	private void openDoorsLeft() {
 		this.doorsOpenLeft = true;
@@ -183,10 +191,6 @@ public class TrainController {
 	
 	private void deactivateServiceBrake() {
 		this.trainModel.deactivateServiceBrake();
-	}
-	
-	private double getAuthorityFromCTC() {
-		return this.authorityFromCTC;
 	}
 		
 	private void announceStation() {
@@ -241,8 +245,26 @@ public class TrainController {
 	public void hackAuthorityFromCTC(double newAuthority) {
 		this.authorityFromCTC = newAuthority;
 	}
+
+	/**
+	 * Helper functions for UI refreshing
+	 */
+	public double getTargetVelocity() {
+		return this.targetVelocity;
+	}
+
+	public double getCurrentVelocitySI() {
+		return this.velocitySI;
+	}
+
+	public double getAuthorityFromCTC() {
+		return this.authorityFromCTC;
+	}
 	
-	
+
+	/**
+	 * Utility functions
+	 */
 
 	private double millisToSeconds(double millis) {
 		return millis / 1000.0;
