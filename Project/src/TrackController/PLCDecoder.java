@@ -3,10 +3,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.File;
 import java.util.Stack;
+import java.util.InputMismatchException;
 
 public class PLCDecoder
 {
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args) throws IOException, Exception
 	{
 		Scanner keyboard = new Scanner(System.in);
 		Scanner PLCReader;
@@ -16,33 +17,53 @@ public class PLCDecoder
 		
 		int inputCount = PLCReader.nextInt();
 		int outputCount = PLCReader.nextInt();
+		int switchCount = PLCReader.nextInt();
+		int crossingCount = PLCReader.nextInt();
 		boolean[] inputs = new boolean[inputCount];
-		boolean[] outputs = new boolean[outputCount];
+		boolean[] outputs = new boolean[outputCount+switchCount+crossingCount];
 		
 		for(int i = 0;i<inputCount;i++)
 		{
 			System.out.print("enter a boolean value for input "+i+": ");
-			inputs[i] = keyboard.nextBoolean();
+			try
+			{
+				inputs[i] = keyboard.nextBoolean();
+			}
+			catch(InputMismatchException ime)
+			{
+				if(keyboard.hasNextInt() && keyboard.nextInt()==1) inputs[i]=true;
+				else inputs[i]=false;
+			}
 		}
 		
-		outputs = decode (inputs,filename);
+		outputs = decode(inputs,filename);
 		
 		for(int i = 0;i<outputCount;i++)
 		{
-			System.out.println("output "+i+" = "+outputs[i]);
+			System.out.println("block "+i+" = "+outputs[i]);
+		}
+		for(int i=0;i<switchCount;i++)
+		{
+			System.out.println("switch "+i+" = "+outputs[i+outputCount]);
+		}
+		for(int i=0;i<crossingCount;i++)
+		{
+			System.out.println("crossing "+i+" = "+outputs[i+outputCount+switchCount]);
 		}
 	}
 		
-	public static boolean[] decode(boolean[] inputs, File filename) throws FileNotFoundException
+	public static boolean[] decode(boolean[] inputs, File filename) throws FileNotFoundException, Exception
 	{
 		Scanner PLCReader = new Scanner(filename);
 		int inputCount = PLCReader.nextInt();
 		int outputCount = PLCReader.nextInt();
+		int switchCount = PLCReader.nextInt();
+		int crossingCount = PLCReader.nextInt();
 		PLCReader.nextLine();
-		boolean[] outputs = new boolean[outputCount];
+		boolean[] outputs = new boolean[outputCount+switchCount+crossingCount];
 		
 		
-		for(int i=0;i<outputCount;i++)
+		for(int i=0;i<outputCount+switchCount+crossingCount;i++)
 		{
 			Stack<Boolean> operands = new Stack();
 			//System.out.print(i+" = ");
@@ -101,8 +122,7 @@ public class PLCDecoder
 					}
 					else
 					{
-						System.out.println("invalid PLC file");
-						System.exit(0);
+						throw new Exception("invalid PLC file");
 					}
 				}
 			}
