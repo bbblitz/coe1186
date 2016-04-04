@@ -64,15 +64,15 @@ str, 100, 50, 0, 50, 3, 1, TAIL, HEAD, 2, 1
 str, 150, 50, 0, 50, 4, 2, TAIL, HEAD, 3, 1
 str, 200, 50, 0, 50, 5, 3, TAIL, HEAD, 4, 1
 str, 250, 50, 0, 50, 6, 4, TAIL, HEAD, 5, 1
-cur, 300, 50, 90, -90, 100, 5, 8, TAIL, HEAD, 6, 1
-str, 300, 100, 270, 50, 14, 6, TAIL, HEAD, 8, 1
-cur, 250, 100, 0, -90, 100, 13, 8, TAIL, HEAD, 14, 1
-str, 250, 200, 180,  50,   12, 14, HEAD, TAIL, 13, 2
-str, 200, 200, 180,  50,   11, 13, HEAD, TAIL, 12, 2
-sta, 150, 200, 180,  50,   10, 13, HEAD, TAIL, 11, 2, "Kingdom Come"
-str, 100, 200, 180,  50,   9, 11, HEAD, TAIL, 10, 2
-cur, 50, 100, 180, 90, 100, 7, 10, HEAD, TAIL, 7, 2
+cur, 250, 50, 90, -90, 100, 5, 8, TAIL, HEAD, 6, 1
 str, 50, 100, 90, 50, 1, 9, TAIL, HEAD, 7, 2
+str, 350, 150, 270, 50, 14, 6, TAIL, HEAD, 8, 1
+cur, 50, 100, 180, 90, 100, 7, 10, HEAD, TAIL, 9, 2
+str, 150, 200, 180,  50,   9, 11, HEAD, TAIL, 10, 2
+sta, 200, 200, 180,  50,   10, 13, HEAD, TAIL, 11, 2, "Kingdom Come"
+str, 250, 200, 180,  50,   11, 13, HEAD, TAIL, 12, 2
+str, 300, 200, 180,  50,   12, 14, HEAD, TAIL, 13, 2
+cur, 250, 100, 0, -90, 100, 13, 8, TAIL, HEAD, 14, 1
 LINE END
 
 /*

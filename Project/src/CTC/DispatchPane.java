@@ -9,7 +9,20 @@ public class DispatchPane extends JPanel implements ActionListener{
   ArrayList<BlockStation> stations = new ArrayList<BlockStation>();
   ArrayList<Integer> trains = new ArrayList<Integer>();
   public DispatchPane(Config c) {
+    config = c;
     JComboBox trainlist = new JComboBox();
+    for(Integer i : trains){
+      trainlist.addItem("Train #" + i);
+    }
+    JComboBox blocklist = new JComboBox();
+    for(Line l : config.aldl){
+      System.out.println("Found a line: " + l.name);
+    }
+    for(BlockInterface bi : config.aldl.get(0).blocks){
+      if(bi != null){
+        blocklist.addItem("Block #" + bi.getID());
+      }
+    }
     JLabel l = new JLabel("Dispatch:");
     JLabel trainname = new JLabel("Train:");
     JTextField station = new JTextField();
@@ -17,9 +30,9 @@ public class DispatchPane extends JPanel implements ActionListener{
     setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
     add(l);
     add(trainname);
+    add(trainlist);
     add(station);
     add(dispatchbutton);
-    config = c;
 
     // dummy values
     /*

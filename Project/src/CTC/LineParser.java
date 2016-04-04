@@ -34,7 +34,7 @@ public class LineParser{
     }
     while(s.hasNextLine()){
       String blockstring = s.nextLine();
-
+      /*
       System.out.println("Parseing: " + blockstring);
       System.out.printf("State is:\n");
       if(curline != null && curline.name != null)
@@ -42,6 +42,7 @@ public class LineParser{
       System.out.printf("\tfname:%s\n",fname);
       System.out.printf("\tlinenumber:%d\n",linenumber);
       System.out.printf("\tincomment:%d\n",incomment?1:0);
+      */
 
       linenumber++;
       parseLine(blockstring);
@@ -72,27 +73,8 @@ public class LineParser{
   }
 
   public void resolveblocks(){
-    /*
-    System.out.println("Finished parseing line, resolveing blocks...");
-    System.out.println("Heads is:");
-    for(int i = 0; i < 8; i++){
-      System.out.printf("\t%3d : %d\n",i,heads.get(i));
-    }
-    System.out.println("Tails is:");
-    for(int i = 0; i < 8; i++){
-      System.out.printf("\t%3d : %d\n",i,tails.get(i));
-    }
-    System.out.println("Lines are:");
-    for(int i = 0; i < all.size(); i++){
-      Line thisline = all.get(i);
-      for(int j = 0; thisline.blocks.get(j) != null; j++){
-        System.out.printf("\t%3d : ",j);
-        System.out.printf("%3s\n",thisline.blocks.get(j).toString());
-      }
-    }
-    */
 
-    for(int i = 0; i < 8; i++){
+    for(int i = 1; curline.blocks.get(i) != null; i++){
       if(curline == null){
         System.out.println("\tCurrent line does not exist!");
         System.exit(1);
