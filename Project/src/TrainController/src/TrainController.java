@@ -93,6 +93,7 @@ public class TrainController {
 			if (this.dwellTimeRemaining <= 0) {
 				this.stationApproachStatus = StationApproachStatus.NONE;
 				this.trainModel.deactivateServiceBrake();
+				this.ui.log("Leaving station.");
 			}
 		}
 
@@ -101,6 +102,7 @@ public class TrainController {
 			this.stationApproachStatus = StationApproachStatus.DWELLING;
 			this.dwellTimeRemaining = STATION_DWELL_TIME;
 			this.trainModel.notifyAtStation(this.nextStationId);
+			this.ui.log("Stopped completely at station.");
 		}
 
 		// calculate power if we're not at or braking for a station
@@ -136,6 +138,7 @@ public class TrainController {
 			// distance to station is set but we're not braking yet - should we start braking?
 			double stoppingDistance = this.calculateServiceBrakeStoppingDistance();
 			if (stoppingDistance + DISTANCE_BUFFER >= this.distanceToStationEnd) {
+				this.ui.log("Going" + String.valueOf(this.velocitySI) + "m/s, stating to brake for station " + String.valueOf(this.distanceToStationEnd) + " m away.");
 				// give 0 power to start braking and begin station approach
 				this.stationApproachStatus = StationApproachStatus.BRAKING_FOR_APPROACH;
 				return 0;
@@ -211,15 +214,17 @@ public class TrainController {
 		int distance = this.bitsetToInt(bitDistance);
 
 
-		if (stationId == this.nextStationId) {
+		if (stationId == this.nextStationId || this.nextStationId == -1) {
 			// we are entering a station
 			this.distanceToStationEnd = distance;
+			this.stationApproachStatus = StationApproachStatus.DISTANCE_SET;
 		} else {
 			// we are leaving a station, don't care about distance back to station
 			String stationName = this.stationIdToStationName(stationId);
 			this.nextStation = stationName;
 			this.nextStationId = stationId;
 		}
+		this.ui.log("Received beacon: stationId=" + String.valueOf(stationId) + " distance=" + String.valueOf(distance));
 	}
 
 	private String stationIdToStationName(int stationId) {

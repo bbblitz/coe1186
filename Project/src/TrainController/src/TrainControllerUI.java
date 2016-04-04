@@ -3,8 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.BitSet;
 
-public class TrainControllerUI {
+public class TrainControllerUI implements ActionListener {
 
 	public TrainController trainController;
 	public JFrame mainFrame;
@@ -54,11 +55,15 @@ public class TrainControllerUI {
       	this.currentAuthorityLabel.setLocation(5, 65);
       	this.contentPane.add(this.currentAuthorityLabel);
 
-
       	JScrollPane scrollPane = new JScrollPane();
       	this.messagesList = new JList(this.messages);
       	scrollPane.setViewportView(messagesList);
       	this.contentPane.add(scrollPane);
+
+      	JButton simulateBeaconButton = new JButton("Simulate Beacon");
+      	simulateBeaconButton.addActionListener(this);
+      	simulateBeaconButton.setActionCommand("beacon");
+      	this.contentPane.add(simulateBeaconButton);
 
 		this.mainFrame.setContentPane(this.contentPane);
 		this.mainFrame.setSize(400, 400);
@@ -70,6 +75,20 @@ public class TrainControllerUI {
 		this.messages.addElement(message);
 		int lastIndex = this.messages.getSize() - 1;
 		this.messagesList.ensureIndexIsVisible(lastIndex);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if ("beacon".equals(e.getActionCommand())) {
+			// simulate beacon drop
+			BitSet beacon = new BitSet(32);
+			beacon.clear();
+			beacon.set(0);
+			beacon.set(2);
+
+			beacon.set(12);
+
+			this.trainController.receiveBeacon(beacon);
+		}
 	}
 
 }
