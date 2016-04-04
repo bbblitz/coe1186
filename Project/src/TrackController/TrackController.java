@@ -1,11 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 
 public class TrackController
 {
 	File PLCFile;
 	boolean[] inputs;
 	boolean[] outputs;
+	int blockCount;
 	int switchCount;
 	int crossingCount;
 	
@@ -14,9 +17,15 @@ public class TrackController
 		
 	}
 	
-	public TrackController(File PLCFile)
+	public TrackController(File PLCFile) throws FileNotFoundException
 	{
 		this.PLCFile = PLCFile;
+		Scanner PLCReader = new Scanner(PLCFile);
+		PLCReader.nextInt();
+		blockCount = PLCReader.nextInt();
+		switchCount = PLCReader.nextInt();
+		crossingCount = PLCReader.nextInt();
+		PLCReader.close();
 	}
 	
 	public void decode() throws Exception
@@ -49,6 +58,10 @@ public class TrackController
 		//update inputs
 		//send switch positions to track model
 		//zero authority on all true tracks?
+		for(int i=0;i<blockCount;i++)
+		{
+			if(outputs[i]) zeroAuthority(i);
+		}
 		//send speed to all blocks where speed changes?
 		//relay occupancies to CTC
 	}
