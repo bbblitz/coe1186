@@ -1,3 +1,6 @@
+import java.util.BitSet;
+//notifyAtStation
+
 public class TrainModel{
 	private double mass;
 	private final double eBrakeRate = -2.73;
@@ -17,11 +20,13 @@ public class TrainModel{
 	private double oldVelocity;
 	private double velocity;
 	private double velocitySI;
-	private double position;
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
 	//private TrackModel trackModel;
+	
+	private BitSet railSignal;
+	private BitSet beaconSignal;
 	
 	public TrainModel(String ID/*, TrackModel trackModel*/){
 		this.mass = 37103.86;
@@ -40,24 +45,32 @@ public class TrainModel{
 		this.accelerationSI = 0;
 		this.oldVelocity = 0;
 		this.velocitySI = 0;
-		this.position = 0;
-		this.trainController = new TrainController(this);
+		this.positionSI = 0;
+		
+		//this.trainController = new TrainController(this);
 		//this.trackModel = trackModel;
+		
+		railSignal = new BitSet(32);
+		beaconSignal = new BitSet(32);
 	}
 	
 	public void tick(double deltaT){
-		this.trainController.tick(deltaT);
-		if(this.velocitySI == 0){
+		//this.trainController.tick(deltaT);
+		//this.trainController.receiveSignalFromRail(this.railSignal);
+		
+		if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
-		}else{
+		} else if(){
+			
+		} else{
 			this.oldVelocity = this.velocitySI;
 		}
-		calculateSpeed(deltaT);
-		System.out.println("Distance: " + this.position);
-		//this.trackModel.recieveDistance();
+		double distanceOnTick = calculateSpeed(deltaT);
+		
+		//this.trackModel.recieveDistance(distanceOnTick);
 	}
 	
-	private void calculateSpeed(double deltaT){
+	private double calculateSpeed(double deltaT){
 		
 		double appForce = 0;
 		if(sBrake){
@@ -73,17 +86,36 @@ public class TrainModel{
 		this.accelerationSI = totalForce / this.mass;
 		
 		this.velocitySI = this.oldVelocity + this.accelerationSI * deltaT/1000.0;
+		if(this.velocitySI < 0){
+			this.velocitySI = 0;
+		}
 		
-		this.position += ((this.oldVelocity + this.velocitySI)/2) * deltaT/1000.0;
+		double distanceOnTick = ((this.oldVelocity + this.velocitySI)/2) * deltaT/1000.0;
+		return distanceOnTick;
 	}
 	
 	private double gravitationalForce(){
 		double grade = /* currentBlock.getGrade(); */ 0;		//set to 0 for now, need get method from Block
 		
-		double theta = Math.atan(grade/100);
-		double force = 9.8 * this.mass * Math.sin(theta) * -1;
+		double theta = Math.atan(grade/100.0);
+		double force = 9.8 * this.mass * Math.sin(theta) * -1.0;
 		
 		return force;
+	}
+	
+	public void notifyAtStation(int stationID){
+		/*
+		
+		
+		
+		
+		
+		handle adding passengers
+		
+		
+		
+		
+		*/
 	}
 	
 	public double getMass(){
@@ -136,5 +168,13 @@ public class TrainModel{
 	
 	public void setSignalPickupFailure(boolean failure){
 		this.signalFailure = failure;
+	}
+	
+	public void receiveBeacon(BitSet beacon){
+		this.trainController.receiveBeacon(beacon);
+	}
+	
+	public void receiveSignalFromRail(BitSet railSignal){
+		this.railSignal = railSignal;
 	}
 }
