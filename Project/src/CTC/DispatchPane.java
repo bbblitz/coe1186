@@ -6,7 +6,10 @@ import java.util.*;
 public class DispatchPane extends JPanel implements ActionListener{
   Config config;
   JButton dispatchbutton;
+  ArrayList<BlockStation> stations = new ArrayList<BlockStation>();
+  ArrayList<Integer> trains = new ArrayList<Integer>();
   public DispatchPane(Config c) {
+    JComboBox trainlist = new JComboBox();
     JLabel l = new JLabel("Dispatch:");
     JLabel trainname = new JLabel("Train:");
     JTextField station = new JTextField();

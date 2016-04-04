@@ -7,8 +7,8 @@ public class Train {
 		this.currentBlock = currentBlock;
 		this.route = new Route(this, destinationBlock, targetTime);
 
-		// create the actual train
-		TrainModel newTrain = new TrainModel(id);
+		// create the actual train TODO:Uncomment?
+		//TrainModel newTrain = new TrainModel(id);
 	}
 
 	public void setRoute(Route route) {

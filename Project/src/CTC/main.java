@@ -10,7 +10,7 @@ import java.util.*;
 public class main{
   //public static Config config;
   public static void main(String[] args){
-    CTCWindow ctcw = new CTCWindow(null);
+    CTCWindow ctcw = new CTCWindow(null, null);
     /*
     config = new Config();
     config.windowDim = new Dimension(1200,600);

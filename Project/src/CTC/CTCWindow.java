@@ -63,10 +63,6 @@ public class CTCWindow extends JFrame{
 			}
 		}
 
-
-
-
-
 		// move trains forward if their current block is no longer occupied
 		for (Train train : allTrains) {
 			// if train.getCurrentBlock() is not occupied according to track controller(s)
@@ -78,11 +74,6 @@ public class CTCWindow extends JFrame{
 				train.moveForwardOneBlock();
 			}
 		}
-
-
-
-
-
 	}
 
 }
