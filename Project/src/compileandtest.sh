@@ -9,7 +9,7 @@ cp CTC/* ./build
 cp TrackController/* ./build
 cp TrackModel/* ./build
 cp TrainModel/* ./build
-cp TrainController/* ./build
+cp TrainController/src/* ./build
 
 # Copy our "real" main.java last so it dosen't conflict with any other ones.
 cp ./main.java ./build
