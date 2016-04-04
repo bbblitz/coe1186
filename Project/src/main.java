@@ -1,14 +1,17 @@
 
+
 import java.awt.Toolkit;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class main{
 
+  static final long deltaT = 100;
+  static final int speedupFactor = 1;
+
+
   static TrackModel trackModel;
   static CTCWindow ctc;
-
-  static long deltaT = 100;
 
   //TODO:Finish this method
   static TrackModel createTrackModel(){
@@ -45,7 +48,7 @@ public class main{
 
 
     // Run the simulation
-    System.out.println("Starting the program, ticking every " + String.valueOf(deltaT) + " milliseconds...");
+    System.out.println("Starting the program, ticking every " + String.valueOf(deltaT) + " ms, and telling modules that " + String.valueOf(deltaT * speedupFactor) + "ms have passed each tick.");
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(new Ticker(), 0, deltaT);
@@ -55,8 +58,8 @@ public class main{
     public void run() {
       System.out.println("tick");
 
-      //trackModel.tick(deltaT);
-      //ctc.tick(deltaT);
+      //trackModel.tick(deltaT * speedupFactor);
+      //ctc.tick(deltaT * speedupFactor);
     }
   }
 }

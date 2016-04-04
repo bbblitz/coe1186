@@ -60,6 +60,10 @@ public class TrainControllerUI {
 		this.mainFrame.setVisible(true);
 	}
 
+	public void log(String message) {
+		
+	}
+
 }
 
 class RefreshTask extends TimerTask {
