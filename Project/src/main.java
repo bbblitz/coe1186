@@ -20,13 +20,16 @@ public class main{
   }
 
   //TODO:Finish this method
-  static TrackControllerManager createTrackControllers(TrackModel tm){
-
-    return new TrackControllerManager(tm);
+  static LineController createTrackControllers(TrackModel tm){
+	TrackController tc1 = new TrackController();
+	TrackController tc2 = new TrackController();
+	tc1.loadFile();
+	tc2.loadFile();
+    return new LineController(tc1, tc2, tm);
   }
 
   //TODO:Finish this method
-  static CTCWindow createCTC(TrackControllerManager tcm, TrackModel tm){
+  static CTCWindow createCTC(LineController tcm, TrackModel tm){
 
     return new CTCWindow(tm, tcm);
   }
@@ -34,7 +37,7 @@ public class main{
   public static void main(String[] args){
     //Order is important!
     trackModel = createTrackModel();
-    TrackControllerManager tcm = createTrackControllers(trackModel);
+    LineController tcm = createTrackControllers(trackModel);
     ctc = createCTC(tcm,trackModel);
 
 
