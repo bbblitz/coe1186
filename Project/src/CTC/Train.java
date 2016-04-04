@@ -3,7 +3,7 @@ public class Train {
 	private BlockInterface previousBlock;
 	private Route route;
 
-	public Train(Config config, int id, BlockInterface currentBlock, BlockInterface destinationBlock, long targetTime) {
+	public Train(Config config, String id, BlockInterface currentBlock, BlockInterface destinationBlock, long targetTime) {
 		this.currentBlock = currentBlock;
 		this.route = new Route(this, destinationBlock, targetTime);
 

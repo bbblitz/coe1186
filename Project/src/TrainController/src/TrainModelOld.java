@@ -2,7 +2,7 @@
 /**
  * Temporary class to simulate interaction between train controller and model.  Will be replaced with real model in the future.
  */
-public class TrainModel {
+public class TrainModelOld {
 	private final double MASS = 37103;	// kg
 	private final double EMERGENCY_BRAKE_ACCELERATION_RATE_SI = -2.73;
 	private final double SERVICE_BRAKE_ACCELERATION_RATE_SI = -1.2;
@@ -22,7 +22,7 @@ public class TrainModel {
 	private boolean serviceBrakeActive;
 	private boolean emergencyBrakeActive;
 	
-	public TrainModel() {
+	public TrainModel(String id) {
 		this.velocitySI = 1.0;
 		this.positionSI = 1.0;
 		this.serviceBrakeActive = false;
