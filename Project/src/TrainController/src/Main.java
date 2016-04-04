@@ -18,12 +18,12 @@ public final class Main extends TimerTask {
 		System.out.println("            TRAIN CONTROLLER TEST            ");
 		System.out.println("*********************************************");
 		
-		trainModel = new TrainModel();	// train mass
+		trainModel = new TrainModel("");
 		trainController = new TrainController(trainModel);
 		
 		// fake the train already moving
-		double CURRENT_SPEED = 1.0;
-		trainModel.setCurrentVelocitySI(CURRENT_SPEED);
+		//double CURRENT_SPEED = 1.0;
+		//trainModel.setCurrentVelocitySI(CURRENT_SPEED);
 		
 		// fake some speed+auth commands
 		double TARGET_SPEED = 6.0;
@@ -33,7 +33,7 @@ public final class Main extends TimerTask {
 		trainController.hackAuthorityFromCTC(AUTH);
 		
 		
-		System.out.println("Train is moving at " + CURRENT_SPEED + "m/s, and received a command to accelerate to " + TARGET_SPEED + "m/s with authority of " + AUTH + "m.");
+		System.out.println("Train is moving at 1 m/s, and received a command to accelerate to " + TARGET_SPEED + "m/s with authority of " + AUTH + "m.");
 		System.out.println();
 		
 		// set up the ticking
