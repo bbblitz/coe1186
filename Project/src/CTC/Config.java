@@ -9,7 +9,7 @@ public class Config{
   public ArrayList<Line> aldl;
   public ArrayList<Train> greenLineTrains;
   public ArrayList<Train> redLineTrains;
-
+  public ArrayList<Train> pinkLineTrains;
   public TrackControllerManager trackControllerManager;
 
   /*
