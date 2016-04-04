@@ -20,6 +20,8 @@ public class TrainModel{
 	private double oldVelocity;
 	private double velocity;
 	private double velocitySI;
+	private double position;
+	private double positionSI;
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
@@ -60,8 +62,6 @@ public class TrainModel{
 		
 		if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
-		} else if(){
-			
 		} else{
 			this.oldVelocity = this.velocitySI;
 		}
@@ -78,11 +78,16 @@ public class TrainModel{
 		} else if(eBrake){
 			appForce = this.eBrakeRate * this.mass;
 		} else{
-			appForce = this.power / this.oldVelocity;
+			if (this.power == 0 && this.oldVelocity == 0) {
+				// avoid division by 0
+				appForce = 0;
+			} else {
+				appForce = this.power / this.oldVelocity;
+			}
 		}
 		double gravForce = gravitationalForce();
 		double totalForce = gravForce + appForce;
-		
+		System.out.println(String.valueOf(appForce));
 		this.accelerationSI = totalForce / this.mass;
 		
 		this.velocitySI = this.oldVelocity + this.accelerationSI * deltaT/1000.0;
