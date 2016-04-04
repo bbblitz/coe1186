@@ -34,11 +34,21 @@ public class main{
     TrackControllerManager tcm = createTrackControllers(trackModel);
     ctc = createCTC(tcm,trackModel);
 
-    //Run the simulation
+
+    // initialize a train on the track somewhere
+
+    // create a route for the train?
+
+    // give the train some authority and speed
+
+    // go train go
+
+
+    // Run the simulation
     System.out.println("Starting the program, ticking every " + String.valueOf(deltaT) + " milliseconds...");
 
     Timer timer = new Timer();
-    timer.schedule(new Ticker(), deltaT);
+    timer.scheduleAtFixedRate(new Ticker(), 0, deltaT);
   }
 
   static class Ticker extends TimerTask {
@@ -47,11 +57,6 @@ public class main{
 
       //trackModel.tick(deltaT);
       //ctc.tick(deltaT);
-
-
-      //System.exit(0); //Stops the AWT thread (and everything else)
-      Timer timer = new Timer();
-      timer.schedule(new Ticker(), deltaT);
     }
   }
 }
