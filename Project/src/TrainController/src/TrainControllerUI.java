@@ -13,6 +13,8 @@ public class TrainControllerUI {
 	public JLabel currentSpeedLabel;
 	public JLabel currentPowerLabel;
 	public JLabel currentAuthorityLabel;
+	public DefaultListModel messages = new DefaultListModel();
+	public JList messagesList;
 	
 	public TrainControllerUI(TrainController trainController) {
 		this.trainController = trainController;
@@ -30,7 +32,7 @@ public class TrainControllerUI {
       	this.contentPane = new JPanel();
       	this.contentPane.setOpaque(true);
       	this.contentPane.setBackground(Color.WHITE);
-      	this.contentPane.setLayout(null);
+      	this.contentPane.setLayout(new GridLayout(0, 1));
 
       	this.targetSpeedLabel = new JLabel("Target speed: ");
       	this.targetSpeedLabel.setSize(300, 30);
@@ -53,6 +55,10 @@ public class TrainControllerUI {
       	this.contentPane.add(this.currentAuthorityLabel);
 
 
+      	JScrollPane scrollPane = new JScrollPane();
+      	this.messagesList = new JList(this.messages);
+      	scrollPane.setViewportView(messagesList);
+      	this.contentPane.add(scrollPane);
 
 		this.mainFrame.setContentPane(this.contentPane);
 		this.mainFrame.setSize(400, 400);
@@ -61,7 +67,9 @@ public class TrainControllerUI {
 	}
 
 	public void log(String message) {
-		
+		this.messages.addElement(message);
+		int lastIndex = this.messages.getSize() - 1;
+		this.messagesList.ensureIndexIsVisible(lastIndex);
 	}
 
 }

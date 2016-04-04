@@ -22,6 +22,7 @@ public class TrainController {
 	
 	/* station stuff */
 	private String nextStation;
+	private int nextStationId;
 	private int distanceToStationEnd;
 	private enum StationApproachStatus {
 		NONE,
@@ -51,6 +52,7 @@ public class TrainController {
 		this.ui = new TrainControllerUI(this);
 		
 		this.nextStation = "";
+		this.nextStationId = -1;
 		this.distanceToStationEnd = -1;
 
 		// train status
@@ -78,7 +80,7 @@ public class TrainController {
 		this.authorityFromCTC -= deltaX;
 		this.authorityFromCTC = Math.max(0, this.authorityFromCTC);	// no negative authorities
 
-		// if we know the distance to station end, update it
+		// if we know the distance to station end, update that
 		if (this.stationApproachStatus == StationApproachStatus.DISTANCE_SET || this.stationApproachStatus == StationApproachStatus.BRAKING_FOR_APPROACH) {
 			this.distanceToStationEnd -= deltaX;
 			this.distanceToStationEnd = Math.max(0, this.distanceToStationEnd);	// no negative distances
@@ -98,6 +100,7 @@ public class TrainController {
 		if (this.stationApproachStatus == StationApproachStatus.BRAKING_FOR_APPROACH && this.velocitySI == 0) {
 			this.stationApproachStatus = StationApproachStatus.DWELLING;
 			this.dwellTimeRemaining = STATION_DWELL_TIME;
+			this.trainModel.notifyAtStation(this.nextStationId);
 		}
 
 		// calculate power if we're not at or braking for a station
@@ -117,6 +120,7 @@ public class TrainController {
 			this.trainModel.receivePowerCommand(power);
 		} else {
 			// we're braking for a station approach or stopped at the station
+			this.trainModel.activateServiceBrake();	// if it wasn't already
 			this.trainModel.receivePowerCommand(0);
 		}
 	}
@@ -128,44 +132,32 @@ public class TrainController {
 	 */
 	public double calculatePower(double deltaT) {
 		double power;
-		
-		boolean engineFailure = this.trainModel.getEngineFailure();
-		boolean brakeFailure = this.trainModel.getBrakeFailure();
-		boolean signalPickupFailure = this.trainModel.getSignalPickupFailure();
-		
-		if (engineFailure || brakeFailure || signalPickupFailure) {
-			// emergency!!!
-			this.trainModel.activateEmergencyBrake();
-			return 0;
-		} else {
-			// no emergency, continue with power calculation
-			if (this.distanceToStationEnd > -1 && !this.brakingForStationApproach) {
-				// distance to station is set but we're not braking yet - should we start braking?
-				double stoppingDistance = this.calculateServiceBrakeStoppingDistance();
-				if (stoppingDistance + DISTANCE_BUFFER >= this.distanceToStationEnd) {
-					// give 0 power to start braking and begin station approach
-					this.brakingForStationApproach = true;
-					return 0;
-				}
-			}
-			if (haveEnoughAuthority()) {
-				// authority is fine, turn off service brake if applied and let the train continue
-				this.trainModel.deactivateServiceBrake();
-				
-				// decide best velocity to target
-				this.targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
-				
-				// calculate new power
-				double calculatedPower = this.powerController.calculatePower(this.velocitySI, this.targetVelocity, deltaT);
-				
-				// abs(power) should never be more than max train power
-				power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
-				return power;
-			} else {
-				// out of authority, brake the train to a stop (or until more authority is received)
-				this.trainModel.activateServiceBrake();
+		if (this.stationApproachStatus == StationApproachStatus.DISTANCE_SET) {
+			// distance to station is set but we're not braking yet - should we start braking?
+			double stoppingDistance = this.calculateServiceBrakeStoppingDistance();
+			if (stoppingDistance + DISTANCE_BUFFER >= this.distanceToStationEnd) {
+				// give 0 power to start braking and begin station approach
+				this.stationApproachStatus = StationApproachStatus.BRAKING_FOR_APPROACH;
 				return 0;
 			}
+		}
+		if (haveEnoughAuthority()) {
+			// authority is fine, turn off service brake if applied and let the train continue
+			this.trainModel.deactivateServiceBrake();
+			
+			// decide best velocity to target
+			this.targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
+			
+			// calculate new power
+			double calculatedPower = this.powerController.calculatePower(this.velocitySI, this.targetVelocity, deltaT);
+			
+			// abs(power) should never be more than max train power
+			power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
+			return power;
+		} else {
+			// out of authority, brake the train to a stop (or until more authority is received)
+			this.trainModel.activateServiceBrake();
+			return 0;
 		}
 	}
 	
@@ -218,14 +210,15 @@ public class TrainController {
 		int stationId = this.bitsetToInt(bitStationId);
 		int distance = this.bitsetToInt(bitDistance);
 
-		String stationName = this.stationIdToStationName(stationId);
 
-		if (stationName == this.nextStation) {
+		if (stationId == this.nextStationId) {
 			// we are entering a station
 			this.distanceToStationEnd = distance;
 		} else {
 			// we are leaving a station, don't care about distance back to station
+			String stationName = this.stationIdToStationName(stationId);
 			this.nextStation = stationName;
+			this.nextStationId = stationId;
 		}
 	}
 
