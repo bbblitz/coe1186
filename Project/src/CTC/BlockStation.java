@@ -49,4 +49,8 @@ public class BlockStation extends BlockInterface{
   public String getStationName() {
 	  return this.stationName;
   }
+
+  public String toString(){
+    return String.format("x:%3d y:%3d length:%3d head:%3d tail:%3d direction:%3d name:%s", x, y, length, head != null?head.getID():-1, tail != null?tail.getID():-1, direction, this.stationName);
+  }
 }

@@ -15,9 +15,6 @@ public class DispatchPane extends JPanel implements ActionListener{
       trainlist.addItem("Train #" + i);
     }
     JComboBox blocklist = new JComboBox();
-    for(Line l : config.aldl){
-      System.out.println("Found a line: " + l.name);
-    }
     for(BlockInterface bi : config.aldl.get(0).blocks){
       if(bi != null){
         blocklist.addItem("Block #" + bi.getID());
@@ -25,13 +22,15 @@ public class DispatchPane extends JPanel implements ActionListener{
     }
     JLabel l = new JLabel("Dispatch:");
     JLabel trainname = new JLabel("Train:");
+    JLabel blockname = new JLabel("Block:");
     JTextField station = new JTextField();
-    dispatchbutton = new JButton("Set");
+    dispatchbutton = new JButton("Dispatch");
     setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
     add(l);
     add(trainname);
     add(trainlist);
-    add(station);
+    add(blockname);
+    add(blocklist);
     add(dispatchbutton);
 
     // dummy values

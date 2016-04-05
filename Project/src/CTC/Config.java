@@ -5,10 +5,15 @@ import java.util.*;
 
 
 public class Config{
+  //Why dosen't java have #define? this is so inconvinent.
+  public static final boolean DEBUG_PARSER = false;
+
+
   //The red line is the first line in aldl, the green line is the second.
   public ArrayList<Line> aldl;
   public ArrayList<Train> greenLineTrains;
   public ArrayList<Train> redLineTrains;
+  //TODO:Delete this
   public ArrayList<Train> pinkLineTrains;
   public TrackControllerManager trackControllerManager;
 

@@ -1,14 +1,23 @@
 public class Train {
+	private int trainid;
 	private BlockInterface currentBlock;
 	private BlockInterface previousBlock;
 	private Route route;
 
-	public Train(Config config, String id, BlockInterface currentBlock, BlockInterface destinationBlock, long targetTime) {
+	public Train(Config config, Integer id, BlockInterface currentBlock, BlockInterface destinationBlock, long targetTime) {
 		this.currentBlock = currentBlock;
 		this.route = new Route(this, destinationBlock, targetTime);
-
+		this.trainid = id;
 		// create the actual train TODO:Uncomment?
 		//TrainModel newTrain = new TrainModel(id);
+	}
+
+	public int getID(){
+		return trainid;
+	}
+
+	public void setID(int n){
+		trainid = n;
 	}
 
 	public void setRoute(Route route) {

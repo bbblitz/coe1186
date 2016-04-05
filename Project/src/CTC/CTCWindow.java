@@ -21,6 +21,15 @@ public class CTCWindow extends JFrame{
 
 		LineParser parser = new LineParser("track.txt",config);
 
+		//TODO:Remove this
+		BlockInterface startblock = config.aldl.get(0).blocks.get(11);
+		System.out.println("Start block is:");
+		System.out.println(startblock.toString());
+
+		//Train ntrain = new Train();
+
+		//config.pinkLineTrains.add(ntrain);
+
 		JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = new TrackPane(config);
