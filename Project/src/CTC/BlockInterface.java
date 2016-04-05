@@ -1,6 +1,5 @@
-
 import java.util.*;
-
+import java.awt.*;
 /**
  * The overarching class for all blocks. All block types extend this class.
  */
@@ -27,6 +26,8 @@ public abstract class BlockInterface{
 
   public abstract BlockInterface getHead();
   public abstract BlockInterface getTail();
+	public abstract void drawBlock(Graphics g);
+	public abstract void drawTrainOn(Graphics g, boolean on);
 
   /**
    * Get the next block. Returns the first block in its adjacentBlocks ArrayList, so only use if you're certain it has only 1 connected block (e.g. from the yard)

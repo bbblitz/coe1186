@@ -1,4 +1,5 @@
 import java.util.*;
+import java.awt.*;
 
 public class BlockSwitch extends BlockInterface{
   //.
@@ -38,20 +39,26 @@ public class BlockSwitch extends BlockInterface{
       }
     }
   }
-  
+
   public BlockInterface getHead() {
 	  return this.head;
   }
-  
+
   public BlockInterface getTail() {
 	  return this.tail;
   }
-  
+
   public void setFlipped(boolean flipped) {
 	  this.flipped = flipped;
   }
-  
+
   public boolean getFlipped() {
 	  return this.flipped;
+  }
+  public void drawBlock(Graphics g){
+
+  }
+  public void drawTrainOn(Graphics g, boolean on){
+
   }
 }

@@ -98,21 +98,7 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void drawStraightTrack(Graphics g, BlockStraight track, Color c){
-    BlockStraight ts = track;
-    int sx = ts.x;
-    int sy = ts.y;
-    //System.out.println("Cos of " + ts.direction + " is " + Math.cos(Math.toRadians(ts.direction)));
-    int exoff = (int)(Math.cos(Math.toRadians(ts.direction))*ts.length);
-    int eyoff = (int)(Math.sin(Math.toRadians(ts.direction))*ts.length);
-    int ex = exoff+sx;
-    int ey = eyoff+sy;
-    //System.out.printf("Line from (%d,%d)+(%d,%d) to (%d,%d)\n",sx,sy,exoff,eyoff,ex,ey);
-    g.drawLine(sx,sy,ex,ey);
-    ArrayList<Infrastructure> allinfra = track.getInfrastructure();
-    if(allinfra == null) return;
-    for(Infrastructure f : allinfra){
-
-    }
+    track.drawBlock(g);
   }
 
   public void drawCrossingTrack(Graphics g, BlockCrossing dti, Color c){
