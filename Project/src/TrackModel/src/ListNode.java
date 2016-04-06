@@ -112,8 +112,18 @@ public class ListNode
 	            // switch_block + ":" + direction + ":");
 	  }
 	  
-	  theLinkedList.display();
-	  System.out.println("Speed Limit is "+speed_limit);
+	 // theLinkedList.display();
+	 // System.out.println("Speed Limit is "+speed_limit);
+	  //System.out.println(theLinkedList.find(2).block_number);
+	  int distance = 0, x = 1;
+	  
+	  //Calculate distance
+	  while(theLinkedList.find(x).block_length != 0){
+		  System.out.println(theLinkedList.find(x).block_length);
+		  distance = (int) (theLinkedList.find(x).block_length + distance);
+		  System.out.println(distance+"cccccccc");
+		  x++;
+	  }
   }
 	   //outputing on reverse order, ORANGE is the first link
 	//  theLinkedList.removeFirst(); //ORANGE is removed
