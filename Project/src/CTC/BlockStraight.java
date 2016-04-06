@@ -52,20 +52,95 @@ public class BlockStraight extends BlockInterface{
   }
 
   public void drawBlock(Graphics g){
-    //System.out.println("Cos of " + ts.direction + " is " + Math.cos(Math.toRadians(ts.direction)));
-    int exoff = (int)(Math.cos(Math.toRadians(direction))*length);
-    int eyoff = (int)(Math.sin(Math.toRadians(direction))*length);
-    int ex = exoff+x;
-    int ey = eyoff+y;
-    //System.out.printf("Line from (%d,%d)+(%d,%d) to (%d,%d)\n",sx,sy,exoff,eyoff,ex,ey);
-    g.drawLine(x,y,ex,ey);
+    //Figure out what colors to draw in {}
+    int drawnnum = 0;
+    boolean drawgray = false, drawred = false, drawyellow = false;
+    if(getFailState() == TrackFailState.FS_TRACK_CIRCUIT_FAILURE || getFailState() == TrackFailState.FS_CIRCUIT_AND_RAIL || getFailState() == TrackFailState.FS_CIRCUIT_AND_POWER || getFailState() == TrackFailState.FS_CIRCUIT_RAIL_POWER){
+      drawred = true;
+      drawnnum++;
+    }
+    if(getFailState() == TrackFailState.FS_BROKEN_RAIL || getFailState() == TrackFailState.FS_CIRCUIT_AND_RAIL || getFailState() == TrackFailState.FS_RAIL_AND_POWER || getFailState() == TrackFailState.FS_CIRCUIT_RAIL_POWER){
+      drawgray = true;
+      drawnnum++;
+    }
+    if(getFailState() == TrackFailState.FS_POWER_FAILURE || getFailState() == TrackFailState.FS_CIRCUIT_AND_POWER || getFailState() == TrackFailState.FS_RAIL_AND_POWER || getFailState() == TrackFailState.FS_CIRCUIT_RAIL_POWER){
+      drawyellow = true;
+      drawnnum++;
+    }
+
+    Color[] allcol = new Color[Math.max(1,drawnnum)];
+    int count = 0;
+    if(drawred){
+      allcol[count++] = Color.RED;
+    }
+    if(drawgray){
+      allcol[count++] = Color.GRAY;
+    }
+    if(drawyellow){
+      allcol[count++] = Color.YELLOW;
+    }
+    if(!drawred && !drawgray && !drawyellow){
+      allcol[count++] = Color.GREEN;
+    }
+    //Actually draw the thing
+    drawBySegments(allcol, g);
+
+
     ArrayList<Infrastructure> allinfra = this.getInfrastructure();
     if(allinfra == null) return;
     for(Infrastructure f : allinfra){
 
     }
   }
+
+  public void drawBySegments(Color[] colors, Graphics g){
+    int segmentlength = length / (colors.length * 5);
+    int exoff = (int)(Math.cos(Math.toRadians(direction))*length);
+    int eyoff = (int)(Math.sin(Math.toRadians(direction))*length);
+    int ex = exoff+x;
+    int ey = eyoff+y;
+    int xadd = (exoff/length)*segmentlength;
+    int yadd = (eyoff/length)*segmentlength;
+
+    //Print some debug stuff
+    /*
+    System.out.printf("Drawing straight block:\n\toff:(%d,%d)\n\tstart:(%d,%d)\n\tend:(%d,%d)\n\tadd:(%d,%d)\n",exoff,eyoff,x,y,ex,ey,xadd,yadd);
+    System.out.printf("With colors:\n");
+    for(int i = 0; i < colors.length; i++){
+      System.out.printf("\t%s\n",colors[i].toString());
+    }
+    */
+    /*
+    int gx = x;
+    int gy = y;
+    int colind = 0;
+    while((gx != ex) || (gy != ey)){
+      System.out.printf("Drawing a line from (%d,%d) to (%d,%d)",gx,gy,gx+xadd,gy+yadd);
+
+      g.setColor(colors[colind%colors.length]);
+      g.drawLine(gx,gy,gx+xadd,gy+yadd);
+
+      colind++;
+      gx += xadd;
+      gy += yadd;
+    }
+    */
+    for(int gx=x, gy=y, col = 0; (gx != exoff+x) || (gy != eyoff+y); gx+= xadd, gy += yadd, col++){
+      g.setColor(colors[col%colors.length]);
+      //System.out.printf("Drawing a line from (%d,%d) to (%d,%d)",gx,gy,gx+xadd,gy+yadd);
+      g.drawLine(gx,gy,gx+xadd,gy+yadd);
+    }
+  }
+
   public void drawTrainOn(Graphics g, boolean on){
 
+    drawBlock(g);
+    //Find the middle of the track
+    int exoff = (int)(Math.cos(Math.toRadians(direction))*length);
+    int eyoff = (int)(Math.sin(Math.toRadians(direction))*length);
+    int ex = (exoff/2)+x;
+    int ey = (eyoff/2)+y;
+    g.setColor(Color.WHITE);
+    g.drawOval(ex-5,ey-5,10,10);
   }
 }

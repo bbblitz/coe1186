@@ -7,6 +7,7 @@ import java.util.*;
 public class Config{
   //Why dosen't java have #define? this is so inconvinent.
   public static final boolean DEBUG_PARSER = false;
+  public static final int SEGMENTATION_LENGTH = 10;
 
 
   //The red line is the first line in aldl, the green line is the second.
