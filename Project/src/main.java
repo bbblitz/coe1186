@@ -12,6 +12,7 @@ public class main{
 
   static TrackModel trackModel;
   static CTCWindow ctc;
+  static LineController tcm;
 
   //TODO:Finish this method
   static TrackModel createTrackModel(){
@@ -37,7 +38,7 @@ public class main{
   public static void main(String[] args){
     //Order is important!
     trackModel = createTrackModel();
-    LineController tcm = createTrackControllers(trackModel);
+    tcm = createTrackControllers(trackModel);
     ctc = createCTC(tcm,trackModel);
 
 
@@ -67,7 +68,7 @@ public class main{
 			//ctc.tick(deltaT);
       	}
 
-      
+
 	}
   }
 }
