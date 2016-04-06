@@ -1,0 +1,11 @@
+Issue Discovery
+
+We will create test code that will test each of our modules regularly for errors.  Each test file will correspond to a module and contain sample data for inputs and outputs.  It will run the module, supplying it with the sample data as input as if it were from another module (as it will be in the final working version), and ensure that the module processes the data correctly and returns an output that is previously determined to be correct.
+
+Issue Tracking
+
+We will be using Github.com's built-in issue tracking features.  Issues will be opened as soon as they are discovered, and assigned to the most appropriate member.  The member assigned to the issue might not necessarily be the member who designed or wrote the relevant code, but in most cases, that member will have the most knowledge of the specific details of the module anyway.
+
+Issue Resolution
+
+All issues will be resolved as soon as possible. Time limits for issue resolution will be set on a case-by-case basis, depending on the severity and importance. Critical issues, such as those that produce non-runnable code, must be resolved quicker than non-critical issues, such as those that implemenet a feature improperly or produce wrong output.

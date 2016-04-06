@@ -1,0 +1,150 @@
+The CTC window will be split into 3 sections
+
+A top ribbon that will take 10% of the window's allotted height, and 100% of the allotted width, and will flush with the top of the screen.
+
+A left panel that will take up 60% of the window's width, and 85% of the window's height, the bottom and left edges of this panel will be flush with the bottom and left edges of the window, and the top of this panel will be flush with the top ribbon
+
+A right pane which will contain several smaller panes: the train line visibility toggle box, a train details box, a manual dispatch box, a track switch window, and a message log. The right pane will be 40% of the window, and 85% the height of the window, it's bottom edge will be flush with the bottom edge of the window, it's right edge should be flush with the right edge of the window, it's top edge should be flush should the top ribbon, and it's left edge should be flush with the left pane.
+
+
+Overview of the window
+╭──────────────────────────────────────────────────╮
+│ Top Ribbon                                       │
+├─────────────────────────────┬────────────────────┤
+│                             │                    │
+│                             │                    │
+│   Right pane                │   Left pane        │
+│                             │                    │
+│                             │                    │
+│                             │                    │
+│                             │                    │
+│                             │                    │
+╰─────────────────────────────┴────────────────────╯
+
+The top ribbon
+  Each label for the dropdown menu will be the full height of the top ribbon, and 8 default font-widths.
+  Will contain text labeled drop menus for text labeled buttons (in order from the left):
+    File-
+      Exiting the window(Exit)
+    Edit-
+      removes the currently selected text and saves it to the clipboard(Cut)
+      creates a copy of the currently selected text and saves it to the clipboard (Copy)
+      inserts the clipboards' text into the currently selected field (Paste)
+    Window-
+      Manually open train schedule pane(Schedual)
+      Manually open train line visibility toggle box window (Line Vis.)
+      Manually open train details box window (Details)
+      Manually open manual train dispatch window (Dispatch)
+      Manually open message log window (Message)
+      Manually open track switch window (Switch)
+    Help-
+      Opens the user manual in another window(Manual)
+      Shows team name, and team member's names (About)
+
+      The top ribbon with the "window" drop down selected
+      ┌──────────────────────────────────────────────────┐
+      │ [File  ] [Edit  ] [Window] [Help  ]              │
+      └───────────────────┐              ┌───────────────┘
+                          │Schedual      │
+                          │Line Vis.     │
+                          │Details       │
+                          │Dispatch      │
+                          │Message       │
+                          │Switch        │
+                          ╰──────────────╯
+The left pane
+  Will show a diagram of train lines
+  Only train lines that are selected in the train line visibility box will be shown
+  The train line diagram will attempt to fill both the width and the height of the window, but will stop at the first limit reached(either the height or the width)
+  Will contain a black background, so as to easily contrast with the possible colors of the track (See below)
+  Any lines that are visible will also have a diagram of all trains on the line.
+  Trains will be shown as a box in the center of the block it is on.
+  Segments of the train line will be shown as 2 pixel width lines, and will end 5 model feet before, and 5 model feet after what is described in the spreadsheet to easily differentiate different line segments.
+  Segments of the train line that are designated "station" segments will have two 4 pixel lines running on either side of their 2 pixel track
+  Segments of the train line that are designated "switch" segments show the direction the switch currently routing trains in the track's primary color(below), and non-current routings in a faded color(by subtracting 100 to each the R,G, and B values of the color, if possible, and if not, subtracting the maximum ammount)
+  Segments of the train line that are designated "Crossing" will be indicated by a blue(rgb(0,0,255)) 2px border on both sides of the rail.
+  Each line segment will be one of the following colors, indicating it's state:
+    Normal(green, rgb(0,255,0))
+    Broken Rail(gray, rgb(100,100,100))
+    Track Circuit Failure (red, rgb(255,0,0))
+    Power Failure(yellow, rgb(255,255,0))
+    If a section of the track is experiencing more than one failure, the colors will appear in stripes, if 2 failures are experienced at a time, the track will be 20 model feet of alternating colors corresponding to the failures. If the section of track is experiencing 3 failures at a time, the alternating colors will be in 10 model feet increments.
+  A section of track can be selected by clicking on it, and will appear with all it's details in the right pane
+  If the selected section of track is a switch, it will appear in the switch window.
+  If the selected item is a train, it will appear in the dispatch and train information windows.
+
+The right pane
+  Sub-panes in the right pane will be half the right pane's width, and will have the same height and width, so 20% of window height, and 20% of window width. Panes with overflow(graphical elements that cannot fit in the pane) will hide the overflow, and may not display all their graphical elements.
+  The right pane will contain informational, and function panes:
+
+    Train schedule pane - Allows a selected (see the left pane) train to be scheduled, with a time. The schedule pane will have a text label that describes the train that is selected. The labels will be 18 pixels tall, and the full width of the pane. There will be a table underneath the label that contains the train's current schedule. The table will be formatted with columns: Time and Action, where time is the time that the action should take place, and Action is the new authority for the train.
+    The schedule pane will have an "Add" button at the bottom, that when pressed will display a popup that will allow the user to add parts to the schedule for that train.
+
+    ┌────────────────────────┐      Add / Edit popup
+    │Train: trAin123         │    ┌───────────────┐
+    ├────────┬───────────────┤    │Time:[8:30__]  │
+    │  Time  │ Infrastructure│    │Infra.:[abc___]│
+    ├────────┼───────────────┤    │Speed:[16_]f/s │
+    │ 5:30   │ Station abcde │    ├───────────────┤
+    │ 6:00   │ Station 12345 │    │     Confirm   │
+    │        │               │    └───────────────┘
+    ├───────┬┴──────┬────────┤
+    │  Add  │  Edit │ Delete │
+    └───────┴───────┴────────┘
+
+  Line visibility toggle pane - Contains a checkbox for each train line with the line name on the right of the checkbox, organized vertically. The pane will show up to as many lines as fit in the box at the users default font. The checkboxes when checked or unchecked hides/unhides lines on the left pane.
+
+  ┌───────────────┐
+  │  ☐  Green Line│
+  │  ☑  Red Line  │
+  │               │
+  │               │
+  └───────────────┘
+
+  Train details pane - Shows throughput and other details, with a label on the left half of the pane, and it's corresponding value on the right hand of the pane. details will include throughput, and may include number of passengers, speed, and authority.
+
+  ┌───────────────────────┐
+  │ Train:      trAin123  │
+  │ Throughput: 11 f/s    │
+  │ Passengers: 23        │
+  │ Speed:      12 f/s    │
+  │ Authority:  200 ft    │
+  │                       │
+  │                       │
+  └───────────────────────┘
+
+  Train dispatch pane - Allows the user to dispatch a train to a specifc station
+
+  ┌───────────────────────┐
+  │ Train:      trAin123  │
+  │                       │
+  │ Station:    [_______] │
+  │                       │
+  │                       │
+  ├───────────────────────┤
+  │        Set            │
+  └───────────────────────┘
+
+  Message log pane - A pane that shows messages from different parts of the software, may show: success/failure to set authority, success/failure to open close tracks, success/failure to dispatch trains. The pane shall show up to as many messages as will fit at the users default font in the pane.
+
+  ┌───────────────────────┐
+  │                       │
+  │ trAin123 departed     │
+  │ Switch B modified     │
+  │ Track section 33 fail │
+  │ ...                   │
+  │                       │
+  │                       │
+  └───────────────────────┘
+
+  Track switch pane - Allows the user to activate track switches, the pane will show a graphical representation of the two states, with the color scheme described in left pane (segments). Switching is controlled by clicking on an inactive switch, and then clicking on a 22 pixel conformation button (labeld "Confirm") at the bottom of the window. If no switch will take place based on the user's selection, the "Confirm" button will be faded, and no action will occur if it is clicked.
+
+  ┌───────────────────────┐
+  │      │      │         │
+  │      ╲     ╱          │
+  │           ╱           │
+  │          ╱            │
+  │          │            │
+  ├───────────────────────┤
+  │         Confirm       │
+  └───────────────────────┘

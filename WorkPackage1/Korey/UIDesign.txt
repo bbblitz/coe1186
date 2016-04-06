@@ -1,0 +1,18 @@
+The Track Controller will be displayed in a window
+The Track Controller will display Track Number, Train Authority, Track Speed, and Track State
+
+Track Number:
+the Track Number section will display the name of the selected track
+
+Train Authority
+If a train is on the track, it's authority will be displayed in the Train Autority section
+
+Track Speed:
+The track speed limit will be displayed in the Track Speed Section
+
+Track State:
+The Track State section will display an icon representing the state the track: 
+	for a railroad switch, the current direction is displayed by a blue arrow across the route the train will follow. An additional switch will allow the user to change the switch position
+	for a road crossing, the display will show if the gates are closed and the lights are on. An additional switch will allow the user to turn on or off the railroad crossing signal.
+	for any tracks with lights will display which lights are active and an additional set of buttons will allow the user to change which lights are lit.
+	the track will have a warning symbol in the corner if it is malfunctioning

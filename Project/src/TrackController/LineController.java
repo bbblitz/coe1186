@@ -1,0 +1,85 @@
+import java.io.File;
+
+public class LineController
+{
+	TrackController controller1;
+	TrackController controller2;
+	
+	public LineController(TrackController controller1, TrackController controller2)
+	{
+		this.controller1 = controller1;
+		this.controller2 = controller2;
+	}
+		
+	public void updateInputs(boolean[] inputs) throws Exception
+	{
+		boolean[] inputs1 = new boolean[14];
+		boolean[] inputs2 = new boolean[14];
+		for(int i=0;i<14;i++)
+		{
+			inputs1[i] = inputs[i];
+			inputs2[i] = inputs[i+14];
+		}
+		controller1.updateInputs(inputs1);
+		controller2.updateInputs(inputs2);
+	}
+	
+	public boolean[] getBlockOccupancies()
+	{
+		boolean[] out = new boolean[28];
+		for(int i=0;i<14;i++)
+		{
+			out[i] = controller1.inputs[i];
+			out[i+14] = controller2.inputs[i];
+		}
+		return out;
+	}
+	
+	public boolean[] getSwitchStates()
+	{
+		boolean[] switches = new boolean[controller1.switchCount+controller2.switchCount];
+		int j=0;
+		for(int i=controller1.blockCount;i<controller1.blockCount+controller1.switchCount;i++)
+		{
+			switches[j++] = controller1.outputs[i];
+		}
+		for(int i=controller2.blockCount;i<controller1.blockCount+controller2.switchCount;i++)
+		{
+			switches[j++] = controller2.outputs[i];
+		}
+		return switches;
+	}
+	
+	public static void main(String[] args)
+	{
+		/*TrackController TCA = new TrackController(new File("test1.plc"));
+		TrackController TCB = new TrackController(new File("test2.plc"));
+		TrackController TCC = new TrackController(new File("test1.plc"));
+		TrackController TCD = new TrackController(new File("test2.plc"));
+		//LineController LCA = new LineController(new TrackController[] {TCA, TCB});
+		//LineController LCB = new LineController(new TrackController[] {TCC, TCD});
+		
+		boolean[] TCAInputs = new boolean[] {true, true, true};
+		boolean[] TCBInputs = new boolean[] {true, true, true, true, true};
+		boolean[] TCCInputs = new boolean[] {false, false, false};
+		boolean[] TCDInputs = new boolean[] {false, false, false, false, false};
+		//LCA.updateInputs(new boolean[][] {TCAInputs, TCBInputs});
+		//LCB.updateInputs(new boolean[][] {TCCInputs, TCDInputs});
+		for(int i=0;i<TCAInputs.length;i++)
+		{
+			System.out.println("TCA["+i+"] = "+TCA.outputs[i]);
+		}
+		for(int i=0;i<TCBInputs.length;i++)
+		{
+			System.out.println("TCB["+i+"] = "+TCB.outputs[i]);
+		}
+		for(int i=0;i<TCCInputs.length;i++)
+		{
+			System.out.println("TCC["+i+"] = "+TCC.outputs[i]);
+		}
+		for(int i=0;i<TCDInputs.length;i++)
+		{
+			System.out.println("TCD["+i+"] = "+TCD.outputs[i]);
+		}*/
+	}
+}

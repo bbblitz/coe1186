@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  div{
+    border:1px solid black;
+    padding:2px;
+  }
+</style>
+<title>BitsPlease CTC Users Manual</title>
+<h1>CTC Users Manual</h1>
+<!--
+<p>This users manual describes the avaliable controls for the CTC. Throughout this manual, clicking on these buttons will show images of the actions being described</p>
+-->
+<h2>Table of Contents</h2>
+<ul>
+  <li><a href="#s1">1 The main three views</a>
+    <ul>
+      <li><a href="#s1.1">1.1 The top ribbon</a>
+        <ul>
+          <li><a href="#s1.1.1">1.1.1 File</a>
+          <li><a href="#s1.1.2">1.1.2 Edit</a>
+          <li><a href="#s1.1.3">1.1.3 Window</a>
+          <li><a href="#s1.1.4">1.1.4 Help</a>
+        </ul>
+      <li><a href="#s1.2">1.2 The left track view</a>
+        <ul>
+          <li><a href="#s1.2.1">1.2.1 Track Symbols</a>
+          <li><a href="#s1.2.2">1.2.2 Train Symbols</a>
+          <li><a href="#s1.2.3">1.2.3 Colors </a>
+        </ul>
+      <li><a href="#s1.3">1.3 The right information view</a>
+        <ul>
+          <li><a href="#s1.3.1">1.3.1 Train schedule pane</a>
+          <li><a href="#s1.3.2">1.3.2 Train line visibility pane</a>
+          <li><a href="#s1.3.3">1.3.3 Train details pane</a>
+          <li><a href="#s1.3.4">1.3.4 Train dispatch pane</a>
+          <li><a href="#s1.3.5">1.3.5 Message log pane</a>
+          <li><a href="#s1.3.6">1.3.6 Track Switch pane</a>
+        </ul>
+    </ul>
+  <li><a href="#s2">2 Common functions</a>
+    <ul>
+      <li><a href="#s2.1">2.1 Show/hide train lines</a>
+      <li><a href="#s2.2">2.2 Viewing a train's information</a>
+      <li><a href="#s2.3">2.3 Manually dispatching a train</a>
+      <li><a href="#s2.4">2.4 Schedualing trains</a>
+      <li><a href="#s2.5">2.5 Moveing switches</a>
+    </ul>
+  <li><a href="#s3">3 Errors and troubleshooting<a/>
+    <ul>
+      <li><a href="#s3.1">3.1 User error</a>
+        <ul>
+          <li><a href="#s3.1.1">3.1.1 I am not a train</a>
+          <li><a href="#s3.1.2">3.1.2 I am not a track</a>
+        </ul>
+      <li><a href="#s3.2">3.2 Software error</a>
+    </ul>
+</ul>
+
+<h2>Manual</h2>
+<section>
+  <span id="s1"><h3>1 Three main views</h3><div>
+    <p>The main window contains three panels: a top ribbon that stores functions related files, windows, and display; a left pane that gives you an overview of the rail, and a right pane that shows you detailed information and allows you to schedual and dispatch trains, and control switches.
+    <span id="s1.1"><h4>1.1 Top ribbon</h4><div>
+      <p>The top ribbon stores functions related to files, windows, and displays. From left to right, the drop down menues on the ribbon are:<br><code>File | Edit | Window | Help</code>
+      </p>
+      <span id="s1.1.1"><h5>1.1.1 File</h5>
+        <p>The <code>file</code> drop down allows you to exit the CTC window
+      </span>
+      <span id="s1.1.2"><h5>1.1.2 Edit</h5>
+        <p>The <code>edit</code> drop down allows you to:<br>
+          <ul>
+            <li>copy a section of text to your clipboard with the <code> copy</code> button,<br>
+            <li>to copy to your clipboard and delete the selected text with the <code>cut</code> button,<br>
+            <li>or to paste the text in the currently selected text edit area with the <code>paste</code> button.
+          </ul>
+      </span>
+      <span id="s1.1.3"><h5>1.1.3 Window</h5>
+        <p>The <code>window</code> drop down allows you to open any of the information views in their own window, for more information on each information view, see <a href="#s1.3">section 1.3</a>
+      </span>
+      <span id="s1.1.4"><h5>1.1.4 Help</h5>
+        <p>The <code>help</code> drop down contains two options,
+          <ul>
+            <li><code>About</code> will list the authors and name of the software
+            <li><code>Manual</code> will open this page in your default browser
+          </ul>
+      </span>
+    </span></div>
+    <span id="s1.2"><h4>1.2 Left pane</h4><div>
+      <p>The left pane shows a diagram of the track</p>
+      <span id="s1.2.1"><h5>1.2.1 Track Symbols</h5>
+      <p>The track is depicted with a 2 pixel line, additionally, tracks with special designation use different symbols:<br>
+        <ul>
+          <li>Track designated <code>Switch</code> will show it's activated rail normally, and any non-active rails in a faded color.
+          <li>Track designated <code>Station</code> will have additional 4px lines on either side of the track, the same color as the track.
+          <li>Track designated <code>Crossing</code> will have additional 2px blue lines on either side of the track.
+        </ul>
+      </span>
+      <span id="s1.2.2"><h5>1.2.2 Train Symbols</h5>
+        <p>The trains are depicted in this pane as rectangles. Rectangles with an arrow inside are engines, the arrow points the same direction that the engine is faceing.
+      </span>
+      <span id="s1.2.3"><h5>1.2.3 Colors</h5>
+        <p>The 2px track can assume the following colors for the following reasons:<br>
+          <ul style="background:black">
+            <li style="color:rgb(0,255,0)">Normal(green)
+            <li style="color:rgb(100,100,100)">Broken Rail(Gray)
+            <li style="color:rgb(255,0,0)">Track Circuit Failure(Red)
+            <li style="color:rgb(255,255,0)">Power Failure(Yellow)
+          </ul>
+        <p>If the section of track is experienceing more than one failure at a time, it will be striped with the colors of each failure in regular intervals
+      </span>
+    </span></div>
+    <span id="s1.3"><h4>1.3 Right pane</h4><div>
+      <p>The right pane shows more information and contains the controls for elemenets selected in the left pane.
+      <span id="s1.3.1"><h5>1.3.1 Train schedule pane</h5>
+        <p>The train schedule pane allows you to schedual setting the authority of a train at a future time. For dispatching a train immediately, see <a href="#s1.3.4">section 1.3.4</a>
+      </span>
+      <span id="s1.3.2"><h5>1.3.2 Train line visibility pane</h5>
+        <p>The train line visibility pane allows you so set which lines are visible in the left pane. A checked box indicates that the line is currently visible. To toggle the visibility of a line, click on the checkbox next to it's label.
+      </span>
+      <span id="s1.3.3"><h5>1.3.3 Train details pane</h5>
+        <p>The train details pane displays details about the currently selected train. To select a train, simply click on it in the left pane. This pane will show you the train's name, throughput of the track it is currently on, current number of passengers, current speed, and current authority.
+      </span>
+      <span id="s1.3.4"><h5>1.3.4 Train dispatch pane</h5>
+        <p>The train dispatch pane allows you do dispatch a selected train to any station immediately. Once a train has been selected in the left pane, the train's name will be displayed at the top of the dispatch pane, you can now enter the station the train should be dispatched to, and press <code>set</code>
+      </span>
+      <span id="s1.3.5"><h5>1.3.5 Message dialog pane</h5>
+        <p>The message dialog pane will display messages about the transit line, the messages may include rail failures, track switches, and trains executing their schedual. This is neither a complete or exhaustive list. More recent messages are displayed at the bottom, messages that have scrolled past the top of the pane can be viewed by scrolling up.
+      </span>
+      <span id="s1.3.6"><h5>1.3.6 Track switch pane</h5>
+        <p>The track switch pane will display the state of a selected switch on the line, and will allow the user to change the direction the switch is faceing. The current state of the switch will be displayed in the color of the track(see <a href="#s1.2.3">Section 1.2.3</a>), and will display all non-active possible states in a faded color. Clicking on an inactive track will switch the track view, but will not activate the switch until the <code>confrim</code> button is pressed.
+      </span>
+    </span></div>
+  </span></div>
+  <br><br>
+  <span id="s2"><h3> 2 Common functions</h3><div>
+    <p>This sections describes breifly how to do some of the common functions of the CTC, without bothering with detail explaniations like in <a href="#s1">section 1</a>
+    <span id="s2.1"><h4> 2.1 Show/hide train lines</h4>
+      <p>All train lines are visible by default the first time the program starts. The names of each line can be seen the the <a href="#s1.3.2">Train line visibility pane</a> on the right hand side of the window (This pane can also be opened in a seperate window by selecting <code>Line Vis.</code> under the <code>Window</code> drop down at the top of the window). You can toggle the hidden state of a line by clicking the checkbox next to the line's name. It is not possible to set a line to half, quarter, or any other visibility than "on" and "off". Hideing a line will also hide any trains currently on the line.
+    </span>
+    <span id="s2.2"><h4> 2.2 viewing a train's information</h4>
+      <p>To view a train's information, select it on the left hand side of the window, it's details will appear in the right hand side of the window, in the <a href="#s1.3.3">Train details pane</a>(This pane can also be opened in a seperate window by selecting <code>Details</code> under the <code>Window</code> drop down at the top of the window). This pane will show the train's name, the throughput of the section of track it is on, the number of passengers currently abord, the train's current speed, and the train's authority.
+    </span>
+    <span id="s2.3"><h4> 2.3 Manually dispatching a train</h4>
+      <p>To manuall dispatch the train, use the <a href="#s1.3.4">Train Dispatch Pane</a> located on the right side of the window.(This pane can also be opened in a seperate window by selecting <code>Dispatch</code> under the <code>Window</code> drop down at the top of the window). To dispatch a train, select it in the left side of the window by clicking on it. You can varify it is selected by seeing if it's information is visible in the <a href="s1.3.3">Train Details Pane</a>. To dispatch, enter the station to dispatch it to, and press the <code>set</code> button at the bottom of the dispatch pane.
+    </span>
+    <span id="s2.4"><h4> 2.4 Schedualing trains</h4>
+      <p>To schedual a train to be dispatched in the future, use the <a href="#s1.3.1">Train Schedual Pane</a>, located on the right hand side of the window.(This pane can also be opened in a seperate window by selecting <code>Schedual</code> under the <code>Window</code> drop down at the top of the window). To use the pane, slect the train you want to schedual from the left side of the window. You can varify it is selected by seeing if it's information is visible in the <a href="s1.3.3">Train Details Pane</a>. It's current schedual will appear in the train schedual pane, it there is nothing currently in the schedual, it will be blank. To add items to the schedual, click the <code>add</code> button at the bottom of the pane, a popup will apear, prompting your for the time of the new schudel item, and the station to dispatch the train to at that time. Once you have entered the time and station, press the <code>confirm</code> button. If you ever accidentally enter an incorrect schedual, you can change the schedual before it executes by selecting it in the table, and pressing the <code>edit</code> or <code>delete</code> buttons in the shedualing pane.
+    </span>
+    <span id="s2.5"><h4> 2.5 Moveing switches</h4>
+      <p>To change the direction a switch is faceing, use the track switch pane, located on the right side of the window.(This pane can also be opened in a seperate window by selecting <code>Schedual</code> under the <code>Window</code> drop down at the top of the window). To use this pane, select a section of track designated as a switch section (see <a href="#s1.2.1">Section 1.2.1</a>), the switch will display in the switch pane, with current direction the switch is faceing in the primary color of the track, and directions the switch can face, but is not faceing in a faded color. To move the switch, select one of the faded color tracks, and the view in the switch pane will change, but the switch will not be flipped yet. To finish moveing the switch, press the <code>Confirm</code> button at the bottom of the switch pane.
+    </span>
+  </span></div>
+  <br><br>
+  <span id="s3"><h3> 3 Errors and troubleshooting</h3><div>
+    <p>If possible, errors will be shown in a popup dialog, if not, they will be displayed to the console.
+    <span id="s3.1"><h4>User errors</h4><div>
+      <p>Errors caused by the user</p>
+      <span id="s3.1.1"><h5> 3.1.1 I am not a train</h5>
+        <p>This error occures when the user has selected a section of track, and attempts to do operations that apply to trains, such as schedualing, or dispatching.</p><br><br>
+        <p>To resolve, select a train.
+      </span>
+      <span id="s3.1.2"><h5> 3.1.2 I am not a track</h5>
+        <p>This error occures when the user has selected a train, and attempts to do operations that apply to tracks, such as moveing switches.</p><br><br>
+        <p>To resolve, select a section of track.</p>
+      </span>
+    </span></div>
+    <span id="s3.2"><h4>Software errors</h4><div>
+      <p>These may require parts of the software to be rewritten</p><br>
+      <p>These are serious software errors that may force portion of the software to be re-written</p>
+      <span id="s3.2.1"><h5>Errors in track file parseing</h5><div>
+        <p>Error 1xx - Parser errors
+        <p>Error 101 - The parser hit the end of the file while in a comment block, place a */ before the end of the file to close the block
+        <p>Error 102 - The parse hit the end of the file while createing a line, place <code>LINE END</code> on the last line of the file to designate the end of the line
+        <p>Error 103 - A line in the track file does not use the correct syntax for a segment of track
+        <p>Error 104 - A block is supposed to be connected to a track segment that was never created, be sure the block head/tail is correct
+    </span></div>
+  </span></div>
+</section>
