@@ -14,7 +14,6 @@ public class TrackController
 	
 	public TrackController()
 	{
-		
 	}
 	
 	public TrackController(File PLCFile) throws FileNotFoundException
@@ -46,17 +45,20 @@ public class TrackController
 			System.out.println("something went wrong");
 			return;
 		}
-		/*if(outputs != outputsRedundant)
+		for(int i=0;i<outputs.length;i++)
 		{
-			throw new Exception("Error With PLC Decoder");
-		}*/
+			if(outputs[i] != outputsRedundant[i])
+			{
+				throw new Exception("Error With PLC Decoder");
+			}
+		}
 	}
 	
-	public void Tick(double deltaT)
+	/*public void tick(double deltaT) throws Exception
 	{
 		//get inputs from track model
-		//update inputs
 		//send switch positions to track model
+		//
 		//zero authority on all true tracks?
 		for(int i=0;i<blockCount;i++)
 		{
@@ -64,7 +66,7 @@ public class TrackController
 		}
 		//send speed to all blocks where speed changes?
 		//relay occupancies to CTC
-	}
+	}*/
 	
 	public void updateInputs(boolean[] inputs) throws Exception
 	{
@@ -87,6 +89,11 @@ public class TrackController
 		return out;
 	}
 	
+	public void loadFile()
+	{
+		TrackControllerUI tcui = new TrackControllerUI(this);
+	}
+	
 	public void loadFile(File PLCFile)
 	{
 		this.PLCFile = PLCFile;
@@ -95,6 +102,7 @@ public class TrackController
 	public void relayAuthority(int authority, int blockID)
 	{
 		//tell track model to send authority signal to block
+		
 	}
 	
 	public void zeroAuthority(int blockID)
@@ -109,7 +117,11 @@ public class TrackController
 	
 	public static void main(String[] args) throws Exception
 	{
-		TrackController GA = new TrackController(new File("GreenLoopTop.plc"));
+		TrackController TCA = new TrackController();
+		TCA.loadFile();
+		
+		
+		/*TrackController GA = new TrackController(new File("GreenLoopTop.plc"));
 		TrackController GB = new TrackController(new File("GreenLoopBottom.plc"));
 		
 		boolean[] GAInputs = new boolean[28];
@@ -131,7 +143,7 @@ public class TrackController
 		for(int i=0;i<GB.outputs.length;i++)
 		{
 			System.out.println("GB["+i+"] = "+GB.outputs[i]);
-		}
+		}*/
 	}
 	
 	

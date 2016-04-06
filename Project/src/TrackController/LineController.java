@@ -4,21 +4,23 @@ public class LineController
 {
 	TrackController controller1;
 	TrackController controller2;
+	TrackModel model;
 	
-	public LineController(TrackController controller1, TrackController controller2)
+	public LineController(TrackController controller1, TrackController controller2, TrackModel model)
 	{
 		this.controller1 = controller1;
 		this.controller2 = controller2;
+		this.model = model;
 	}
 		
 	public void updateInputs(boolean[] inputs) throws Exception
 	{
-		boolean[] inputs1 = new boolean[14];
-		boolean[] inputs2 = new boolean[14];
-		for(int i=0;i<14;i++)
+		boolean[] inputs1 = new boolean[7];
+		boolean[] inputs2 = new boolean[7];
+		for(int i=0;i<7;i++)
 		{
 			inputs1[i] = inputs[i];
-			inputs2[i] = inputs[i+14];
+			inputs2[i] = inputs[i+7];
 		}
 		controller1.updateInputs(inputs1);
 		controller2.updateInputs(inputs2);
@@ -26,11 +28,12 @@ public class LineController
 	
 	public boolean[] getBlockOccupancies()
 	{
-		boolean[] out = new boolean[28];
-		for(int i=0;i<14;i++)
+		//model.getBlockOccupancies();
+		boolean[] out = new boolean[14];
+		for(int i=0;i<7;i++)
 		{
 			out[i] = controller1.inputs[i];
-			out[i+14] = controller2.inputs[i];
+			out[i+7] = controller2.inputs[i];
 		}
 		return out;
 	}
@@ -48,6 +51,16 @@ public class LineController
 			switches[j++] = controller2.outputs[i];
 		}
 		return switches;
+	}
+	
+	public void relayAuthority(int authority, int blockID)
+	{
+		model.relayAuthority(authority, blockID);
+	}
+	
+	public void tick(double deltaT)
+	{
+		updateInputs(model.getBlockOccupancies());
 	}
 	
 	public static void main(String[] args)
