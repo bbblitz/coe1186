@@ -1,20 +1,20 @@
-//====MyLinkList.java
+
 
 public class MyLinkList
 {
    public ListNode firstLink;
    MyLinkList(){firstLink = null;}
    public boolean isEmpty(){ return(firstLink == null);}
-   public void insertFristLink(String newline, char newsection, int newblock_number, 
-           double newblock_length, double newblock_grade, 
-           int newspeed_limit, String newinfrastruct,
-           double newelevation, double newcummulative_el,
-           String newswitch_block, String newdirection){
-	   ListNode newLink = new ListNode(newline, newsection, newblock_number, 
-	           newblock_length, newblock_grade, 
-	           newspeed_limit, newinfrastruct,
-	           newelevation, newcummulative_el,
-	           newswitch_block, newdirection);
+   public void insertFristLink(String line, char section, int block_number, 
+           double block_length, double block_grade, 
+           int speed_limit, String infrastruct,
+           double elevation, double cummulative_el,
+           String switch_block, String direction){
+	   ListNode newLink = new ListNode(line, section, block_number, 
+	           block_length, block_grade, 
+	           speed_limit, infrastruct,
+	           elevation, cummulative_el,
+	           switch_block, direction);
 	   newLink.next = firstLink;
 	   firstLink = newLink;  
    }
@@ -36,6 +36,7 @@ public class MyLinkList
 		   theLink.display();
 		   System.out.println("next Link:" + theLink.next);
 		   theLink = theLink.next;
+	
 		   System.out.println();
 	   }
    }
@@ -75,4 +76,5 @@ public class MyLinkList
 	   }
 	   return currentLink;
    }
-}
+}  
+   
