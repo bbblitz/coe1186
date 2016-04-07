@@ -1,22 +1,22 @@
 @echo off
 rem Dependencies:
 rem cp "..\Track"
-cp "..\TrackController\TrackController.java" .
-cp "..\TrackController\PLCDecoder.java" .
-cp "..\TrackController\LineController.java" .
+rem cp "..\TrackController\TrackController.java" .
+rem cp "..\TrackController\PLCDecoder.java" .
+rem cp "..\TrackController\LineController.java" .
 
 rem cp "..\Track Controller\TrackInterface.java" .
 rem cp "..\Track Controller\Track.java" .
 rem cp "..\Track Controller\Switch.java" .
 rem cp "..\Track Controller\Crossing.java" .
 
+copy dummy\* .
+
 rem Compile and run the thing:
 javac Config.java
 javac main.java
 java main
 del *.class
-del TrackController.java
-del PLCDecoder.java
 del LineController.java
 
 rem Compile the javadoc

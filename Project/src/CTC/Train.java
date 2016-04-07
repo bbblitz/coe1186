@@ -4,9 +4,9 @@ public class Train {
 	private BlockInterface previousBlock;
 	private Route route;
 
-	public Train(Config config, Integer id, BlockInterface currentBlock, BlockInterface destinationBlock, long targetTime) {
+	public Train(Config config, Integer id, BlockInterface currentBlock) {
 		this.currentBlock = currentBlock;
-		this.route = new Route(this, destinationBlock, targetTime);
+		//this.route = new Route(this, destinationBlock, targetTime);
 		this.trainid = id;
 		// create the actual train TODO:Uncomment?
 		//TrainModel newTrain = new TrainModel(id);

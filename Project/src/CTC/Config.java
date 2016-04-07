@@ -15,8 +15,8 @@ public class Config{
   public ArrayList<Train> greenLineTrains;
   public ArrayList<Train> redLineTrains;
   //TODO:Delete this
-  public ArrayList<Train> pinkLineTrains;
-  public TrackControllerManager trackControllerManager;
+  public ArrayList<Train> pinkLineTrains = new ArrayList<Train>();
+  public LineController lineController;
 
   /*
    * UI STUFF
