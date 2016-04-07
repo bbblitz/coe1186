@@ -113,19 +113,22 @@ public class TrainController {
 
 		// calculate power if we're not at or braking for a station
 		if (this.stationApproachStatus == StationApproachStatus.NONE || this.stationApproachStatus == StationApproachStatus.DISTANCE_SET) {
-			// calculate power (power <= 0 means brake should be applied)
-			this.powerCommand = calculatePower(deltaT);
-			double power = this.powerCommand;
-			if (power <= 0) {
-				// best action is to slow down
-				power = 0;
-				this.trainModel.activateServiceBrake();
-			} else if (power > 0) {
-				// best action is to speed up
-				this.trainModel.deactivateServiceBrake();
+			// don't bother calculating power if we have no authority
+			if (this.authorityFromCTC > 0) {
+				// calculate power (power <= 0 means brake should be applied)
+				this.powerCommand = calculatePower(deltaT);
+				double power = this.powerCommand;
+				if (power <= 0) {
+					// best action is to slow down
+					power = 0;
+					this.trainModel.activateServiceBrake();
+				} else if (power > 0) {
+					// best action is to speed up
+					this.trainModel.deactivateServiceBrake();
+				}
+				this._lastPowerCommand = power;
+				this.trainModel.receivePowerCommand(power);
 			}
-			this._lastPowerCommand = power;
-			this.trainModel.receivePowerCommand(power);
 		} else {
 			// we're braking for a station approach or stopped at the station
 			this.trainModel.activateServiceBrake();	// if it wasn't already
