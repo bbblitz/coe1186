@@ -50,7 +50,7 @@ public class TrainModel{
 		this.oldVelocity = 0;
 		this.velocitySI = 0;
 		this.positionSI = 0;
-		this.authority = 0;
+		//this.authority = 0;
 		
 		this.trainController = new TrainController(this);
 		this.trackModel = trackModel;
@@ -70,7 +70,7 @@ public class TrainModel{
 		}
 		double distanceOnTick = calculateSpeed(deltaT);
 		
-		this.trackModel.recieveDistance(distanceOnTick);
+		this.trackModel.receiveDistance(distanceOnTick);
 	}
 	
 	private double calculateSpeed(double deltaT){
@@ -187,10 +187,10 @@ public class TrainModel{
 	}
 	
 	public void receiveAuthority(int authority){
-		this.trainController.recieveAuthority(authority);
+		this.trainController.receiveAuthority(authority);
 	}
 	
 	public void receiveSpeed(int speed){
-		this.trainController.recieveSpeed(speed);
+		this.trainController.receiveSpeed(speed);
 	}
 }

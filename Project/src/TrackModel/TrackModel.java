@@ -6,7 +6,7 @@ public class TrackModel{
 	private TrainModel train;
 
   public TrackModel(){
-  	TrainModel dummyTrain = new TrainModel("IAmAFakeTrain", this);
+  	this.train = new TrainModel("IAmAFakeTrain", this);
   }
 
   public void tick(long deltaT) {
@@ -17,7 +17,7 @@ public class TrackModel{
   	this.train.receiveAuthority(authority);
   }
 
-  public void receiveSpeed(int speed, int blockID) {
+  public void relaySpeed(int speed, int blockID) {
   	this.train.receiveSpeed(speed);
   }
 
