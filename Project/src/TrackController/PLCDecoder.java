@@ -7,14 +7,20 @@ import java.util.InputMismatchException;
 
 public class PLCDecoder
 {
-	public static void main(String[] args) throws IOException, Exception
+	public static void main(String[] args)
 	{
 		Scanner keyboard = new Scanner(System.in);
-		Scanner PLCReader;
+		Scanner PLCReader = null;
 		System.out.print("enter the name of a PLC file: ");
 		File filename = new File(keyboard.nextLine());
-		PLCReader = new Scanner(filename);
-		
+		try
+		{
+			PLCReader = new Scanner(filename);
+		}
+		catch(FileNotFoundException fnfe)
+		{
+			System.err.println("File not found");
+		}
 		int inputCount = PLCReader.nextInt();
 		int outputCount = PLCReader.nextInt();
 		int switchCount = PLCReader.nextInt();
@@ -52,9 +58,18 @@ public class PLCDecoder
 		}
 	}
 		
-	public static boolean[] decode(boolean[] inputs, File filename) throws FileNotFoundException, Exception
+	public static boolean[] decode(boolean[] inputs, File filename)
 	{
-		Scanner PLCReader = new Scanner(filename);
+		Scanner PLCReader = null;
+		try
+		{
+			PLCReader = new Scanner(filename);
+		}
+		catch(FileNotFoundException fnfe)
+		{
+			System.out.println("PLC File Not Found");
+		}
+	
 		int inputCount = PLCReader.nextInt();
 		int outputCount = PLCReader.nextInt();
 		int switchCount = PLCReader.nextInt();
@@ -122,7 +137,7 @@ public class PLCDecoder
 					}
 					else
 					{
-						throw new Exception("invalid PLC file");
+						System.err.println("invalid PLC file");
 					}
 				}
 			}

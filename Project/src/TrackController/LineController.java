@@ -13,7 +13,7 @@ public class LineController
 		this.model = model;
 	}
 		
-	public void updateInputs(boolean[] inputs) throws Exception
+	public void updateInputs(boolean[] inputs)
 	{
 		boolean[] inputs1 = new boolean[7];
 		boolean[] inputs2 = new boolean[7];

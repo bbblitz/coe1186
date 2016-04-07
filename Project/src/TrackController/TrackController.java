@@ -16,10 +16,18 @@ public class TrackController
 	{
 	}
 	
-	public TrackController(File PLCFile) throws FileNotFoundException
+	public TrackController(File PLCFile)
 	{
 		this.PLCFile = PLCFile;
-		Scanner PLCReader = new Scanner(PLCFile);
+		Scanner PLCReader = null;
+		try
+		{
+			PLCReader = new Scanner(PLCFile);
+		}
+		catch(FileNotFoundException fnfe)
+		{
+			System.out.println("file not found");
+		}
 		PLCReader.nextInt();
 		blockCount = PLCReader.nextInt();
 		switchCount = PLCReader.nextInt();
@@ -27,34 +35,21 @@ public class TrackController
 		PLCReader.close();
 	}
 	
-	public void decode() throws Exception
+	public void decode()
 	{
 		boolean[] outputsRedundant;
-		try
-		{
-			outputs = PLCDecoder.decode(inputs, PLCFile);
-			outputsRedundant = PLCDecoder.decode(inputs, PLCFile);
-		}
-		catch(FileNotFoundException fnfe)
-		{
-			System.out.println("PLC file invalid or missing");
-			return;
-		}
-		catch(Exception e)
-		{
-			System.out.println("something went wrong");
-			return;
-		}
+		outputs = PLCDecoder.decode(inputs, PLCFile);
+		outputsRedundant = PLCDecoder.decode(inputs, PLCFile);
 		for(int i=0;i<outputs.length;i++)
 		{
 			if(outputs[i] != outputsRedundant[i])
 			{
-				throw new Exception("Error With PLC Decoder");
+				System.out.println("Error With PLC Decoder");
 			}
 		}
 	}
 	
-	/*public void tick(double deltaT) throws Exception
+	/*public void tick(double deltaT)
 	{
 		//get inputs from track model
 		//send switch positions to track model
@@ -68,7 +63,7 @@ public class TrackController
 		//relay occupancies to CTC
 	}*/
 	
-	public void updateInputs(boolean[] inputs) throws Exception
+	public void updateInputs(boolean[] inputs)
 	{
 		this.inputs = inputs;
 		decode();
@@ -115,7 +110,7 @@ public class TrackController
 		//tell track model to send speed signal to block
 	}
 	
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
 	{
 		TrackController TCA = new TrackController();
 		TCA.loadFile();
