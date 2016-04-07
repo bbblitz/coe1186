@@ -41,6 +41,9 @@ public class TrainController {
 	
 	private double odometer;
 	double _lastPowerCommand;
+
+	/* internal logging and event tracking */
+	boolean outOfAuthorityBraking = false;
 	
 	/**
 	 * Create the TrainController
@@ -104,6 +107,8 @@ public class TrainController {
 			this.dwellTimeRemaining = STATION_DWELL_TIME;
 			this.trainModel.notifyAtStation(this.nextStationId);
 			this.ui.log("Stopped completely at station. Dwelling for " + (STATION_DWELL_TIME / 1000) + "s.");
+
+			//this.trainModel.
 		}
 
 		// calculate power if we're not at or braking for a station
@@ -147,6 +152,7 @@ public class TrainController {
 		}
 		if (haveEnoughAuthority()) {
 			// authority is fine, turn off service brake if applied and let the train continue
+			this.outOfAuthorityBraking = false;
 			this.trainModel.deactivateServiceBrake();
 			
 			// decide best velocity to target
@@ -160,7 +166,10 @@ public class TrainController {
 			return power;
 		} else {
 			// out of authority, brake the train to a stop (or until more authority is received)
-			this.ui.log("Out of authority, starting to brake.");
+			if (!this.outOfAuthorityBraking) {
+				this.ui.log("Authority running out, starting to brake.");
+				this.outOfAuthorityBraking = true;
+			}
 			this.trainModel.activateServiceBrake();
 			return 0;
 		}
