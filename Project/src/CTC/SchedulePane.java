@@ -53,12 +53,14 @@ public class SchedulePane extends JPanel{
     Random r = new Random();
     for(int i = 0; i < 5; i++){
       String time = String.format("%02d:%02d",r.nextInt(24),r.nextInt(60));
-      String station = "";
+      String station = "Kingdom Come";
+      /*
       station += (char)('A' + r.nextInt(24));
       for(int j = 0; j < 10; j++){
         //Generate a random station name
         station += (char)('a' + r.nextInt(24));
       }
+      */
       addItem(time,station);
     }
   }

@@ -73,8 +73,10 @@ public class DispatchPane extends JPanel implements ActionListener{
       int blockid = (Integer)blocklist.getSelectedItem();
       int trainid = (Integer)trainlist.getSelectedItem();
       int authority = calculateAuthority(trainid, blockid);
-      config.lineController.relayAuthority(authority,blockid);
-      config.lineController.relaySpeed(10, blockid);
+      Train train = config.pinkLineTrains.get(trainid);
+      int currentblock = train.getCurrentBlock().getID();
+      config.lineController.relayAuthority(authority,currentblock);
+      config.lineController.relaySpeed(10, currentblock);
     }
   }
 

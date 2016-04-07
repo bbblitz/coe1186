@@ -28,5 +28,8 @@ public class LineController{
   public void relayAuthority(int authority, int blockID){
 
   }
+  public void relaySpeed(int speed, int blockID){
+    
+  }
 
 }

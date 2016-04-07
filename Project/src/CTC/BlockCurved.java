@@ -56,10 +56,34 @@ public class BlockCurved extends BlockInterface{
   }
 
   public void drawBlock(Graphics g){
-
+    BlockCurved dtc = this;
+    g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
   }
-  public void drawTrainOn(Graphics g, boolean on){
 
+  public void drawTrainOn(Graphics g, boolean on){
+    System.out.println("Dawing a train on " + toString());
+    drawBlock(g);
+    int ang = startang + (endang/2);
+    System.out.println("Angle to draw at is " + ang);
+    int xoff = (int)(Math.cos(Math.toRadians(ang)) * (radius/2));
+    int yoff = -(int)(Math.sin(Math.toRadians(ang)) * (radius/2));
+    System.out.printf("Offsets:(%d,%d)\n",xoff,yoff);
+    //Quick hack to make it work
+    if(xoff > 0)
+      xoff=90;
+    else
+      xoff=10;
+    if(yoff > 0)
+      yoff=80;
+    else
+      yoff=20;
+
+
+    int ex = x+xoff;
+    int ey = y+yoff;
+    System.out.printf("fanals:(%d,%d)\n",ex,ey);
+    g.setColor(Color.WHITE);
+    g.drawOval(ex-5,ey-5,10,10);
   }
 
   public String toString(){
