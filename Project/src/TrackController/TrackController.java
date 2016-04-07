@@ -1,35 +1,67 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 
 public class TrackController
 {
 	File PLCFile;
 	boolean[] inputs;
 	boolean[] outputs;
+	int blockCount;
 	int switchCount;
+	int crossingCount;
 	
 	public TrackController()
 	{
-		
 	}
 	
 	public TrackController(File PLCFile)
 	{
 		this.PLCFile = PLCFile;
+		Scanner PLCReader = null;
+		try
+		{
+			PLCReader = new Scanner(PLCFile);
+		}
+		catch(FileNotFoundException fnfe)
+		{
+			System.out.println("file not found");
+		}
+		PLCReader.nextInt();
+		blockCount = PLCReader.nextInt();
+		switchCount = PLCReader.nextInt();
+		crossingCount = PLCReader.nextInt();
+		PLCReader.close();
 	}
 	
 	public void decode()
 	{
-		try
+		boolean[] outputsRedundant;
+		outputs = PLCDecoder.decode(inputs, PLCFile);
+		outputsRedundant = PLCDecoder.decode(inputs, PLCFile);
+		for(int i=0;i<outputs.length;i++)
 		{
-			outputs = PLCDecoder.decode(inputs, PLCFile);
-		}
-		catch(FileNotFoundException fnfe)
-		{
-			System.out.println("PLC file invalid or missing");
-			return;
+			if(outputs[i] != outputsRedundant[i])
+			{
+				System.out.println("Error With PLC Decoder");
+			}
 		}
 	}
+	
+	/*public void tick(double deltaT)
+	{
+		//get inputs from track model
+		//send switch positions to track model
+		//
+		//zero authority on all true tracks?
+		for(int i=0;i<blockCount;i++)
+		{
+			if(outputs[i]) zeroAuthority(i);
+		}
+		//send speed to all blocks where speed changes?
+		//relay occupancies to CTC
+	}*/
 	
 	public void updateInputs(boolean[] inputs)
 	{
@@ -52,6 +84,11 @@ public class TrackController
 		return out;
 	}
 	
+	public void loadFile()
+	{
+		TrackControllerUI tcui = new TrackControllerUI(this);
+	}
+	
 	public void loadFile(File PLCFile)
 	{
 		this.PLCFile = PLCFile;
@@ -59,6 +96,7 @@ public class TrackController
 	
 	public void relayAuthority(int authority, int blockID)
 	{
+		//tell track model to send authority signal to block
 		
 	}
 	
@@ -67,26 +105,40 @@ public class TrackController
 		relayAuthority(0, blockID);
 	}
 	
-	public void relaySpeed()
+	public void relaySpeed(float speed, int blockID)
 	{
-		
+		//tell track model to send speed signal to block
 	}
 	
 	public static void main(String[] args)
 	{
-		TrackController TCA = new TrackController(new File("test1.plc"));
-		TrackController TCB = new TrackController(new File("test2.plc"));
+		TrackController TCA = new TrackController();
+		TCA.loadFile();
 		
-		TCA.updateInputs(new boolean[] {true, true, true});
-		for(int i=0;i<TCA.outputs.length;i++)
+		
+		/*TrackController GA = new TrackController(new File("GreenLoopTop.plc"));
+		TrackController GB = new TrackController(new File("GreenLoopBottom.plc"));
+		
+		boolean[] GAInputs = new boolean[28];
+		GAInputs[27] = true;
+		GAInputs[20] = true;
+		GAInputs[0] = true;
+		
+		boolean[] GBInputs = new boolean[24];
+		GBInputs[3] = true;
+		GBInputs[23] = true;
+		
+		GA.updateInputs(GAInputs);
+		for(int i=0;i<GA.outputs.length;i++)
 		{
-			System.out.println("TCA["+i+"] = "+TCA.outputs[i]);
+			System.out.println("GA["+i+"] = "+GA.outputs[i]);
 		}
-		TCB.updateInputs(new boolean[] {true, true, true, true, true});
-		for(int i=0;i<TCB.outputs.length;i++)
+		
+		GB.updateInputs(GBInputs);
+		for(int i=0;i<GB.outputs.length;i++)
 		{
-			System.out.println("TCB["+i+"] = "+TCB.outputs[i]);
-		}
+			System.out.println("GB["+i+"] = "+GB.outputs[i]);
+		}*/
 	}
 	
 	

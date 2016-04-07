@@ -58,7 +58,7 @@ The left pane
   The train line diagram will attempt to fill both the width and the height of the window, but will stop at the first limit reached(either the height or the width)
   Will contain a black background, so as to easily contrast with the possible colors of the track (See below)
   Any lines that are visible will also have a diagram of all trains on the line.
-  Trains will be shown as a series of close boxes representing train cars with train engines represented as a box with an arrow inside, the arrow indicating the direction the engine is facing.
+  Trains will be shown as a box in the center of the block it is on.
   Segments of the train line will be shown as 2 pixel width lines, and will end 5 model feet before, and 5 model feet after what is described in the spreadsheet to easily differentiate different line segments.
   Segments of the train line that are designated "station" segments will have two 4 pixel lines running on either side of their 2 pixel track
   Segments of the train line that are designated "switch" segments show the direction the switch currently routing trains in the track's primary color(below), and non-current routings in a faded color(by subtracting 100 to each the R,G, and B values of the color, if possible, and if not, subtracting the maximum ammount)

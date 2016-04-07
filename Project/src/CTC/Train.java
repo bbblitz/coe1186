@@ -1,14 +1,24 @@
 public class Train {
+	private int trainid;
 	private BlockInterface currentBlock;
 	private BlockInterface previousBlock;
 	private Route route;
 
-	public Train(Config config, int id, BlockInterface currentBlock, BlockInterface destinationBlock, long targetTime) {
+	public Train(Config config, Integer id, BlockInterface currentBlock, BlockInterface previousBlock) {
 		this.currentBlock = currentBlock;
-		this.route = new Route(this, destinationBlock, targetTime);
+		this.previousBlock = previousBlock;
+		//this.route = new Route(this, destinationBlock, targetTime);
+		this.trainid = id;
+		// create the actual train TODO:Uncomment?
+		//TrainModel newTrain = new TrainModel(id);
+	}
 
-		// create the actual train
-		TrainModel newTrain = new TrainModel(id);
+	public int getID(){
+		return trainid;
+	}
+
+	public void setID(int n){
+		trainid = n;
 	}
 
 	public void setRoute(Route route) {
@@ -24,6 +34,7 @@ public class Train {
 	}
 
 	public void moveForwardOneBlock() {
+		System.out.println("Train gong forward 1 block...");
 		BlockInterface nextBlock = this.currentBlock.goesto(previousBlock);
 		this.previousBlock = this.currentBlock;
 		this.currentBlock = nextBlock;

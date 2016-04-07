@@ -1,6 +1,13 @@
-//package system;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Main {
+public final class Main extends TimerTask {
+
+	static long TIME_INTERVAL_MILLIS = 100;
+	static int speedup = 1;
+
+	static TrainModel trainModel;
+	static TrainController trainController;
 
 	/**
 	 * @param args
@@ -8,37 +15,36 @@ public class Main {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		System.out.println("*********************************************");
-		System.out.println("         TRAIN CONTROLLER PROTOTYPE          ");
+		System.out.println("            TRAIN CONTROLLER TEST            ");
 		System.out.println("*********************************************");
 		
-		TrainModel trainModel = new TrainModel();	// train mass
-		TrainController trainController = new TrainController(trainModel);
-
-		long TIME_INTERVAL_MILLIS = 100;
+		trainModel = new TrainModel("");
+		trainController = new TrainController(trainModel);
 		
 		// fake the train already moving
-		double CURRENT_SPEED = 1.0;
-		trainModel.setCurrentVelocitySI(CURRENT_SPEED);
+		//double CURRENT_SPEED = 1.0;
+		//trainModel.setCurrentVelocitySI(CURRENT_SPEED);
 		
 		// fake some speed+auth commands
-		double TARGET_SPEED = 10.0;
-		double AUTH = 300000.0;
+		double TARGET_SPEED = 6.0;
+		double AUTH = 300.0;
 		trainController.hackVelocityFromCTC(TARGET_SPEED);
 		trainController.hackVelocityFromTrainOperator(TARGET_SPEED);
 		trainController.hackAuthorityFromCTC(AUTH);
 		
 		
-		System.out.println("Train is moving at " + CURRENT_SPEED + "m/s, and received a command to accelerate to " + TARGET_SPEED + "m/s with authority of " + AUTH + "m.");
+		System.out.println("Train is moving at 1 m/s, and received a command to accelerate to " + TARGET_SPEED + "m/s with authority of " + AUTH + "m.");
 		System.out.println();
 		
-		// simulate 100 iterations
-		for (int t = 0; t < 100; t++) {
-			trainModel.tick(TIME_INTERVAL_MILLIS);
-			trainController.tick(TIME_INTERVAL_MILLIS);
-						
-			//System.out.println("t=" + t + ": velocity = " + (Math.round(trainModel.getCurrentVelocitySI() * 10000.0) / 10000.0) + "m/s, powerCommand = " + (Math.round(trainController._getLastPowerCommand() * 10000.0) / 10000.0) + ", authority = " + (Math.round(trainController.getAuthorityFromCTC() * 100.0) / 100.0) + "m.");
-			//Thread.sleep(TIME_INTERVAL_MILLIS);
-		}
+		// set up the ticking
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new Main(), 0, TIME_INTERVAL_MILLIS);
+	}
+
+	@Override
+	public void run() {
+		trainModel.tick(TIME_INTERVAL_MILLIS * speedup);
+		trainController.tick(TIME_INTERVAL_MILLIS * speedup);
 	}
 
 }

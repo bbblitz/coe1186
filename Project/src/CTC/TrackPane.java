@@ -98,20 +98,68 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void drawStraightTrack(Graphics g, BlockStraight track, Color c){
-    BlockStraight ts = track;
-    int sx = ts.x;
-    int sy = ts.y;
-    //System.out.println("Cos of " + ts.direction + " is " + Math.cos(Math.toRadians(ts.direction)));
-    int exoff = (int)(Math.cos(Math.toRadians(ts.direction))*ts.length);
-    int eyoff = (int)(Math.sin(Math.toRadians(ts.direction))*ts.length);
-    int ex = exoff+sx;
-    int ey = eyoff+sy;
-    //System.out.printf("Line from (%d,%d)+(%d,%d) to (%d,%d)\n",sx,sy,exoff,eyoff,ex,ey);
-    g.drawLine(sx,sy,ex,ey);
-    ArrayList<Infrastructure> allinfra = track.getInfrastructure();
-    if(allinfra == null) return;
-    for(Infrastructure f : allinfra){
+    
+    track.drawBlock(g);
+    //track.drawTrainOn(g, true);
+  }
 
+  public void drawCrossingTrack(Graphics g, BlockCrossing dti, Color c){
+    BlockCrossing bs = dti;
+    int starts[][] = new int[2][2];
+    int ends[][] = new int[2][2];
+    int xvar  = (int)(Math.sin(Math.toRadians(bs.direction))*4);
+    int yvar = (int)(Math.cos(Math.toRadians(bs.direction))*4);
+    starts[0][0] = bs.x + xvar;
+    starts[1][0] = bs.x;
+    starts[0][1] = bs.y + yvar;
+    starts[1][1] = bs.y;
+
+    int endx = bs.x + (int)(Math.cos(Math.toRadians(bs.direction))*bs.length);
+    int endy = bs.y + (int)(Math.sin(Math.toRadians(bs.direction))*bs.length);
+    ends[0][0] = endx + xvar;
+    ends[1][0] = endx;
+    ends[0][1] = endy + yvar;
+    ends[1][1] = endy;
+
+    int sx = bs.x;
+    int sx2 = bs.x + 4;
+    int sx3 = bs.x - 4;
+    int sy = bs.y;
+    int exoff = (int)(Math.cos(Math.toRadians(bs.direction))*bs.length);
+    for(int i = 0; i < 2; i++){
+      g.drawLine(starts[i][0],starts[i][1],ends[i][0],ends[i][1]);
+    }
+  }
+
+  public void drawStationTrack(Graphics g, BlockStation dti, Color c){
+    BlockStation bs = dti;
+    int starts[][] = new int[3][2];
+    int ends[][] = new int[3][2];
+    int xvar  = (int)(Math.sin(Math.toRadians(bs.direction))*4);
+    int yvar = (int)(Math.cos(Math.toRadians(bs.direction))*4);
+    starts[0][0] = bs.x + xvar;
+    starts[1][0] = bs.x;
+    starts[2][0] = bs.x - xvar;
+    starts[0][1] = bs.y + yvar;
+    starts[1][1] = bs.y;
+    starts[2][1] = bs.y - yvar;
+
+    int endx = bs.x + (int)(Math.cos(Math.toRadians(bs.direction))*bs.length);
+    int endy = bs.y + (int)(Math.sin(Math.toRadians(bs.direction))*bs.length);
+    ends[0][0] = endx + xvar;
+    ends[1][0] = endx;
+    ends[2][0] = endx - xvar;
+    ends[0][1] = endy + yvar;
+    ends[1][1] = endy;
+    ends[2][1] = endy - yvar;
+
+    int sx = bs.x;
+    int sx2 = bs.x + 4;
+    int sx3 = bs.x - 4;
+    int sy = bs.y;
+    int exoff = (int)(Math.cos(Math.toRadians(bs.direction))*bs.length);
+    for(int i = 0; i < 3; i++){
+      g.drawLine(starts[i][0],starts[i][1],ends[i][0],ends[i][1]);
     }
   }
 
@@ -140,6 +188,12 @@ public class TrackPane extends JPanel implements MouseListener {
         drawSegment(g,ds.divergent,c);
       }
       drawSegment(g,ds.tail,c);
+    }
+    else if(dti instanceof BlockStation){
+      drawStationTrack(g,(BlockStation)dti,c);
+    }
+    else{
+      System.out.println("Did not understand kind of track!");
     }
   }
 
