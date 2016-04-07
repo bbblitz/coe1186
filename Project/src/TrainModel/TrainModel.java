@@ -1,4 +1,6 @@
 import java.util.BitSet;
+//AFTER PROTOTYPE, change TrackModel communication on Distance
+//			TrackModel will call train.getDistance();
 
 public class TrainModel{
 	private double mass;
@@ -21,6 +23,7 @@ public class TrainModel{
 	private double velocitySI;
 	private double position;
 	private double positionSI;
+	
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
@@ -47,6 +50,7 @@ public class TrainModel{
 		this.oldVelocity = 0;
 		this.velocitySI = 0;
 		this.positionSI = 0;
+		this.authority = 0;
 		
 		this.trainController = new TrainController(this);
 		this.trackModel = trackModel;
@@ -57,7 +61,7 @@ public class TrainModel{
 	
 	public void tick(double deltaT){
 		this.trainController.tick(deltaT);
-		this.trainController.receiveSignalFromRail(this.railSignal);
+		//this.trainController.receiveSignalFromRail(this.railSignal);
 		
 		if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
@@ -180,5 +184,13 @@ public class TrainModel{
 	
 	public void receiveSignalFromRail(BitSet railSignal){
 		this.railSignal = railSignal;
+	}
+	
+	public void receiveAuthority(int authority){
+		this.trainController.recieveAuthority(authority);
+	}
+	
+	public void receiveSpeed(int speed){
+		this.trainController.recieveSpeed(speed);
 	}
 }

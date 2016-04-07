@@ -186,6 +186,16 @@ public class TrainController {
 		double stoppingDistance = -1 * Math.pow(this.velocitySI, 2) / (2.0 * -1.2);	// service brake decceleration = 1.2m/s^2
 		return stoppingDistance;
 	}
+
+	// temporary - combined into one bit package later
+	public void receiveAuthority(int authority) {
+		this.authorityFromCTC = authority;
+	}
+
+	// temporary - combined into one bit package later
+	public void receiveSpeed(int speed) {
+		this.velocityFromCTC = speed;
+	}
 	
 	/**
 	 * First 5 bits are speed, the rest is authority
