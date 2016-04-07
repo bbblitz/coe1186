@@ -79,7 +79,7 @@ public class LineParser{
   }
 
   public void resolveblocks(){
-
+    System.out.println("\t---Starting block resolution---");
     for(int i = 0; curline.blocks.get(i) != null; i++){
       if(curline == null){
         System.out.println("\tCurrent line does not exist!");
@@ -117,11 +117,6 @@ public class LineParser{
         }
       }else if(block instanceof BlockCurved){
         BlockCurved blockcur = (BlockCurved)block;
-        if(c.DEBUG_PARSER){
-          System.out.println("Size of heads is " + heads.size() + " and i is " + i + " and curline.blocks size is " + curline.blocks.size());
-          System.out.println("i is " + i);
-          System.out.println("heads.get(i) is " + heads.get(i));
-        }
         //System.out.println("curline.blocks.get(heads.get(i)) is " + curline.blocks.get(heads.get(i)));
         if(heads.size() < i || curline.blocks.size() < heads.get(i) || heads.get(i) == -1 || curline.blocks.get(heads.get(i)) == null){
           System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
@@ -129,13 +124,31 @@ public class LineParser{
         }else{
           blockcur.head = curline.blocks.get(heads.get(i));
         }
-
         if(curline.blocks.get(tails.get(i)) == null){
           System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockcur.tail = curline.blocks.get(tails.get(i));
         }
+        System.out.println("\t\tResolved curved block");
+        System.out.println("\t\t" + blockcur.toString());
+      }else if(block instanceof BlockStation){
+        BlockStation blocksta = (BlockStation)block;
+        if(curline.blocks.get(heads.get(i)) == null){
+          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          return;
+        }else{
+          blocksta.head = curline.blocks.get(heads.get(i));
+        }
+
+        if(curline.blocks.get(tails.get(i)) == null){
+          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          return;
+        }else{
+          blocksta.tail = curline.blocks.get(tails.get(i));
+        }
+        System.out.println("\t\tResolved station block");
+        System.out.println("\t\t" + blocksta.toString());
       }else if(block instanceof BlockSwitch){
         BlockSwitch blockswi = (BlockSwitch)block;
         if(curline.blocks.get(heads.get(i)) == null){
@@ -160,6 +173,7 @@ public class LineParser{
         }
       }
     }
+    System.out.println("\t---Ending block resolution---");
     c.aldl.add(curline);
     c.vislines.add(true);
   }
@@ -293,6 +307,7 @@ public class LineParser{
       heads.add(blockid, headid);
       tails.add(blockid, tailid);
       newblock.setID(blockid);
+      newblock.stationName = stationname;
       curline.blocks.add(blockid, newblock);
 
     }
