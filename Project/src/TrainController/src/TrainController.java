@@ -103,7 +103,7 @@ public class TrainController {
 			this.stationApproachStatus = StationApproachStatus.DWELLING;
 			this.dwellTimeRemaining = STATION_DWELL_TIME;
 			this.trainModel.notifyAtStation(this.nextStationId);
-			this.ui.log("Stopped completely at station.");
+			this.ui.log("Stopped completely at station. Dwelling for " + (STATION_DWELL_TIME / 1000) + "s.");
 		}
 
 		// calculate power if we're not at or braking for a station
@@ -139,7 +139,7 @@ public class TrainController {
 			// distance to station is set but we're not braking yet - should we start braking?
 			double stoppingDistance = this.calculateServiceBrakeStoppingDistance();
 			if (stoppingDistance + DISTANCE_BUFFER >= this.distanceToStationEnd) {
-				this.ui.log("Going" + String.valueOf(this.velocitySI) + "m/s, stating to brake for station " + String.valueOf(this.distanceToStationEnd) + " m away.");
+				this.ui.log("Starting to brake for station " + String.valueOf(this.distanceToStationEnd) + "m away.");
 				// give 0 power to start braking and begin station approach
 				this.stationApproachStatus = StationApproachStatus.BRAKING_FOR_APPROACH;
 				return 0;
@@ -160,6 +160,7 @@ public class TrainController {
 			return power;
 		} else {
 			// out of authority, brake the train to a stop (or until more authority is received)
+			this.ui.log("Out of authority, starting to brake.");
 			this.trainModel.activateServiceBrake();
 			return 0;
 		}
@@ -190,11 +191,13 @@ public class TrainController {
 
 	// temporary - combined into one bit package later
 	public void receiveAuthority(int authority) {
+		this.ui.log("Received authority command: " + String.valueOf(authority) + "m");
 		this.authorityFromCTC = authority;
 	}
 
 	// temporary - combined into one bit package later
 	public void receiveSpeed(int speed) {
+		this.ui.log("Received speed command from CTC: " + String.valueOf(speed) + "m/s");
 		this.velocityFromCTC = speed;
 	}
 	
