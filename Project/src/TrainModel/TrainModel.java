@@ -61,7 +61,7 @@ public class TrainModel{
 		
 		this.trainController = new TrainController(this);
 		this.trackModel = trackModel;
-		this.uI = new TrainModelUI(this);
+		this.uI = new TrainModelUI(this, this.trainController);
 		
 		railSignal = new BitSet(32);
 		beaconSignal = new BitSet(32);
