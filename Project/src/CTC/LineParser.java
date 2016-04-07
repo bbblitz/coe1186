@@ -98,7 +98,7 @@ public class LineParser{
         }
       }
     }
-    for(int i = 0; i < curline.blocks.size(); i++){
+    for(int i = 0; curline.blocks.get(i) != null; i++){
       BlockInterface block = curline.blocks.get(i);
       if(block instanceof BlockStraight){
         BlockStraight blockstr = (BlockStraight)block;

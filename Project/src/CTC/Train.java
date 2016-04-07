@@ -34,6 +34,7 @@ public class Train {
 	}
 
 	public void moveForwardOneBlock() {
+		System.out.println("Train gong forward 1 block...");
 		BlockInterface nextBlock = this.currentBlock.goesto(previousBlock);
 		this.previousBlock = this.currentBlock;
 		this.currentBlock = nextBlock;

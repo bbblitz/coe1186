@@ -21,7 +21,7 @@ public class LineController{
 
   public boolean[] getBlockOccupancies(){
     boolean[] output = new boolean[14];
-    output[10] = true;
+    //output[10] = true;
     return output;
   }
 

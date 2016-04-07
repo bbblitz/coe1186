@@ -60,6 +60,7 @@ public class CTCWindow extends JFrame{
 			}else{
 				if(train.getCurrentBlock() == null){
 					System.out.println("Block that train was on is null!");
+					System.exit(-1);
 				}else{
 					if(!blocksoccupied[train.getCurrentBlock().getID()]){
 						train.moveForwardOneBlock();
