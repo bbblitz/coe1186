@@ -30,16 +30,16 @@ public class main{
   }
 
   //TODO:Finish this method
-  static CTCWindow createCTC(LineController tcm, TrackModel tm){
+  static CTCWindow createCTC(LineController tcm){
 
-    return new CTCWindow(tm, tcm);
+    return new CTCWindow(tcm);
   }
 
   public static void main(String[] args){
     //Order is important!
     trackModel = createTrackModel();
     tcm = createTrackControllers(trackModel);
-    ctc = createCTC(tcm,trackModel);
+    ctc = createCTC(tcm);
 
 
     // initialize a train on the track somewhere
