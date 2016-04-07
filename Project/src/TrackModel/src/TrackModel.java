@@ -84,6 +84,10 @@ public class TrackModel{
 	  trackmodel.theLinkedList.display();
   }
   
+  public TrackModel(){
+	  
+  }
+  
   /*public TrackModel(/*String line, char section, int block_number, 
                   double block_length, double block_grade, 
                   int speed_limit, String infrastruct,
@@ -179,9 +183,17 @@ public class TrackModel{
 		i = i+1;
 		System.out.println("i=" + (i-1));
 		test = new boolean[14];
-		test[i-2] = true;
+		test[convertBlock(i-2)] = true;
+		System.out.println(Arrays.toString(test));
 	  
   }
 	  return test;
 }
+  
+  public int convertBlock(int i)
+  {
+	  int[] blocks = {11,10,9,8,6,0,1,2,3,4,5,7,13,12};
+	  return blocks[i];
+	  
+  }
 }
