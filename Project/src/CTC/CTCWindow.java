@@ -22,10 +22,11 @@ public class CTCWindow extends JFrame{
 		LineParser parser = new LineParser("track.txt",config);
 
 		//TODO:Remove this
-		BlockInterface startblock = config.aldl.get(0).blocks.get(11);
+		BlockInterface startblock = config.aldl.get(0).blocks.get(10);
+		BlockInterface preblock = config.aldl.get(0).blocks.get(11);
 		System.out.println("Start block is:");
 		System.out.println(startblock.toString());
-		Train ntrain = new Train(config, 0, startblock);
+		Train ntrain = new Train(config, 0, startblock,preblock);
 		config.pinkLineTrains.add(ntrain);
 
 		JPanel holder = new JPanel();
@@ -70,11 +71,14 @@ public class CTCWindow extends JFrame{
 		for(Line l : config.aldl){
 			for(BlockInterface bi : l.blocks){
 				if(bi == null){
-					System.out.println("Found a null block");
+					//System.out.println("Found a null block");
 				}else{
 					if(bi.getID() >= blocksoccupied.length){
 						System.out.println("blocksoccupied not big enough! " + bi.getID());
 					}else{
+						if(config.DEBUG_COMMUNICATION){
+							System.out.printf("Block %d is set to %s\n", bi.getID(), blocksoccupied[bi.getID()]?"true":"false");
+						}
 						bi.setOccupied(blocksoccupied[bi.getID()]);
 					}
 				}

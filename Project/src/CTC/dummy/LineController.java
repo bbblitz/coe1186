@@ -12,6 +12,7 @@ public class LineController{
     //frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
     frame.pack();
     frame.setVisible(true);
+
   }
 
   public void tick(long delta){
@@ -19,7 +20,9 @@ public class LineController{
   }
 
   public boolean[] getBlockOccupancies(){
-    return new boolean[14];
+    boolean[] output = new boolean[14];
+    output[10] = true;
+    return output;
   }
 
 }
