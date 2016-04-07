@@ -14,7 +14,7 @@ public class main{
     ctc = new CTCWindow(lc);
 
     java.util.Timer timer = new java.util.Timer();
-    //timer.scheduleAtFixedRate(new Ticker(), 0, 1000);
+    timer.scheduleAtFixedRate(new Ticker(), 0, 1000);
   }
 
   public static LineController makeDummyTrackController(){
@@ -23,7 +23,7 @@ public class main{
 
   static class Ticker extends TimerTask {
     public void run() {
-      System.out.println("tick");
+      //System.out.println("tick");
 
       // tick everything once if we're going normal speed, or more than once if we're going fast
       for(int i = 0; i < 1; i++) {

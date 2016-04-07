@@ -32,12 +32,12 @@ public class BlockStation extends BlockInterface{
    *@override
    */
   public BlockInterface goesto(BlockInterface from){
-    System.out.println("Calling goesto on station block" + this.toString());
+    //System.out.println("Calling goesto on station block" + this.toString());
     if(from == head){
-      System.out.println("Returning " + tail.toString());
+      //System.out.println("Returning " + tail.toString());
       return tail;
     }else{
-      System.out.println("Returning " + head.toString());
+      //System.out.println("Returning " + head.toString());
       return head;
     }
   }

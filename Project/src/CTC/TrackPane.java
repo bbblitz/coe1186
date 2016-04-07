@@ -183,7 +183,15 @@ public class TrackPane extends JPanel implements MouseListener {
 
   public void drawCurvedTrack(Graphics g, BlockCurved dti){
     //dti.drawBlock(g);
-    dti.drawTrainOn(g,true);
+    boolean hasdrawn = false;
+    for(Train t : this.c.pinkLineTrains){
+      if(t.getCurrentBlock() == dti){
+        dti.drawTrainOn(g,true);
+      }
+    }
+    if(!hasdrawn){
+      dti.drawBlock(g);
+    }
     //g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
   }
 
