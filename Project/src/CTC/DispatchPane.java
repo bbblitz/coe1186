@@ -8,16 +8,22 @@ public class DispatchPane extends JPanel implements ActionListener{
   JButton dispatchbutton;
   ArrayList<BlockStation> stations = new ArrayList<BlockStation>();
   ArrayList<Integer> trains = new ArrayList<Integer>();
+  JComboBox trainlist;
+  JComboBox blocklist;
   public DispatchPane(Config c) {
     config = c;
-    JComboBox trainlist = new JComboBox();
-    for(Integer i : trains){
-      trainlist.addItem("Train #" + i);
+    for(Train t : config.pinkLineTrains){
+      trains.add(t.getID());
     }
-    JComboBox blocklist = new JComboBox();
+
+    trainlist = new JComboBox();
+    for(Integer i : trains){
+      trainlist.addItem(new Integer(i));
+    }
+    blocklist = new JComboBox();
     for(BlockInterface bi : config.aldl.get(0).blocks){
       if(bi != null){
-        blocklist.addItem("Block #" + bi.getID());
+        blocklist.addItem(new Integer(bi.getID()));
       }
     }
     JLabel l = new JLabel("Dispatch:");
@@ -25,6 +31,7 @@ public class DispatchPane extends JPanel implements ActionListener{
     JLabel blockname = new JLabel("Block:");
     JTextField station = new JTextField();
     dispatchbutton = new JButton("Dispatch");
+    dispatchbutton.addActionListener(this);
     setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
     add(l);
     add(trainname);
@@ -45,9 +52,28 @@ public class DispatchPane extends JPanel implements ActionListener{
     */
   }
 
+  public int calculateAuthority(int trainid, int blockid){
+    int totallength = 0;
+    Train train = config.pinkLineTrains.get(trainid);
+    BlockInterface currentblock = train.getCurrentBlock();
+    BlockInterface previousblock = train.getPreviousBlock();
+    BlockInterface tmpblock = currentblock;
+    while(tmpblock.getID() != blockid){
+      BlockInterface tmp2 = tmpblock;
+      tmpblock = tmpblock.goesto(previousblock);
+      previousblock = tmp2;
+      totallength += 50;
+    }
+    System.out.println("Calculated length to be:" + totallength);
+    return totallength;
+  }
+
   public void actionPerformed(ActionEvent e){
     if(e.getSource() == dispatchbutton){
-      //Do the dispatch pane
+      int blockid = (Integer)blocklist.getSelectedItem();
+      int trainid = (Integer)trainlist.getSelectedItem();
+      int authority = calculateAuthority(trainid, blockid);
+      config.lineController.relayAuthority(authority,blockid);
     }
   }
 

@@ -25,4 +25,8 @@ public class LineController{
     return output;
   }
 
+  public void relayAuthority(int authority, int blockID){
+
+  }
+
 }
