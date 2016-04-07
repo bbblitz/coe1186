@@ -12,7 +12,7 @@ public class TrainController {
 	private final int STATION_DWELL_TIME = 60000;	// 60s
 	
 	/* signal pickups */
-	private double velocityFromTrainOperator;
+	private double velocityFromTrainOperator = 20;
 	private double velocityFromCTC;
 	private double authorityFromCTC;
 
