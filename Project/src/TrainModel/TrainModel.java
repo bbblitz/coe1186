@@ -21,7 +21,6 @@ public class TrainModel{
 	private double velocitySI;
 	private double position;
 	private double positionSI;
-	private int authority;
 	
 	//private Block currentBlock;   (add back when block class is finished)
 	
@@ -61,7 +60,6 @@ public class TrainModel{
 	public void tick(double deltaT){
 		this.trainController.tick(deltaT);
 		//this.trainController.receiveSignalFromRail(this.railSignal);
-		this.trainController.recieveAuthority(this.authority);
 		
 		if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
@@ -187,6 +185,10 @@ public class TrainModel{
 	}
 	
 	public void recieveAuthority(int authority){
-		this.authority = authority;
+		this.trainController.recieveAuthority(authority);
+	}
+	
+	public void recieveSpeed(int speed){
+		this.trainController.recieveSpeed(speed);
 	}
 }
