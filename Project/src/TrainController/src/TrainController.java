@@ -147,7 +147,8 @@ public class TrainController {
 			// distance to station is set but we're not braking yet - should we start braking?
 			double stoppingDistance = this.calculateServiceBrakeStoppingDistance();
 			if (stoppingDistance + DISTANCE_BUFFER >= this.distanceToStationEnd) {
-				this.ui.log("Starting to brake for station " + String.valueOf(this.distanceToStationEnd) + "m away.");
+				double feetToEnd = Math.round(this.metersToFeet(this.distanceToStationEnd) * 100.0) / 100.0;
+				this.ui.log("Starting to brake for station " + String.valueOf(feetToEnd) + " ft away.");
 				// give 0 power to start braking and begin station approach
 				this.stationApproachStatus = StationApproachStatus.BRAKING_FOR_APPROACH;
 				return 0;
@@ -203,13 +204,15 @@ public class TrainController {
 
 	// temporary - combined into one bit package later
 	public void receiveAuthority(int authority) {
-		this.ui.log("Received authority command: " + String.valueOf(authority) + "m");
+		double authFeet = Math.round(this.metersToFeet(authority) * 100.0) / 100.0;
+		this.ui.log("Received authority command: " + String.valueOf(authFeet) + " ft");
 		this.authorityFromCTC = authority;
 	}
 
 	// temporary - combined into one bit package later
 	public void receiveSpeed(int speed) {
-		this.ui.log("Received speed command from CTC: " + String.valueOf(speed) + "m/s");
+		double speedMph = Math.round(this.mpsToMph(speed) * 100.0) / 100.0;
+		this.ui.log("Received speed command from CTC: " + String.valueOf(speedMph) + " mph");
 		this.velocityFromCTC = speed;
 	}
 	
@@ -381,20 +384,24 @@ public class TrainController {
 	 * Utility functions
 	 */
 
-	private double millisToSeconds(double millis) {
+	public double millisToSeconds(double millis) {
 		return millis / 1000.0;
 	}
 	
-	private double secondsToMillis(double seconds) {
+	public double secondsToMillis(double seconds) {
 		return seconds * 1000.0;
 	}
 	
-	private double metersToFeet(double meters) {
+	public double metersToFeet(double meters) {
 		return meters * 3.28084;
 	}
 	
-	private double feetToMeters(double feet) {
+	public double feetToMeters(double feet) {
 		return feet * 0.3048;
+	}
+
+	public double mpsToMph(double mps) {
+		return mps * 2.2369;
 	}
 	
 	private int bitsetToInt(BitSet bitset) {

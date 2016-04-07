@@ -105,20 +105,24 @@ class RefreshTask extends TimerTask {
 
 	@Override
 	public void run() {
-		double targetSpeed = Math.round(trainController.getTargetVelocity() * 100.0) / 100.0;
-		String targetSpeedText = "Target speed: " + String.valueOf(targetSpeed);
+		double targetSpeed = trainController.mpsToMph(trainController.getTargetVelocity());
+		targetSpeed = Math.round(targetSpeed * 100.0) / 100.0;
+		String targetSpeedText = "Target speed: " + String.valueOf(targetSpeed) + " mph";
 		trainControllerUI.targetSpeedLabel.setText(targetSpeedText);
 
-		double currentSpeed = Math.round(trainController.getCurrentVelocitySI() * 100.0) / 100.0;
-		String currentSpeedText = "Current speed: " + String.valueOf(currentSpeed);
+		double currentSpeed = trainController.mpsToMph(trainController.getCurrentVelocitySI());
+		currentSpeed = Math.round(currentSpeed * 100.0) / 100.0;
+		String currentSpeedText = "Current speed: " + String.valueOf(currentSpeed) + " mph";
 		trainControllerUI.currentSpeedLabel.setText(currentSpeedText);
 
-		double currentPower = Math.round(trainController.getPowerCommand() * 100.0) / 100.0;
-		String currentPowerText = "Calculated power command: " + String.valueOf(currentPower);
+		double currentPower = trainController.getPowerCommand() / 1000.0;
+		currentPower = Math.round(currentPower * 100.0) / 100.0;
+		String currentPowerText = "Calculated power command: " + String.valueOf(currentPower) + " kW";
 		trainControllerUI.currentPowerLabel.setText(currentPowerText);
 
-		double currentAuthority = Math.round(trainController.getAuthorityFromCTC() * 100.0) / 100.0;
-		String currentAuthorityText = "Current authority: " + String.valueOf(currentAuthority);
+		double currentAuthority = trainController.metersToFeet(trainController.getAuthorityFromCTC());
+		currentAuthority = Math.round(currentAuthority * 100.0) / 100.0;
+		String currentAuthorityText = "Current authority: " + String.valueOf(currentAuthority) + " ft";
 		trainControllerUI.currentAuthorityLabel.setText(currentAuthorityText);
 	}
 }
