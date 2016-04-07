@@ -15,7 +15,7 @@ public class TrackModel{
   	this.train = new TrainModel("IAmAFakeTrain", this);
   }
 
-  public void tick(long deltaT) {
+  public void tick(double deltaT) {
     System.out.println("TrackModel tick");
   	this.train.tick(deltaT);
   }
@@ -173,16 +173,16 @@ public class TrackModel{
   public boolean[] getBlockOccupancies() {
 	  boolean [] test = new boolean[14];
 	  int i=1;
-	  while (recvdistance > totaldistance) 
-	  {
-		totaldistance =  totaldistance + theLinkedList.find(i).block_length;  
+	  //while (recvdistance > totaldistance) 
+	  //{
+		//totaldistance =  totaldistance + theLinkedList.find(i).block_length;  
 		i = i+1;
 		System.out.println("i=" + (i-1));
 		test = new boolean[14];
-		test[convertBlock(i-2)] = true;
-		System.out.println(Arrays.toString(test));
+		//test[convertBlock(i-2)] = true;
+		//System.out.println(Arrays.toString(test));
 	  
-  }
+  //}
 	  return test;
 }
   

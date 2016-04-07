@@ -68,6 +68,7 @@ public class TrainModel{
 	}
 	
 	public void tick(double deltaT){
+		System.out.println("Train Model tick");
 		this.trainController.tick(deltaT);
 		//this.trainController.receiveSignalFromRail(this.railSignal);
 		
