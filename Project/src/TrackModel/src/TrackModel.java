@@ -84,10 +84,6 @@ public class TrackModel{
 	  trackmodel.theLinkedList.display();
   }
   
-  public TrackModel(){
-	  
-  }
-  
   /*public TrackModel(/*String line, char section, int block_number, 
                   double block_length, double block_grade, 
                   int speed_limit, String infrastruct,
