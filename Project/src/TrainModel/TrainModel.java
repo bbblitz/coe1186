@@ -1,4 +1,6 @@
 import java.util.BitSet;
+//AFTER PROTOTYPE, change TrackModel communication on Distance
+//			TrackModel will call train.getDistance();
 
 public class TrainModel{
 	private double mass;
@@ -184,11 +186,11 @@ public class TrainModel{
 		this.railSignal = railSignal;
 	}
 	
-	public void recieveAuthority(int authority){
+	public void receiveAuthority(int authority){
 		this.trainController.recieveAuthority(authority);
 	}
 	
-	public void recieveSpeed(int speed){
+	public void receiveSpeed(int speed){
 		this.trainController.recieveSpeed(speed);
 	}
 }
