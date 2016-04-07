@@ -80,7 +80,7 @@ public class LineParser{
 
   public void resolveblocks(){
 
-    for(int i = 1; curline.blocks.get(i) != null; i++){
+    for(int i = 0; curline.blocks.get(i) != null; i++){
       if(curline == null){
         System.out.println("\tCurrent line does not exist!");
         System.exit(1);
