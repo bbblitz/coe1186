@@ -1,15 +1,15 @@
-@echo off
+
 
 rem Make the directories we're going to use for running the program
 mkdir build
 mkdir bin
 
 rem Copy all the dependencies into the build folder
-copy CTC/* .\build
-copy TrackController/* .\build
-copy TrackModel/* .\build
-copy TrainModel/* .\build
-copy TrainController/* .\build
+copy CTC\* .\build
+copy TrackController\* .\build
+copy TrackModel\* .\build
+copy TrainModel\* .\build
+copy TrainController\* .\build
 
 rem Copy our "real" main.java last so it dosen't conflict with any other ones.
 copy .\main.java .\build

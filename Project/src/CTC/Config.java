@@ -7,6 +7,8 @@ import java.util.*;
 public class Config{
   //Why dosen't java have #define? this is so inconvinent.
   public static final boolean DEBUG_PARSER = false;
+  public static final boolean DEBUG_COMMUNICATION = false;
+  public static final int SEGMENTATION_LENGTH = 10;
 
 
   //The red line is the first line in aldl, the green line is the second.
@@ -14,8 +16,8 @@ public class Config{
   public ArrayList<Train> greenLineTrains;
   public ArrayList<Train> redLineTrains;
   //TODO:Delete this
-  public ArrayList<Train> pinkLineTrains;
-  public TrackControllerManager trackControllerManager;
+  public ArrayList<Train> pinkLineTrains = new ArrayList<Train>();
+  public LineController lineController;
 
   /*
    * UI STUFF

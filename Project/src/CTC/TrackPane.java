@@ -98,7 +98,9 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void drawStraightTrack(Graphics g, BlockStraight track, Color c){
+    
     track.drawBlock(g);
+    //track.drawTrainOn(g, true);
   }
 
   public void drawCrossingTrack(Graphics g, BlockCrossing dti, Color c){

@@ -1,5 +1,6 @@
 import java.util.BitSet;
-//notifyAtStation
+//AFTER PROTOTYPE, change TrackModel communication on Distance
+//			TrackModel will call train.getDistance();
 
 public class TrainModel{
 	private double mass;
@@ -22,15 +23,16 @@ public class TrainModel{
 	private double velocitySI;
 	private double position;
 	private double positionSI;
+	
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
-	//private TrackModel trackModel;
+	private TrackModel trackModel;
 	
 	private BitSet railSignal;
 	private BitSet beaconSignal;
 	
-	public TrainModel(String ID/*, TrackModel trackModel*/){
+	public TrainModel(String ID, TrackModel trackModel){
 		this.mass = 37103.86;
 		
 		this.power = 0;
@@ -48,16 +50,18 @@ public class TrainModel{
 		this.oldVelocity = 0;
 		this.velocitySI = 0;
 		this.positionSI = 0;
+		//this.authority = 0;
 		
-		//this.trainController = new TrainController(this);
-		//this.trackModel = trackModel;
+		this.trainController = new TrainController(this);
+		this.trackModel = trackModel;
 		
 		railSignal = new BitSet(32);
 		beaconSignal = new BitSet(32);
 	}
 	
 	public void tick(double deltaT){
-		//this.trainController.tick(deltaT);
+		System.out.println("Train Model tick");
+		this.trainController.tick(deltaT);
 		//this.trainController.receiveSignalFromRail(this.railSignal);
 		
 		if(this.velocitySI == 0 && this.power > 0){
@@ -67,7 +71,7 @@ public class TrainModel{
 		}
 		double distanceOnTick = calculateSpeed(deltaT);
 		
-		//this.trackModel.recieveDistance(distanceOnTick);
+		this.trackModel.receiveDistance(distanceOnTick);
 	}
 	
 	private double calculateSpeed(double deltaT){
@@ -181,5 +185,13 @@ public class TrainModel{
 	
 	public void receiveSignalFromRail(BitSet railSignal){
 		this.railSignal = railSignal;
+	}
+	
+	public void receiveAuthority(int authority){
+		this.trainController.receiveAuthority(authority);
+	}
+	
+	public void receiveSpeed(int speed){
+		this.trainController.receiveSpeed(speed);
 	}
 }

@@ -12,6 +12,7 @@ public class main{
 
   static TrackModel trackModel;
   static CTCWindow ctc;
+  static LineController tcm;
 
   //TODO:Finish this method
   static TrackModel createTrackModel(){
@@ -29,16 +30,16 @@ public class main{
   }
 
   //TODO:Finish this method
-  static CTCWindow createCTC(LineController tcm, TrackModel tm){
+  static CTCWindow createCTC(LineController tcm){
 
-    return new CTCWindow(tm, tcm);
+    return new CTCWindow(tcm);
   }
 
   public static void main(String[] args){
     //Order is important!
     trackModel = createTrackModel();
-    LineController tcm = createTrackControllers(trackModel);
-    ctc = createCTC(tcm,trackModel);
+    tcm = createTrackControllers(trackModel);
+    ctc = createCTC(tcm);
 
 
     // initialize a train on the track somewhere
@@ -59,15 +60,16 @@ public class main{
 
   static class Ticker extends TimerTask {
 	public void run() {
-		System.out.println("tick");
+		//System.out.println("tick");
 
 		// tick everything once if we're going normal speed, or more than once if we're going fast
 		for(int i = 0; i < speedupFactor; i++) {
-			//trackModel.tick(deltaT);
-			//ctc.tick(deltaT);
+			trackModel.tick(deltaT);
+			ctc.tick(deltaT);
+      tcm.tick(deltaT);
       	}
 
-      
+
 	}
   }
 }

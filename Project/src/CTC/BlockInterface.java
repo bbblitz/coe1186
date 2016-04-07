@@ -16,6 +16,7 @@ public abstract class BlockInterface{
   private TrackFailState failState;
   private Line line;
   private double length;
+	private boolean isoccupied;
 
   /**
    * Given a Block `from`, return the Block after this one
@@ -75,6 +76,13 @@ public abstract class BlockInterface{
   /**
    * Getters and setters
    */
+
+	public boolean getOccupied(){
+		return this.isoccupied;
+	}
+	public void setOccupied(boolean o){
+		this.isoccupied = o;
+	}
 
   public ArrayList<Infrastructure> getInfrastructure(){
     return this.infrastructure;
