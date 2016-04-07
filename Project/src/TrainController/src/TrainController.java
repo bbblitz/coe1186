@@ -72,7 +72,6 @@ public class TrainController {
 	 * @param deltaT double Milliseconds since last update
 	 */
 	public void tick(double deltaT) {
-		System.out.println("Train Controller tick");
 		// update odometer
 		// deltaX = 0.5 * (v + v0) * deltaT
 		double oldVelocity = this.velocitySI;

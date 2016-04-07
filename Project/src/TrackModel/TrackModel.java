@@ -10,7 +10,6 @@ public class TrackModel{
   }
 
   public void tick(long deltaT) {
-    System.out.println("TrackModel tick");
   	this.train.tick(deltaT);
   }
 
