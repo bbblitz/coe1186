@@ -1,30 +1,31 @@
-//====MyLinkList.java
 
+//Linked List in Java  derek banas class linklist
 public class MyLinkList
 {
    public ListNode firstLink;
-   MyLinkList(){firstLink = null;}
+   MyLinkList(){firstLink = null;} //first link starts with null
    public boolean isEmpty(){ return(firstLink == null);}
-   public void insertFristLink(String newline, char newsection, int newblock_number, 
-           double newblock_length, double newblock_grade, 
-           int newspeed_limit, String newinfrastruct,
-           double newelevation, double newcummulative_el,
-           String newswitch_block, String newdirection){
-	   ListNode newLink = new ListNode(newline, newsection, newblock_number, 
-	           newblock_length, newblock_grade, 
-	           newspeed_limit, newinfrastruct,
-	           newelevation, newcummulative_el,
-	           newswitch_block, newdirection);
+   public void insertFristLink(String line, char section, int block_number, 
+           double block_length, double block_grade, 
+           int speed_limit, String infrastruct,
+           double elevation, double cummulative_el,
+           String switch_block, String direction){
+	   ListNode newLink = new ListNode(line, section, block_number, 
+	           block_length, block_grade, 
+	           speed_limit, infrastruct,
+	           elevation, cummulative_el,
+	           switch_block, direction);
 	   newLink.next = firstLink;
 	   firstLink = newLink;  
    }
+   
    
    public ListNode removeFirst(){
 	   ListNode linkReference = firstLink;
 	   if(!isEmpty()){
 		   firstLink = firstLink.next;
 	   } else {
-		   System.out.println("Emply LinkedList");
+		   System.out.println("Empty LinkedList");
 	   }
 	   return linkReference;
    }
@@ -36,6 +37,7 @@ public class MyLinkList
 		   theLink.display();
 		   System.out.println("next Link:" + theLink.next);
 		   theLink = theLink.next;
+	
 		   System.out.println();
 	   }
    }
@@ -44,9 +46,9 @@ public class MyLinkList
 	   ListNode theLink = firstLink;
 	   if(!isEmpty()){
 		   while(theLink.block_number != block_number){
-			   if(theLink.next == null){
+			   if(theLink.next == null){    //end of list
 				   return null;	   
-			   }else {
+			   }else {                     //found a match
 				   theLink = theLink.next;
 			   }
 		   }
@@ -61,18 +63,20 @@ public class MyLinkList
 	   ListNode currentLink = firstLink;
 	   ListNode previousLink = firstLink;
 	   while(currentLink.block_number != block_number){
-		   if(currentLink.next == null){
+		   if(currentLink.next == null){  //are you at the last
 			   return null;
 		   }else {
 			   previousLink = currentLink;
 			   currentLink = currentLink.next;
 		   }
 	   }
-	   if(currentLink == firstLink){
+	   if(currentLink == firstLink){   //match at first link
 		   firstLink = firstLink.next;
 	   }else {
 		   previousLink.next = currentLink.next;
 	   }
 	   return currentLink;
    }
-}
+   
+}  
+   
