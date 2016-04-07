@@ -64,8 +64,9 @@ public class main{
 
 		// tick everything once if we're going normal speed, or more than once if we're going fast
 		for(int i = 0; i < speedupFactor; i++) {
-			//trackModel.tick(deltaT);
-			//ctc.tick(deltaT);
+			trackModel.tick(deltaT);
+			ctc.tick(deltaT);
+      tcm.tick(deltaT);
       	}
 
 

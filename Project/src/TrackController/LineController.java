@@ -33,13 +33,13 @@ public class LineController
 	
 	public boolean[] getBlockOccupancies()
 	{
-		//model.getBlockOccupancies();
-		boolean[] out = new boolean[14];
+		boolean[] out = model.getBlockOccupancies();
+		/*boolean[] out = new boolean[14];
 		for(int i=0;i<7;i++)
 		{
 			out[i] = controller1.inputs[i];
 			out[i+7] = controller2.inputs[i];
-		}
+		}*/
 		return out;
 	}
 	

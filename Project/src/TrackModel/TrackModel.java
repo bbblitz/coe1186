@@ -10,6 +10,7 @@ public class TrackModel{
   }
 
   public void tick(long deltaT) {
+    System.out.println("TrackModel tick");
   	this.train.tick(deltaT);
   }
 
@@ -19,6 +20,7 @@ public class TrackModel{
 
   public void relaySpeed(int speed, int blockID) {
   	this.train.receiveSpeed(speed);
+    System.out.println(speed);
   }
 
   public void receiveDistance(double deltaX) {
@@ -26,7 +28,7 @@ public class TrackModel{
   }
 
   public boolean[] getBlockOccupancies() {
-  	boolean[] test = new boolean[2];
+  	boolean[] test = new boolean[14];
   	return test;
   }
 }
