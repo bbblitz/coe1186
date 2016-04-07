@@ -15,13 +15,18 @@ public class LineController
 		
 	public void updateInputs(boolean[] inputs)
 	{
-		boolean[] inputs1 = new boolean[7];
-		boolean[] inputs2 = new boolean[7];
+		boolean[] inputs1 = new boolean[8];
+		boolean[] inputs2 = new boolean[8];
 		for(int i=0;i<7;i++)
 		{
 			inputs1[i] = inputs[i];
+		}
+		inputs2[0] = inputs[7];
+		for(int i=1;i<7;i++)
+		{
 			inputs2[i] = inputs[i+7];
 		}
+		inputs2[7] = inputs[6];
 		controller1.updateInputs(inputs1);
 		controller2.updateInputs(inputs2);
 	}
@@ -56,6 +61,11 @@ public class LineController
 	public void relayAuthority(int authority, int blockID)
 	{
 		model.relayAuthority(authority, blockID);
+	}
+	
+	public void relaySpeed(int speed, int blockID)
+	{
+		model.relaySpeed(speed, blockID);
 	}
 	
 	public void tick(double deltaT)

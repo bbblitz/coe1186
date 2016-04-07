@@ -17,8 +17,6 @@ public class TrackControllerUI {
 	public TrackControllerUI(TrackController TC) {
 		this.TC = TC;
 		this.prepareGUI();
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new RefreshTask(this), 0, 100);
 	}
 
 	private void prepareGUI() {
@@ -61,17 +59,4 @@ public class TrackControllerUI {
 		TrackControllerUI tcui = new TrackControllerUI(new TrackController());
 	}
 
-}
-
-class RefreshTask extends TimerTask {
-
-	private TrackControllerUI trackControllerUI;
-
-	public RefreshTask(TrackControllerUI trackControllerUI) {
-		this.trackControllerUI = trackControllerUI;
-	}
-
-	@Override
-	public void run() {
-	}
 }
