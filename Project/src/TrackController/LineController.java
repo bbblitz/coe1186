@@ -58,6 +58,11 @@ public class LineController
 		return switches;
 	}
 	
+	public void zeroAuthority(int blockID)
+	{
+		relayAuthority(0, blockID);
+	}
+	
 	public void relayAuthority(int authority, int blockID)
 	{
 		model.relayAuthority(authority, blockID);
@@ -71,6 +76,20 @@ public class LineController
 	public void tick(double deltaT)
 	{
 		updateInputs(model.getBlockOccupancies());
+		for(int i=0;i<controller1.blockCount;i++)
+		{
+			if(controller1.outputs[i])
+			{
+				zeroAuthority(i);
+			}
+		}
+		for(int i=0;i<controller2.blockCount;i++)
+		{
+			if(controller2.outputs[i])
+			{
+				zeroAuthority(i+7);
+			}
+		}
 	}
 	
 	public static void main(String[] args)
