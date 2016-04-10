@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/development
 
+//Linked List in Java  derek banas class linklist
 public class MyLinkList
 {
    public ListNode firstLink;
-   MyLinkList(){firstLink = null;}
+   MyLinkList(){firstLink = null;} //first link starts with null
    public boolean isEmpty(){ return(firstLink == null);}
    public void insertFristLink(String line, char section, int block_number, 
            double block_length, double block_grade, 
@@ -19,12 +23,13 @@ public class MyLinkList
 	   firstLink = newLink;  
    }
    
+   
    public ListNode removeFirst(){
 	   ListNode linkReference = firstLink;
 	   if(!isEmpty()){
 		   firstLink = firstLink.next;
 	   } else {
-		   System.out.println("Emply LinkedList");
+		   System.out.println("Empty LinkedList");
 	   }
 	   return linkReference;
    }
@@ -45,9 +50,9 @@ public class MyLinkList
 	   ListNode theLink = firstLink;
 	   if(!isEmpty()){
 		   while(theLink.block_number != block_number){
-			   if(theLink.next == null){
+			   if(theLink.next == null){    //end of list
 				   return null;	   
-			   }else {
+			   }else {                     //found a match
 				   theLink = theLink.next;
 			   }
 		   }
@@ -62,19 +67,23 @@ public class MyLinkList
 	   ListNode currentLink = firstLink;
 	   ListNode previousLink = firstLink;
 	   while(currentLink.block_number != block_number){
-		   if(currentLink.next == null){
+		   if(currentLink.next == null){  //are you at the last
 			   return null;
 		   }else {
 			   previousLink = currentLink;
 			   currentLink = currentLink.next;
 		   }
 	   }
-	   if(currentLink == firstLink){
+	   if(currentLink == firstLink){   //match at first link
 		   firstLink = firstLink.next;
 	   }else {
 		   previousLink.next = currentLink.next;
 	   }
 	   return currentLink;
    }
+<<<<<<< HEAD
+=======
+   
+>>>>>>> origin/development
 }  
    

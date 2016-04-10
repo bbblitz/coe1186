@@ -13,10 +13,12 @@ public class TrainDetailPane extends JPanel{
     JLabel passengers = new JLabel("Passengers:");
     JLabel speed = new JLabel("Speed:");
     JLabel authority = new JLabel("Authority:");
+    /*
     add(trainname);
     add(throughput);
     add(passengers);
     add(speed);
     add(authority);
+    */
   }
 }

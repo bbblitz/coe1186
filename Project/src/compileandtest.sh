@@ -7,7 +7,7 @@ mkdir bin
 # Copy all the dependencies into the build folder
 cp CTC/* ./build
 cp TrackController/* ./build
-cp TrackModel/* ./build
+cp TrackModel/src/* ./build
 cp TrainModel/* ./build
 cp TrainController/src/* ./build
 

@@ -98,8 +98,15 @@ public class TrackPane extends JPanel implements MouseListener {
   }
 
   public void drawStraightTrack(Graphics g, BlockStraight track, Color c){
-    
-    track.drawBlock(g);
+    boolean hasdrawn = false;
+    for(Train t : this.c.pinkLineTrains){
+      if(t.getCurrentBlock() == track){
+        track.drawTrainOn(g,true);
+      }
+    }
+    if(!hasdrawn){
+      track.drawBlock(g);
+    }
     //track.drawTrainOn(g, true);
   }
 
@@ -131,7 +138,17 @@ public class TrackPane extends JPanel implements MouseListener {
     }
   }
 
-  public void drawStationTrack(Graphics g, BlockStation dti, Color c){
+  public void drawStationTrack(Graphics g, BlockStation track, Color c){
+    boolean hasdrawn = false;
+    for(Train t : this.c.pinkLineTrains){
+      if(t.getCurrentBlock() == track){
+        track.drawTrainOn(g,true);
+      }
+    }
+    if(!hasdrawn){
+      track.drawBlock(g);
+    }
+    /*
     BlockStation bs = dti;
     int starts[][] = new int[3][2];
     int ends[][] = new int[3][2];
@@ -161,13 +178,28 @@ public class TrackPane extends JPanel implements MouseListener {
     for(int i = 0; i < 3; i++){
       g.drawLine(starts[i][0],starts[i][1],ends[i][0],ends[i][1]);
     }
+    */
+  }
+
+  public void drawCurvedTrack(Graphics g, BlockCurved dti){
+    //dti.drawBlock(g);
+    boolean hasdrawn = false;
+    for(Train t : this.c.pinkLineTrains){
+      if(t.getCurrentBlock() == dti){
+        dti.drawTrainOn(g,true);
+      }
+    }
+    if(!hasdrawn){
+      dti.drawBlock(g);
+    }
+    //g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
   }
 
   public void drawSegment(Graphics g, BlockInterface dti, Color c){
     g.setColor(c);
     if(dti instanceof BlockCurved){
       BlockCurved dtc = (BlockCurved)dti;
-      g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
+      drawCurvedTrack(g,dtc);
 
       //System.out.println("Found curved track");
     }

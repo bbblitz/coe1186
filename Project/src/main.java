@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 public class main{
 
-  static final long deltaT = 100;
+  static final double deltaT = 100;
   static final int speedupFactor = 1;
 
 
@@ -55,7 +55,7 @@ public class main{
     System.out.println("Starting the program, ticking every " + String.valueOf(deltaT) + " ms, and telling modules that " + String.valueOf(deltaT * speedupFactor) + "ms have passed each tick.");
 
     Timer timer = new Timer();
-    timer.scheduleAtFixedRate(new Ticker(), 0, deltaT);
+    timer.scheduleAtFixedRate(new Ticker(), 0, (long)deltaT);
   }
 
   static class Ticker extends TimerTask {

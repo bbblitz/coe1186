@@ -26,7 +26,10 @@ public class LineController{
   }
 
   public void relayAuthority(int authority, int blockID){
-
+    System.out.printf("Got authority:%d meters to be sent to blockid:%d",authority, blockID);
+  }
+  public void relaySpeed(int speed, int blockID){
+    System.out.printf("Got speed:%d m/s to be sent to blockid:%d",speed,blockID);
   }
 
 }

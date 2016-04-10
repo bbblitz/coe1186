@@ -41,6 +41,9 @@ public class TrainController {
 	
 	private double odometer;
 	double _lastPowerCommand;
+
+	/* internal logging and event tracking */
+	boolean outOfAuthorityBraking = false;
 	
 	/**
 	 * Create the TrainController
@@ -69,7 +72,6 @@ public class TrainController {
 	 * @param deltaT double Milliseconds since last update
 	 */
 	public void tick(double deltaT) {
-		System.out.println("Train Controller tick");
 		// update odometer
 		// deltaX = 0.5 * (v + v0) * deltaT
 		double oldVelocity = this.velocitySI;
@@ -104,23 +106,28 @@ public class TrainController {
 			this.dwellTimeRemaining = STATION_DWELL_TIME;
 			this.trainModel.notifyAtStation(this.nextStationId);
 			this.ui.log("Stopped completely at station. Dwelling for " + (STATION_DWELL_TIME / 1000) + "s.");
+
+			//this.trainModel.
 		}
 
 		// calculate power if we're not at or braking for a station
 		if (this.stationApproachStatus == StationApproachStatus.NONE || this.stationApproachStatus == StationApproachStatus.DISTANCE_SET) {
-			// calculate power (power <= 0 means brake should be applied)
-			this.powerCommand = calculatePower(deltaT);
-			double power = this.powerCommand;
-			if (power <= 0) {
-				// best action is to slow down
-				power = 0;
-				this.trainModel.activateServiceBrake();
-			} else if (power > 0) {
-				// best action is to speed up
-				this.trainModel.deactivateServiceBrake();
+			// don't bother calculating power if we have no authority
+			if (this.authorityFromCTC > 0) {
+				// calculate power (power <= 0 means brake should be applied)
+				this.powerCommand = calculatePower(deltaT);
+				double power = this.powerCommand;
+				if (power <= 0) {
+					// best action is to slow down
+					power = 0;
+					this.trainModel.activateServiceBrake();
+				} else if (power > 0) {
+					// best action is to speed up
+					this.trainModel.deactivateServiceBrake();
+				}
+				this._lastPowerCommand = power;
+				this.trainModel.receivePowerCommand(power);
 			}
-			this._lastPowerCommand = power;
-			this.trainModel.receivePowerCommand(power);
 		} else {
 			// we're braking for a station approach or stopped at the station
 			this.trainModel.activateServiceBrake();	// if it wasn't already
@@ -139,7 +146,8 @@ public class TrainController {
 			// distance to station is set but we're not braking yet - should we start braking?
 			double stoppingDistance = this.calculateServiceBrakeStoppingDistance();
 			if (stoppingDistance + DISTANCE_BUFFER >= this.distanceToStationEnd) {
-				this.ui.log("Starting to brake for station " + String.valueOf(this.distanceToStationEnd) + "m away.");
+				double feetToEnd = Math.round(this.metersToFeet(this.distanceToStationEnd) * 100.0) / 100.0;
+				this.ui.log("Starting to brake for station " + String.valueOf(feetToEnd) + " ft away.");
 				// give 0 power to start braking and begin station approach
 				this.stationApproachStatus = StationApproachStatus.BRAKING_FOR_APPROACH;
 				return 0;
@@ -147,6 +155,7 @@ public class TrainController {
 		}
 		if (haveEnoughAuthority()) {
 			// authority is fine, turn off service brake if applied and let the train continue
+			this.outOfAuthorityBraking = false;
 			this.trainModel.deactivateServiceBrake();
 			
 			// decide best velocity to target
@@ -160,7 +169,10 @@ public class TrainController {
 			return power;
 		} else {
 			// out of authority, brake the train to a stop (or until more authority is received)
-			this.ui.log("Out of authority, starting to brake.");
+			if (!this.outOfAuthorityBraking) {
+				this.ui.log("Authority running out, starting to brake.");
+				this.outOfAuthorityBraking = true;
+			}
 			this.trainModel.activateServiceBrake();
 			return 0;
 		}
@@ -191,13 +203,15 @@ public class TrainController {
 
 	// temporary - combined into one bit package later
 	public void receiveAuthority(int authority) {
-		this.ui.log("Received authority command: " + String.valueOf(authority) + "m");
+		double authFeet = Math.round(this.metersToFeet(authority) * 100.0) / 100.0;
+		this.ui.log("Received authority command: " + String.valueOf(authFeet) + " ft");
 		this.authorityFromCTC = authority;
 	}
 
 	// temporary - combined into one bit package later
 	public void receiveSpeed(int speed) {
-		this.ui.log("Received speed command from CTC: " + String.valueOf(speed) + "m/s");
+		double speedMph = Math.round(this.mpsToMph(speed) * 100.0) / 100.0;
+		this.ui.log("Received speed command from CTC: " + String.valueOf(speedMph) + " mph");
 		this.velocityFromCTC = speed;
 	}
 	
@@ -369,20 +383,24 @@ public class TrainController {
 	 * Utility functions
 	 */
 
-	private double millisToSeconds(double millis) {
+	public double millisToSeconds(double millis) {
 		return millis / 1000.0;
 	}
 	
-	private double secondsToMillis(double seconds) {
+	public double secondsToMillis(double seconds) {
 		return seconds * 1000.0;
 	}
 	
-	private double metersToFeet(double meters) {
+	public double metersToFeet(double meters) {
 		return meters * 3.28084;
 	}
 	
-	private double feetToMeters(double feet) {
+	public double feetToMeters(double feet) {
 		return feet * 0.3048;
+	}
+
+	public double mpsToMph(double mps) {
+		return mps * 2.2369;
 	}
 	
 	private int bitsetToInt(BitSet bitset) {

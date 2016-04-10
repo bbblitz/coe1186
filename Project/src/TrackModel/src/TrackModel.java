@@ -9,13 +9,14 @@ import java.io.IOException;
 public class TrackModel{
 	
 
-	/*private TrainModel train;
+	private TrainModel train;
 
   public TrackModel(){
   	this.train = new TrainModel("IAmAFakeTrain", this);
   }
 
-  public void tick(long deltaT) {
+  public void tick(double deltaT) {
+    System.out.println("TrackModel tick");
   	this.train.tick(deltaT);
   }
 
@@ -27,8 +28,8 @@ public class TrackModel{
   	this.train.receiveSpeed(speed);
     System.out.println(speed);
   }
-*/
-  public String line;
+  
+ /* public String line;
   public char   section;
   public int    block_number;
   public double block_length;
@@ -38,11 +39,52 @@ public class TrackModel{
   public double elevation;
   public double cummulative_el;
   public String switch_block;
-  public String direction;
+  public String direction;*/
+  public double recvdistance = 401;
+  public double totaldistance = 0;
   
-  public TrackModel next;       //a reference pointing to next node
+  public MyLinkList theLinkedList;
+  
+  //public TrackModel next;       //a reference pointing to next node
 
-  public TrackModel(String line, char section, int block_number, 
+  	String filename = "t1.txt";
+
+	private String line;
+
+	/*private char section;
+
+	private int block_number;
+
+	private double block_length;
+
+	private double block_grade;
+
+	private int speed_limit;
+
+	private String infrastruct;
+
+	private double elevation;
+
+	private double cummulative_el;
+
+	private String switch_block;
+
+	private String direction; */
+	
+  public TrackModel(String filename) throws NumberFormatException, IOException
+  {
+	  Readfile();
+  }
+  
+  public static void main(String[] args) throws NumberFormatException, IOException{
+
+	  TrackModel trackmodel = new TrackModel();
+	  trackmodel.Readfile();
+	  System.out.println("I am here.");
+	  trackmodel.theLinkedList.display();
+  }
+  
+  /*public TrackModel(/*String line, char section, int block_number, 
                   double block_length, double block_grade, 
                   int speed_limit, String infrastruct,
                   double elevation, double cummulative_el,
@@ -59,15 +101,15 @@ public class TrackModel{
     this.cummulative_el	= cummulative_el;
     this.switch_block	= switch_block;
     this.direction	    = direction;
-  }
+  }*/
 
-  public void display() {
+  /*public void display() {
 		 System.out.println(line + ":" + section + ":" + block_number + ":" +
 	             block_length + ":" + block_grade + ":" + 
 	             speed_limit + ":" + infrastruct + ":" +
 	             elevation + ":" + cummulative_el + ":" +
 	             switch_block + ":" + direction + ":");
-	 }
+	 }*/
 	 public String toString(){
 		 return line;
 	 }
@@ -75,8 +117,8 @@ public class TrackModel{
 	 //public ListNode getNext() {return next;}
 	 //public void setNext(ListNode newNext) {next = newNext;}
 
-	  public static void main(String[] args) throws NumberFormatException, IOException{
-		  MyLinkList theLinkedList = new MyLinkList();
+	  public void Readfile() throws NumberFormatException, IOException{
+		  theLinkedList = new MyLinkList();
 		  
 		  String linecolor;
 		  char   section;
@@ -116,20 +158,38 @@ public class TrackModel{
 		  
 		  
 		 // Output all of the items in the Linked List
-		  	theLinkedList.display();
-		  	System.out.println("HI");
+		  //	theLinkedList.display();
 		 
 		 // Print out Specific Block info.
-		  		//System.out.println(theLinkedList.find(2).block_length);
+		  		//System.out.println(theLinkedList.find(2).block_length);	
 		  
 	  }
-  public void receiveDistance(double deltaX) {
 	  
+  public void receiveDistance(double deltaX) {
+	  recvdistance = recvdistance + deltaX ;
 
   }
 
   public boolean[] getBlockOccupancies() {
-  	boolean[] test = new boolean[14];
-  	return test;
+	  boolean [] test = new boolean[14];
+	  int i=1;
+	  //while (recvdistance > totaldistance) 
+	  //{
+		//totaldistance =  totaldistance + theLinkedList.find(i).block_length;  
+		i = i+1;
+		System.out.println("i=" + (i-1));
+		test = new boolean[14];
+		//test[convertBlock(i-2)] = true;
+		//System.out.println(Arrays.toString(test));
+	  
+  //}
+	  return test;
+}
+  
+  public int convertBlock(int i)
+  {
+	  int[] blocks = {11,10,9,8,6,0,1,2,3,4,5,7,13,12};
+	  return blocks[i];
+	  
   }
 }
