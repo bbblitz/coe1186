@@ -79,7 +79,8 @@ public class LineParser{
   }
 
   public void resolveblocks(){
-    System.out.println("\t---Starting block resolution---");
+    if(c.DEBUG_PARSER)
+      System.out.println("\t---Starting block resolution---");
     for(int i = 0; curline.blocks.get(i) != null; i++){
       if(curline == null){
         System.out.println("\tCurrent line does not exist!");
@@ -130,8 +131,10 @@ public class LineParser{
         }else{
           blockcur.tail = curline.blocks.get(tails.get(i));
         }
-        System.out.println("\t\tResolved curved block");
-        System.out.println("\t\t" + blockcur.toString());
+        if(c.DEBUG_PARSER){
+          System.out.println("\t\tResolved curved block");
+          System.out.println("\t\t" + blockcur.toString());
+        }
       }else if(block instanceof BlockStation){
         BlockStation blocksta = (BlockStation)block;
         if(curline.blocks.get(heads.get(i)) == null){
@@ -147,8 +150,10 @@ public class LineParser{
         }else{
           blocksta.tail = curline.blocks.get(tails.get(i));
         }
-        System.out.println("\t\tResolved station block");
-        System.out.println("\t\t" + blocksta.toString());
+        if(c.DEBUG_PARSER){
+          System.out.println("\t\tResolved station block");
+          System.out.println("\t\t" + blocksta.toString());
+        }
       }else if(block instanceof BlockSwitch){
         BlockSwitch blockswi = (BlockSwitch)block;
         if(curline.blocks.get(heads.get(i)) == null){
@@ -173,7 +178,9 @@ public class LineParser{
         }
       }
     }
-    System.out.println("\t---Ending block resolution---");
+    if(c.DEBUG_PARSER){
+      System.out.println("\t---Ending block resolution---");
+    }
     c.aldl.add(curline);
     c.vislines.add(true);
   }

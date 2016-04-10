@@ -8,9 +8,10 @@ public class SchedulePane extends JPanel{
 
   //A 2 by x arraylist, formated Time,Station
   ArrayList<ArrayList<String>> schedule = new ArrayList<ArrayList<String>>();
-
-  public SchedulePane(){
+  Config c;
+  public SchedulePane(Config config){
     super();
+    c = config;
     JLabel l = new JLabel("Schedule:");
     add(l);
     System.out.println("Createing Schedule");

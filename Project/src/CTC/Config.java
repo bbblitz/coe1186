@@ -8,6 +8,7 @@ public class Config{
   //Why dosen't java have #define? this is so inconvinent.
   public static final boolean DEBUG_PARSER = false;
   public static final boolean DEBUG_COMMUNICATION = false;
+  public static final boolean DEBUG_SCHEDUAL = false;
   public static final int SEGMENTATION_LENGTH = 10;
 
 
@@ -18,6 +19,8 @@ public class Config{
   //TODO:Delete this
   public ArrayList<Train> pinkLineTrains = new ArrayList<Train>();
   public LineController lineController;
+
+  public long time;
 
   /*
    * UI STUFF

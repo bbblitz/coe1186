@@ -16,7 +16,7 @@ public class DetailPane extends JPanel{
     lh.setLayout(new BoxLayout(lh,BoxLayout.Y_AXIS));
     rh.setLayout(new BoxLayout(rh,BoxLayout.Y_AXIS));
     setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
-    SchedulePane sp = new SchedulePane();
+    SchedulePane sp = new SchedulePane(config);
     LineVisPanel lp = new LineVisPanel(config);
     TrainDetailPane tp = new TrainDetailPane();
     DispatchPane dp = new DispatchPane(config);

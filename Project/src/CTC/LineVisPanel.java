@@ -13,8 +13,6 @@ public class LineVisPanel extends JPanel implements ItemListener{
     JLabel lm = new JLabel("Line Visibility:");
     add(lm);
     setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-    System.out.println("In LVP, config is " + config);
-    System.out.println("And aldl is " + config.aldl);
     for(Line l : config.aldl){
       Checkbox c = new Checkbox(l.name,true);
       c.addItemListener(this);
@@ -25,10 +23,8 @@ public class LineVisPanel extends JPanel implements ItemListener{
 
   public void itemStateChanged(ItemEvent e) {
     Object source = e.getItemSelectable();
-    System.out.println("Checkbox ticked");
     for(int i = 0; i < alc.size(); i++){
       if(source == alc.get(i)){
-        System.out.println("Checkbox:" + config.aldl.get(i).lineid);
         config.vislines.set(i,((java.awt.Checkbox)source).getState());
         config.trackpane.repaint();
       }

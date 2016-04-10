@@ -33,7 +33,6 @@ public class CTCWindow extends JFrame{
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = new TrackPane(config);
     config.trackpane = tp;
-    System.out.println("config.trackpane is: " + config.trackpane);
     JPanel dp = new DetailPane(config);
     Dimension d = new Dimension((int)(WIDTH*0.7),HEIGHT);
     Dimension d2 = new Dimension((int)(WIDTH*0.3),HEIGHT);
@@ -52,6 +51,7 @@ public class CTCWindow extends JFrame{
 
 	public void tick(double deltaT) {
 		boolean[] blocksoccupied = config.lineController.getBlockOccupancies();
+		TrackFailState[] failstates = config.lineController.getBlockFailStates();
 		ArrayList<Train> alltrains = config.pinkLineTrains;
 		for(Train train : alltrains){
 			//The train is not on an occupied block, move it forward
@@ -81,46 +81,15 @@ public class CTCWindow extends JFrame{
 							System.out.printf("Block %d is set to %s\n", bi.getID(), blocksoccupied[bi.getID()]?"true":"false");
 						}
 						bi.setOccupied(blocksoccupied[bi.getID()]);
+						bi.setFailState(failstates[bi.getID()]);
 					}
 				}
 			}
 		}
 
 		config.trackpane.repaint();
-		/*
-		//LineController lc = config.lineController();
-		ArrayList<Train> allTrains = config.getAllTrains();
-		ArrayList<LineController> allTrackControllers = config.lineController.getAllTrackControllers();
+		config.time += deltaT;
+		System.out.printf("%d elapsed\n",config.time);
 
-		// flip all switches to correct position
-		for (LineController trackController : allTrackControllers) {
-			// get occupancy+switchstate arrays
-			// process arrays
-			boolean[] tcgss = trackController.getSwitchStates();
-			ArrayList<Boolean> switchStates = new ArrayList<Boolean>(tcgss.length);
-			for(int i = 0; i < tcgss.length; i++){
-				switchStates.set(i,tcgss[i]);
-			}
-			for (int i = 0; i < switchStates.size(); i++) {
-				// turn index into BlockSwitch, then set it flipped or unflipped
-				BlockSwitch blockSwitch = config.trackControllerManager.getBlockFromSwitchArray(trackController, i);
-				boolean flipped = switchStates.get(i);
-				blockSwitch.setFlipped(flipped);
-			}
-		}
-
-		// move trains forward if their current block is no longer occupied
-		for (Train train : allTrains) {
-			// if train.getCurrentBlock() is not occupied according to track controller(s)
-			// then move train forward one block
-			BlockInterface trainCurrentBlock = train.getCurrentBlock();
-			boolean trainBlockOccupied = config.trackControllerManager.isBlockOccupied(trainCurrentBlock);
-			if (!trainBlockOccupied) {
-				// this train must have moved forward one block since its last known block is not occupied
-				train.moveForwardOneBlock();
-			}
-		}
-		*/
 	}
-
 }
