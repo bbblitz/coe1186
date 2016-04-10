@@ -1,21 +1,46 @@
 import java.io.File;
+import java.util.Scanner;
 
 public class LineController
 {
-	TrackController controller1;
-	TrackController controller2;
-	TrackModel model;
+	private TrackController controllers[];
+	private TrackModel model;
 	
 	public LineController(TrackController controller1, TrackController controller2, TrackModel model)
 	{
-		this.controller1 = controller1;
-		this.controller2 = controller2;
+		controllers = new TrackController[2];
+		this.controllers[0] = controller1;
+		this.controllers[1] = controller2;
 		this.model = model;
+	}
+	
+	public LineController(TrackController[] controllers)
+	{
+		int i = 0;
+		for(TrackController current : controllers)
+		{
+			this.controllers[i++] = current;
+		}
 	}
 		
 	public void updateInputs(boolean[] inputs)
 	{
-		boolean[] inputs1 = new boolean[8];
+		int maxInputLength = 0;
+		for(TrackController current : controllers)
+		{
+			if(current.getInputCount()>maxInputLength) maxInputLength = current.getInputCount();
+		}
+		boolean[][] controllerInputs = new boolean[controllers.length][maxInputLength];
+		for(int i=0;i<inputs.length;i++)
+		{
+			int[] whatever = convertToTrackBlock(i);
+			controllerInputs[whatever[0]][whatever[i]] = inputs[i];
+		}
+		for(int i=0;i<controllers.length;i++)
+		{
+			controllers[i].updateInputs(controllerInputs[i]);
+		}
+		/*boolean[] inputs1 = new boolean[8];
 		boolean[] inputs2 = new boolean[8];
 		for(int i=0;i<7;i++)
 		{
@@ -28,32 +53,32 @@ public class LineController
 		}
 		inputs2[7] = inputs[6];
 		controller1.updateInputs(inputs1);
-		controller2.updateInputs(inputs2);
+		controller2.updateInputs(inputs2);*/
 	}
 	
 	public boolean[] getBlockOccupancies()
 	{
 		boolean[] out = model.getBlockOccupancies();
-		/*boolean[] out = new boolean[14];
-		for(int i=0;i<7;i++)
-		{
-			out[i] = controller1.inputs[i];
-			out[i+7] = controller2.inputs[i];
-		}*/
 		return out;
 	}
 	
 	public boolean[] getSwitchStates()
 	{
-		boolean[] switches = new boolean[controller1.switchCount+controller2.switchCount];
-		int j=0;
-		for(int i=controller1.blockCount;i<controller1.blockCount+controller1.switchCount;i++)
+		int totalSwitchCount = 0;
+		for(TrackController current : controllers)
 		{
-			switches[j++] = controller1.outputs[i];
+			totalSwitchCount += current.getSwitchCount();
 		}
-		for(int i=controller2.blockCount;i<controller1.blockCount+controller2.switchCount;i++)
+		boolean[] switches = new boolean[totalSwitchCount];
+		
+		int k=0;
+		for(int i=0;i<controllers.length;i++)
 		{
-			switches[j++] = controller2.outputs[i];
+			boolean[] newSwitches = new boolean[controllers[i].getSwitchCount()];
+			for(int j=0;i<controllers[i].getSwitchCount();j++)
+			{
+				switches[k++] = newSwitches[j];
+			}
 		}
 		return switches;
 	}
@@ -76,24 +101,58 @@ public class LineController
 	public void tick(double deltaT)
 	{
 		updateInputs(model.getBlockOccupancies());
-		for(int i=0;i<controller1.blockCount;i++)
+		for(int i=0;i<controllers.length;i++)
 		{
-			if(controller1.outputs[i])
+			boolean[] currentOutputs = controllers[i].getOutputs();
+			for(int j=0;j<controllers[i].getBlockCount();j++)
 			{
-				zeroAuthority(i);
-			}
-		}
-		for(int i=0;i<controller2.blockCount;i++)
-		{
-			if(controller2.outputs[i])
-			{
-				zeroAuthority(i+7);
+				if(currentOutputs[j])
+				{
+					zeroAuthority(convertToLineBlock(i, j));
+				}
 			}
 		}
 	}
 	
+	public int[] convertToTrackBlock(int blockID)
+	{
+		//hard code blockID
+		int[] out = new int[2];
+		out[0] = blockID/7;
+		if(out[0]==0)
+		{
+			out[1] = blockID;
+		}
+		else if(out[0]==1)
+		{
+			out[1] = blockID-7;
+		}
+		return out;
+	}
+	
+	public int convertToLineBlock(int controllerID, int blockID)
+	{
+		int lineBlockID = 7*controllerID + blockID;
+		return lineBlockID;
+	}
+	
+	public TrackFailState[] getFailStates()
+	{
+		//return array of failstates
+		//probably call model.getFailStates();
+		return null;
+	}
+	
 	public static void main(String[] args)
 	{
+		Scanner keyboard = new Scanner(System.in);
+		System.out.print("Enter the amount of controllers: ");
+		int controllerCount = keyboard.nextInt();
+		TrackController[] LCControllers = new TrackController[controllerCount];
+		for(TrackController current : LCControllers)
+		{
+			current = new TrackController();
+		}
 		/*TrackController TCA = new TrackController(new File("test1.plc"));
 		TrackController TCB = new TrackController(new File("test2.plc"));
 		TrackController TCC = new TrackController(new File("test1.plc"));
