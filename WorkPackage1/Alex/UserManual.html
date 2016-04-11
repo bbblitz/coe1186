@@ -3,7 +3,7 @@
 <style>
   div{
     border:1px solid black;
-    padding:2px;
+    padding:20px;
   }
 </style>
 <title>BitsPlease CTC Users Manual</title>
@@ -44,7 +44,7 @@
       <li><a href="#s2.2">2.2 Viewing a train's information</a>
       <li><a href="#s2.3">2.3 Manually dispatching a train</a>
       <li><a href="#s2.4">2.4 Schedualing trains</a>
-      <li><a href="#s2.5">2.5 Moveing switches</a>
+      <li><a href="#s2.5">2.5 Setting a section of track unuseable</a>
     </ul>
   <li><a href="#s3">3 Errors and troubleshooting<a/>
     <ul>
@@ -54,6 +54,9 @@
           <li><a href="#s3.1.2">3.1.2 I am not a track</a>
         </ul>
       <li><a href="#s3.2">3.2 Software error</a>
+        <ul>
+          <li><a href="#s3.2.1">3.2.1 Track parser errors (1xx)</a>
+        </ul>
     </ul>
 </ul>
 
@@ -148,7 +151,7 @@
       <p>To schedual a train to be dispatched in the future, use the <a href="#s1.3.1">Train Schedual Pane</a>, located on the right hand side of the window.(This pane can also be opened in a seperate window by selecting <code>Schedual</code> under the <code>Window</code> drop down at the top of the window). To use the pane, slect the train you want to schedual from the left side of the window. You can varify it is selected by seeing if it's information is visible in the <a href="s1.3.3">Train Details Pane</a>. It's current schedual will appear in the train schedual pane, it there is nothing currently in the schedual, it will be blank. To add items to the schedual, click the <code>add</code> button at the bottom of the pane, a popup will apear, prompting your for the time of the new schudel item, and the station to dispatch the train to at that time. Once you have entered the time and station, press the <code>confirm</code> button. If you ever accidentally enter an incorrect schedual, you can change the schedual before it executes by selecting it in the table, and pressing the <code>edit</code> or <code>delete</code> buttons in the shedualing pane.
     </span>
     <span id="s2.5"><h4> 2.5 Moveing switches</h4>
-      <p>To change the direction a switch is faceing, use the track switch pane, located on the right side of the window.(This pane can also be opened in a seperate window by selecting <code>Schedual</code> under the <code>Window</code> drop down at the top of the window). To use this pane, select a section of track designated as a switch section (see <a href="#s1.2.1">Section 1.2.1</a>), the switch will display in the switch pane, with current direction the switch is faceing in the primary color of the track, and directions the switch can face, but is not faceing in a faded color. To move the switch, select one of the faded color tracks, and the view in the switch pane will change, but the switch will not be flipped yet. To finish moveing the switch, press the <code>Confirm</code> button at the bottom of the switch pane.
+      <p>To set a block of track to be unuseable, select it in the Track Switch pane from the drop down menu, then use the radio buttons to set the track unuseable. At this point the section of track is not yet set, to finish, press the confirm button at the bottom of the pane.
     </span>
   </span></div>
   <br><br>
@@ -169,11 +172,15 @@
       <p>These may require parts of the software to be rewritten</p><br>
       <p>These are serious software errors that may force portion of the software to be re-written</p>
       <span id="s3.2.1"><h5>Errors in track file parseing</h5><div>
-        <p>Error 1xx - Parser errors
+        <p>Error 1xx - Parser errors <hr/>
         <p>Error 101 - The parser hit the end of the file while in a comment block, place a */ before the end of the file to close the block
         <p>Error 102 - The parse hit the end of the file while createing a line, place <code>LINE END</code> on the last line of the file to designate the end of the line
         <p>Error 103 - A line in the track file does not use the correct syntax for a segment of track
-        <p>Error 104 - A block is supposed to be connected to a track segment that was never created, be sure the block head/tail is correct
+        <p>Error 104 - A block is supposed to be connected to a track segment's head that was never created, be sure the block head is correct, and that the track segment was created.
+        <p>Error 105 - A block is supposed to be connected to a track segment's tail that was never created, be sure the block tail is correct, and that the track segment was created.
+        <p>Error 106 - A block is supposed to be connected to a switch track segment's divergent that was never created, be sure the block divergent is correct, and that the track segment was created.
+        <p>Error 107 - The syntax of the line was not recognized. Be sure to follow the syntax at the top of the sample track file.
+        <p>Error 108 - The track type is not recognized. Be sure the track is one of:<code>STR CUR STA SWI</code>
     </span></div>
   </span></div>
 </section>

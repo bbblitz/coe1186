@@ -53,11 +53,11 @@ public class LineParser{
       parseLine(blockstring);
     }
     if(incomment){
-      System.out.printf("Error: while parseing %s, hit end of file while looking for end of comment\n",fname);
+      System.out.printf("Error 101: while parseing %s, hit end of file while looking for end of comment\n",fname);
       return;
     }
     if(curline != null){
-      System.out.printf("Error: while parseing %s, hit end of file while createing line %s\n",fname, curline.name);
+      System.out.printf("Error 102: while parseing %s, hit end of file while createing line %s\n",fname, curline.name);
       return;
     }
     if(c.DEBUG_PARSER)
@@ -74,7 +74,7 @@ public class LineParser{
     }else if(p.equals("DIVERGENT")){
       return BlockPart.SEC_DIVERGENT;
     }
-    System.out.printf("Error: Could not parse %s, failed on line %d, could not parse part(%s)\n",fname,linenumber,p);
+    System.out.printf("Error 103: Could not parse %s, failed on line %d, could not parse part(%s)\n",fname,linenumber,p);
     return null;
   }
 
@@ -104,14 +104,14 @@ public class LineParser{
       if(block instanceof BlockStraight){
         BlockStraight blockstr = (BlockStraight)block;
         if(curline.blocks.get(heads.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockstr.head = curline.blocks.get(heads.get(i));
         }
 
         if(curline.blocks.get(tails.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 105: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockstr.tail = curline.blocks.get(tails.get(i));
@@ -120,13 +120,13 @@ public class LineParser{
         BlockCurved blockcur = (BlockCurved)block;
         //System.out.println("curline.blocks.get(heads.get(i)) is " + curline.blocks.get(heads.get(i)));
         if(heads.size() < i || curline.blocks.size() < heads.get(i) || heads.get(i) == -1 || curline.blocks.get(heads.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockcur.head = curline.blocks.get(heads.get(i));
         }
         if(curline.blocks.get(tails.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 105: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockcur.tail = curline.blocks.get(tails.get(i));
@@ -138,14 +138,14 @@ public class LineParser{
       }else if(block instanceof BlockStation){
         BlockStation blocksta = (BlockStation)block;
         if(curline.blocks.get(heads.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blocksta.head = curline.blocks.get(heads.get(i));
         }
 
         if(curline.blocks.get(tails.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 105: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blocksta.tail = curline.blocks.get(tails.get(i));
@@ -157,21 +157,21 @@ public class LineParser{
       }else if(block instanceof BlockSwitch){
         BlockSwitch blockswi = (BlockSwitch)block;
         if(curline.blocks.get(heads.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockswi.head = curline.blocks.get(heads.get(i));
         }
 
         if(curline.blocks.get(tails.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 105: While parseing %s, track section %d's tail is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockswi.tail = curline.blocks.get(tails.get(i));
         }
 
         if(curline.blocks.get(divergents.get(i)) == null){
-          System.out.printf("Error: While parseing %s, track section %d's divergent is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+          System.out.printf("Error 106: While parseing %s, track section %d's divergent is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
         }else{
           blockswi.divergent = curline.blocks.get(divergents.get(i));
@@ -200,7 +200,7 @@ public class LineParser{
       return;
     }
     if(blockstring.length() < 4){
-      System.out.printf("Error parseing file %s on line %d: Incorrect syntax\n",fname,linenumber);
+      System.out.printf("Error 107: parseing file %s on line %d: Incorrect syntax\n",fname,linenumber);
       System.exit(0);
     }
 
@@ -319,7 +319,7 @@ public class LineParser{
 
     }
     else{
-      System.out.printf("Unable to parse line: %d in %s\n",linenumber, fname);
+      System.out.printf("Error 108: Unknown block type:%s on line %d in %s\n",blockstring.substring(0,3),linenumber, fname);
     }
   }
 }
