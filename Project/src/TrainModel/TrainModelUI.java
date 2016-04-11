@@ -1,9 +1,10 @@
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class TrainModelUI{
 	private TrainModel model;
-	private TrainController controller;
+	//private TrainController controller;
 	
 	private String train;
 	private String vel;
@@ -146,6 +147,16 @@ public class TrainModelUI{
 		panel[15].add(lightsOn);
 		panel[15].add(lightsOff);
 		
+		ActionListener buttonListener = new ButtonListener();
+		engineForce.addActionListener(buttonListener);
+		engineFix.addActionListener(buttonListener);
+		signalForce.addActionListener(buttonListener);
+		signalFix.addActionListener(buttonListener);
+		brakeForce.addActionListener(buttonListener);
+		brakeFix.addActionListener(buttonListener);
+		eBrakeOn.addActionListener(buttonListener);
+		eBrakeOff.addActionListener(buttonListener);
+		
 		frame.setVisible(true);
 	}
 	
@@ -169,5 +180,29 @@ public class TrainModelUI{
 		lightDisplay.setText(lights);
 		doorDisplay.setText(doors);
 		stationID.setText(station);
+	}
+	
+	class ButtonListener() implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			JButton source = (JButton) e.getSource();
+			
+			if(source.equals(engineForce)){
+				model.forceFailure("e");
+			}else if(source.equals(signalForce)){
+				model.forceFailure("s");
+			}else if(source.equals(brakeForce)){
+				model.forceFailure("b");
+			}else if(source.equals(brakeFix)){
+				model.fixFailure("b");
+			}else if(source.equals(signalFix)){
+				model.fixFailure("s");
+			}else if(source.equals(engineFix)){
+				model.fixFailure("e");
+			}else if(source.equals(eBrakeOn)){
+				model.activateEmergencyBrake();
+			}else if(source.equals(eBrakeOff)){
+				model.deactivateEmergencyBrake();
+			}
+		}
 	}
 }

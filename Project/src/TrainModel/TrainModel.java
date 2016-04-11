@@ -15,8 +15,12 @@ public class TrainModel{
 	private boolean engineFailure;
 	private boolean brakeFailure;
 	private boolean signalFailure;
+	private boolean lights;
+	private boolean doors;
 	
 	private String ID;
+	private String nextStation;
+	
 	private double acceleration;
 	private double accelerationSI;
 	private double oldVelocity;
@@ -26,6 +30,7 @@ public class TrainModel{
 	private double positionSI;
 	
 	private int passengerCount;
+	private int temperature;
 	
 	//private Block currentBlock;   (add back when block class is finished)
 	
@@ -61,14 +66,13 @@ public class TrainModel{
 		
 		this.trainController = new TrainController(this);
 		this.trackModel = trackModel;
-		this.uI = new TrainModelUI(this, this.trainController);
+		this.uI = new TrainModelUI(this, trainController);
 		
 		railSignal = new BitSet(32);
 		beaconSignal = new BitSet(32);
 	}
 	
 	public void tick(double deltaT){
-		System.out.println("Train Model tick");
 		this.trainController.tick(deltaT);
 		//this.trainController.receiveSignalFromRail(this.railSignal);
 		
@@ -124,7 +128,7 @@ public class TrainModel{
 		return force;
 	}
 	
-	public void notifyAtStation(int stationID){
+	public void notifyAtStation(){
 		/*
 		
 		
@@ -191,18 +195,6 @@ public class TrainModel{
 		return signalFailure;
 	}
 	
-	public void setEngineFailure(boolean failure){
-		this.engineFailure = failure;
-	}
-	
-	public void setBrakeFailure(boolean failure){
-		this.brakeFailure = failure;
-	}
-	
-	public void setSignalPickupFailure(boolean failure){
-		this.signalFailure = failure;
-	}
-	
 	public void receiveBeacon(BitSet beacon){
 		//this.trainController.receiveBeacon(beacon);
 	}
@@ -244,6 +236,66 @@ public class TrainModel{
 	}
 	
 	public String getStationID(){
-		return "NeverLand";//this.nextStation;
+		return this.nextStation;
+	}
+	
+	public void displayNextStation(String StationID){
+		this.nextStation = StationID;
+	}
+	
+	public boolean getLightsStatus(){
+		return lights;
+	}
+	
+	public void turnOnLights(){
+		this.lights = true;
+	}
+	
+	public void turnOffLights(){
+		this.lights = false;
+	}
+	
+	public void openDoors(){
+		this.doors = true;
+	}
+	
+	public void closeDoors(){
+		this.doors = false;
+	}
+	
+	public boolean doorsAreOpen(){
+		return doors;
+	}
+	
+	public void setTemperature(int temp){
+		this.temperature = temp;
+	}
+	
+	public int getTemperature(){
+		return this.temperature;
+	}
+	
+	public void forceFailure(String source){
+		if(source.equals("e")){
+			this.engineFailure = true;
+		}else if(source.equals("s")){
+			this.signalFailure = true;
+		}else if(source.equals("b")){
+			this.brakeFailure = true;
+		}
+	}
+	
+	public void fixFailure(String source){
+		if(source.equals("e")){
+			this.engineFailure = false;
+		}else if(source.equals("s")){
+			this.signalFailure = false;
+		}else if(source.equals("b")){
+			this.brakeFailure = false;
+		}
+	}
+	
+	public boolean isEmergencyBreakActivated(){
+		return eBrake;
 	}
 }
