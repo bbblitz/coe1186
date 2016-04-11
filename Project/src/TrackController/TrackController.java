@@ -17,7 +17,7 @@ public class TrackController
 	
 	public TrackController()
 	{
-		loadFile();
+		//loadFile();
 	}
 	
 	public TrackController(File PLCFile)
@@ -180,12 +180,11 @@ public class TrackController
 	{
 		Scanner keyboard = new Scanner(System.in);
 		
-		TrackController TCA = new TrackController(/*new File("test2.plc")*/
-		);
+		TrackController TCA = new TrackController(/*new File("test2.plc")*/);
 		boolean[] TCAInputs = new boolean[TCA.inputs.length];
 		for(int i=0;i<TCA.getInputCount();i++)
 		{
-			System.out.print("Enter a value for TCA block "+i+": ");
+			System.out.print("Enter a value for TrackController block "+i+": ");
 			String value = keyboard.nextLine();
 			TCAInputs[i] = value.equalsIgnoreCase("true") || value.equals("1");
 		}
@@ -204,9 +203,6 @@ public class TrackController
 		for(int i=0;i<TCA.getCrossingCount();i++)
 		{
 			System.out.println("TCA Crossing State "+i+" = "+TCA.crossings[i]);
-		}
-		
+		}	
 	}
-	
-	
 }

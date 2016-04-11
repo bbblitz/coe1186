@@ -135,6 +135,10 @@ public class PLCDecoder
 						//System.out.println(outputs[i]);
 						break;
 					}
+					else if(operator.equals("q"))
+					{
+						//push whatever value we store that we got from the CTC's yard queue
+					}
 					else
 					{
 						System.err.println("invalid PLC file");
