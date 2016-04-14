@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class TrainModelUI{
 	private TrainModel model;
-	//private TrainController controller;
+	private TrainController controller;
 	
 	private String train;
 	private String vel;
@@ -83,8 +83,16 @@ public class TrainModelUI{
 		pow = new Double(model.getPower()).toString();
 		pass = new Integer(model.getPassengerCount()).toString();
 		mass = new Double(model.getWeight()).toString();
-		lights = "Off";
-		doors = "Closed";
+		if(model.getLightsStatus()){
+			lights = "On";
+		}else{
+			lights = "Off";
+		}
+		if(model.doorsAreOpen()){
+			doors = "Open";
+		}else{
+			doors = "Closed";
+		}
 		station = model.getStationID();
 		
 		trainID = new JLabel(train);
@@ -110,37 +118,37 @@ public class TrainModelUI{
 		panel[2].add(wordVel);
 		panel[2].add(velocity);
 		panel[2].add(unitVel);
-		panel[3].add(wordEngine);
-		panel[3].add(engineForce);
-		panel[3].add(engineFix);
+		panel[7].add(wordEngine);
+		panel[7].add(engineForce);
+		panel[7].add(engineFix);
 		panel[4].add(wordAcc);
 		panel[4].add(acceleration);
 		panel[4].add(unitAcc);
-		panel[5].add(wordBrake);
-		panel[5].add(brakeForce);
-		panel[5].add(brakeFix);
+		panel[9].add(wordBrake);
+		panel[9].add(brakeForce);
+		panel[9].add(brakeFix);
 		panel[6].add(wordPower);
 		panel[6].add(power);
 		panel[6].add(unitPower);
-		panel[7].add(wordSignal);
-		panel[7].add(signalForce);
-		panel[7].add(signalFix);
+		panel[11].add(wordSignal);
+		panel[11].add(signalForce);
+		panel[11].add(signalFix);
 		panel[8].add(wordMass);
 		panel[8].add(totalMass);
 		panel[8].add(unitMass);
-		panel[9].add(wordEbrake);
-		panel[9].add(eBrakeOn);
-		panel[9].add(eBrakeOff);
+		panel[5].add(wordEbrake);
+		panel[5].add(eBrakeOn);
+		panel[5].add(eBrakeOff);
 		panel[10].add(wordPass);
 		panel[10].add(passengers);
-		panel[11].add(wordDoors);
-		panel[11].add(doorDisplay);
+		panel[13].add(wordDoors);
+		panel[13].add(doorDisplay);
 		panel[12].add(wordTemp);
 		panel[12].add(temperature);
 		panel[12].add(unitTemp);
-		panel[13].add(wordTempInput);
-		panel[13].add(tempInc);
-		panel[13].add(tempDec);
+		panel[3].add(wordTempInput);
+		panel[3].add(tempInc);
+		panel[3].add(tempDec);
 		panel[14].add(wordLights);
 		panel[14].add(lightDisplay);
 		panel[15].add(wordLightsInput);
@@ -156,6 +164,8 @@ public class TrainModelUI{
 		brakeFix.addActionListener(buttonListener);
 		eBrakeOn.addActionListener(buttonListener);
 		eBrakeOff.addActionListener(buttonListener);
+		lightsOn.addActionListener(buttonListener);
+		lightsOff.addActionListener(buttonListener);
 		
 		frame.setVisible(true);
 	}
@@ -167,8 +177,16 @@ public class TrainModelUI{
 		pow = new Double(model.getPower()).toString();
 		pass = new Integer(model.getPassengerCount()).toString();
 		mass = new Double(model.getWeight()).toString();
-		lights = "Off";
-		doors = "Closed";
+		if(model.getLightsStatus()){
+			lights = "On";
+		}else{
+			lights = "Off";
+		}
+		if(model.doorsAreOpen()){
+			doors = "Open";
+		}else{
+			doors = "Closed";
+		}
 		station = model.getStationID();
 		
 		trainID.setText(train);
@@ -182,7 +200,7 @@ public class TrainModelUI{
 		stationID.setText(station);
 	}
 	
-	class ButtonListener() implements ActionListener{
+	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			JButton source = (JButton) e.getSource();
 			
@@ -202,6 +220,10 @@ public class TrainModelUI{
 				model.activateEmergencyBrake();
 			}else if(source.equals(eBrakeOff)){
 				model.deactivateEmergencyBrake();
+			}else if(source.equals(lightsOn)){
+				model.turnOnLights();
+			}else if(source.equals(lightsOff)){
+				model.turnOffLights();
 			}
 		}
 	}

@@ -35,17 +35,17 @@ public class TrainModel{
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
-	private TrackModel trackModel;
+	//private TrackModel trackModel;
 	private TrainModelUI uI;
 	
 	private BitSet railSignal;
 	private BitSet beaconSignal;
 	
-	public TrainModel(String ID, TrackModel trackModel){
+	public TrainModel(String ID/*, TrackModel trackModel*/){
 		this.mass = 37103.86;
 		this.weight = 81628.492;
 		
-		this.power = 1000;
+		this.power = 0;
 		
 		this.eBrake = false;
 		this.sBrake = false;
@@ -65,8 +65,8 @@ public class TrainModel{
 		this.passengerCount = 0;
 		
 		this.trainController = new TrainController(this);
-		this.trackModel = trackModel;
-		this.uI = new TrainModelUI(this, trainController);
+		//this.trackModel = trackModel;
+		this.uI = new TrainModelUI(this, this.trainController);
 		
 		railSignal = new BitSet(32);
 		beaconSignal = new BitSet(32);
@@ -83,7 +83,7 @@ public class TrainModel{
 		}
 		double distanceOnTick = calculateSpeed(deltaT);
 		
-		this.trackModel.receiveDistance(distanceOnTick);
+		//this.trackModel.receiveDistance(distanceOnTick);
 		convertMass();
 		convertVelocity();
 		convertAcceleration();
@@ -128,7 +128,7 @@ public class TrainModel{
 		return force;
 	}
 	
-	public void notifyAtStation(){
+	public void notifyAtStation(int station){
 		/*
 		
 		
