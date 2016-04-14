@@ -67,6 +67,26 @@ public class CTCWindow extends JFrame{
 					}
 				}
 			}
+
+			if(train == null || train.getRoute() == null){
+				continue;
+			}
+			ArrayList<BlockInterface> b = train.getRoute().route;
+			BlockInterface dest = b.get(b.size());
+			//Route the train the correct way if it wants to go into the yard
+			if(train.getCurrentBlock().getID() == 4){
+				if(dest instanceof BlockYard || dest.getID() == 77){
+					config.lineController.routeToYard(true,0);
+				}else{
+					config.lineController.routeToYard(false,0);
+				}
+			}else if(train.getCurrentBlock().getID() == 132){
+				if(dest instanceof BlockYard || dest.getID() == 144){
+					config.lineController.routeToYard(true,0);
+				}else{
+					config.lineController.routeToYard(false,0);
+				}
+			}
 		}
 		//Update block occupancies for drawing
 		for(Line l : config.aldl){

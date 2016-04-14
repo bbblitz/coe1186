@@ -20,6 +20,7 @@ public class DispatchPane extends JPanel implements ActionListener{
     for(Integer i : trains){
       trainlist.addItem(new Integer(i));
     }
+    trainlist.addItem("+ New Train");
     blocklist = new JComboBox();
     for(BlockInterface bi : config.aldl.get(0).blocks){
       if(bi != null){

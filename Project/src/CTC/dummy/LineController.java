@@ -99,8 +99,12 @@ public class LineController{
 
   //True if next train to pass the yard needs to go into the yard
   //Blockid should be either the green line block or the red line block.
-  public void routeToYard(boolean in, int blockID){
-    log.append(String.format("Routing train into the yard, blockid:\n"));
+  public void routeToYard(boolean in, int redline){
+    log.append(String.format("Route next train into yard?:%s, which line?:%d\n",in?"true":"false",redline));
+  }
+
+  public void createTrain(int line){
+    log.append(String.format("A train should be created on line:%d",line==0?"red":"green"));
   }
 
 }

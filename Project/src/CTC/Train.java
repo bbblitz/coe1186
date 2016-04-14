@@ -3,8 +3,10 @@ public class Train {
 	private BlockInterface currentBlock;
 	private BlockInterface previousBlock;
 	private Route route;
+	public Config c;
 
 	public Train(Config config, Integer id, BlockInterface currentBlock, BlockInterface previousBlock) {
+		this.c = config;
 		this.currentBlock = currentBlock;
 		this.previousBlock = previousBlock;
 		//this.route = new Route(this, destinationBlock, targetTime);

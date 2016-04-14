@@ -24,13 +24,10 @@ public class Route {
 		currentBlock = currentBlock.goesto(previousBlock);
 		while (currentBlock != destinationBlock) {
 			BlockInterface nextBlock = currentBlock.goesto(previousBlock);
-
 			route.add(nextBlock);
 			previousBlock = currentBlock;
 			currentBlock = nextBlock;
 		}
-
-
 
 		return route;
 	}

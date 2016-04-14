@@ -57,6 +57,11 @@ public class BlockCurved extends BlockInterface{
 
   public void drawBlock(Graphics g){
     BlockCurved dtc = this;
+    boolean usered = false;
+    boolean usegray = false;
+    boolean useyellow = false;
+    TrackFailState tfs = this.getFailState();
+  //  if(tfs == TrackFailState.FS_BROKEN_RAIL || tfs == TrackFailState.FS_Br
     g.setColor(Color.GREEN);
     g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
   }
