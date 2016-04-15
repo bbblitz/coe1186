@@ -86,6 +86,7 @@ public class PLCDecoder
 					else if(operator.equals(";"))
 					{
 						outputs[i] = operands.pop();
+						PLCReader.nextLine();
 						//System.out.println(outputs[i]);
 						break;
 					}

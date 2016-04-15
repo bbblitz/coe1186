@@ -1,0 +1,22 @@
+7
+GreenLoopTop.plc
+78-105 in
+78-104 out
+GreenLoopBottom.plc
+154-177 in
+156-177 out
+GreenLineMiddle.plc
+90-162 178-230 in
+105-154 178-230 out
+RedLineBottomLoop.plc
+44-66 in
+43-66 out
+RedLineBottomDiverge.plc
+33-52 67-71 in
+34-52 67-71 out
+RedLineTopDiverge.plc
+1-8 16-38 72-76 in
+17-33 72-76 out
+RedLineTopLoop.plc
+0-27 77 in
+0-16 77 out

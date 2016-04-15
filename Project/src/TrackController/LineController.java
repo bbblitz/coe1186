@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
 
 public class LineController
 {
@@ -9,8 +10,10 @@ public class LineController
 	private boolean[] routeBit;
 	//private ArrayList<Integer[]> blockConversion; //for config files
 	
-	public LineController()
+	public LineController(TrackModel model)
 	{
+		this.model = model;
+		loadConfigFile();
 		//use GUI to load all files for TrackController
 		//load config file to get defaults
 	}
@@ -171,11 +174,11 @@ public class LineController
 			File config = new File("LineControllerConfig.txt");
 			Scanner configReader = new Scanner(config);
 			File lineConfig = new File(configReader.nextLine());
-			File[] controllerFiles = new File[config.nextInt()];
-			config.nextLine();
+			File[] controllerFiles = new File[configReader.nextInt()];
+			configReader.nextLine();
 			for(int i=0;i<controllerFiles.length;i++)
 			{
-				controllerFiles[i] = new File(config.nextLine());
+				controllerFiles[i] = new File(configReader.nextLine());
 			}
 			return true;
 		}
