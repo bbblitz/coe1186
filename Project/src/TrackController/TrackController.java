@@ -67,7 +67,7 @@ public class TrackController
 	{
 		boolean[] allOutputs = PLCDecoder.decode(inputs, PLCFile);
 		boolean[] outputsRedundant = PLCDecoder.decode(inputs, PLCFile);
-		for(int i=0;i<outputs.length;i++)
+		for(int i=0;i<allOutputs.length;i++)
 		{
 			if(allOutputs[i] != outputsRedundant[i])
 			{
@@ -180,13 +180,14 @@ public class TrackController
 	{
 		Scanner keyboard = new Scanner(System.in);
 		
-		TrackController TCA = new TrackController(/*new File("test2.plc")*/);
+		TrackController TCA = new TrackController();
+		TCA.loadFile();
 		boolean[] TCAInputs = new boolean[TCA.inputs.length];
 		for(int i=0;i<TCA.getInputCount();i++)
 		{
 			System.out.print("Enter a value for TrackController block "+i+": ");
 			String value = keyboard.nextLine();
-			TCAInputs[i] = value.equalsIgnoreCase("true") || value.equals("1");
+			TCAInputs[i] = value.equalsIgnoreCase("true") || value.equals('1');
 		}
 		
 		TCA.updateInputs(TCAInputs);

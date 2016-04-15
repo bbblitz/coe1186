@@ -6,59 +6,13 @@ import java.util.Stack;
 import java.util.InputMismatchException;
 
 public class PLCDecoder
-{
-	public static void main(String[] args)
+{	
+	public static boolean[] decode(boolean[] inputs, File filename)
 	{
-		Scanner keyboard = new Scanner(System.in);
-		Scanner PLCReader = null;
-		System.out.print("enter the name of a PLC file: ");
-		File filename = new File(keyboard.nextLine());
-		try
-		{
-			PLCReader = new Scanner(filename);
-		}
-		catch(FileNotFoundException fnfe)
-		{
-			System.err.println("File not found");
-		}
-		int inputCount = PLCReader.nextInt();
-		int outputCount = PLCReader.nextInt();
-		int switchCount = PLCReader.nextInt();
-		int crossingCount = PLCReader.nextInt();
-		boolean[] inputs = new boolean[inputCount];
-		boolean[] outputs = new boolean[outputCount+switchCount+crossingCount];
-		
-		for(int i = 0;i<inputCount;i++)
-		{
-			System.out.print("enter a boolean value for input "+i+": ");
-			try
-			{
-				inputs[i] = keyboard.nextBoolean();
-			}
-			catch(InputMismatchException ime)
-			{
-				if(keyboard.hasNextInt() && keyboard.nextInt()==1) inputs[i]=true;
-				else inputs[i]=false;
-			}
-		}
-		
-		outputs = decode(inputs,filename);
-		
-		for(int i = 0;i<outputCount;i++)
-		{
-			System.out.println("block "+i+" = "+outputs[i]);
-		}
-		for(int i=0;i<switchCount;i++)
-		{
-			System.out.println("switch "+i+" = "+outputs[i+outputCount]);
-		}
-		for(int i=0;i<crossingCount;i++)
-		{
-			System.out.println("crossing "+i+" = "+outputs[i+outputCount+switchCount]);
-		}
+		return decode(inputs,false,filename);
 	}
 		
-	public static boolean[] decode(boolean[] inputs, File filename)
+	public static boolean[] decode(boolean[] inputs, boolean route, File filename)
 	{
 		Scanner PLCReader = null;
 		try
@@ -138,6 +92,7 @@ public class PLCDecoder
 					else if(operator.equals("q"))
 					{
 						//push whatever value we store that we got from the CTC's yard queue
+						operands.push(route);
 					}
 					else
 					{
@@ -148,5 +103,56 @@ public class PLCDecoder
 			//System.out.println();
 		}
 		return outputs;
+	}
+	
+	public static void main(String[] args)
+	{
+		Scanner keyboard = new Scanner(System.in);
+		Scanner PLCReader = null;
+		System.out.print("enter the name of a PLC file: ");
+		File filename = new File(keyboard.nextLine());
+		try
+		{
+			PLCReader = new Scanner(filename);
+		}
+		catch(FileNotFoundException fnfe)
+		{
+			System.err.println("File not found");
+		}
+		int inputCount = PLCReader.nextInt();
+		int outputCount = PLCReader.nextInt();
+		int switchCount = PLCReader.nextInt();
+		int crossingCount = PLCReader.nextInt();
+		boolean[] inputs = new boolean[inputCount];
+		boolean[] outputs = new boolean[outputCount+switchCount+crossingCount];
+		
+		for(int i = 0;i<inputCount;i++)
+		{
+			System.out.print("enter a boolean value for input "+i+": ");
+			try
+			{
+				inputs[i] = keyboard.nextBoolean();
+			}
+			catch(InputMismatchException ime)
+			{
+				if(keyboard.hasNextInt() && keyboard.nextInt()==1) inputs[i]=true;
+				else inputs[i]=false;
+			}
+		}
+		
+		outputs = decode(inputs,filename);
+		
+		for(int i = 0;i<outputCount;i++)
+		{
+			System.out.println("block "+i+" = "+outputs[i]);
+		}
+		for(int i=0;i<switchCount;i++)
+		{
+			System.out.println("switch "+i+" = "+outputs[i+outputCount]);
+		}
+		for(int i=0;i<crossingCount;i++)
+		{
+			System.out.println("crossing "+i+" = "+outputs[i+outputCount+switchCount]);
+		}
 	}
 }

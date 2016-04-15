@@ -6,13 +6,16 @@ public class LineController
 {
 	private TrackController controllers[];
 	private TrackModel model;
+	private boolean[] routeBit;
 	//private ArrayList<Integer[]> blockConversion; //for config files
 	
 	public LineController()
 	{
 		//use GUI to load all files for TrackController
+		//load config file to get defaults
 	}
 	
+	//Constructor for Pink Line with 2 controllers
 	public LineController(TrackController controller1, TrackController controller2, TrackModel model)
 	{
 		controllers = new TrackController[2];
@@ -115,7 +118,7 @@ public class LineController
 	
 	public int[] convertToTrackBlock(int blockID)
 	{
-		//hard code blockID
+		//hard code blockID (Pink Line) eventually use config file to get array?
 		int[] out = new int[2];
 		out[0] = blockID/7;
 		if(out[0]==0)
@@ -145,14 +148,42 @@ public class LineController
 		return 0;
 	}
 	
-	public void nextTrainToYard()
+	public void nextTrainToYard(boolean toYard, int lineNumber)
 	{
 		//gets a bit from CTC for whether the next train should go into the yard or not
+		routeBit[lineNumber] = toYard;
 	}
 	
 	public TrackFailState[] getFailStates()
 	{
 		return model.getFailStates();
+	}
+	
+	public void createTrain(int line)
+	{
+		model.createTrain(line);
+	}
+	
+	public boolean loadConfigFile()
+	{
+		try
+		{			
+			File config = new File("LineControllerConfig.txt");
+			Scanner configReader = new Scanner(config);
+			File lineConfig = new File(configReader.nextLine());
+			File[] controllerFiles = new File[config.nextInt()];
+			config.nextLine();
+			for(int i=0;i<controllerFiles.length;i++)
+			{
+				controllerFiles[i] = new File(config.nextLine());
+			}
+			return true;
+		}
+		catch(FileNotFoundException fnfe)
+		{
+			System.out.println("config file(s) invalid");
+			return false;
+		}
 	}
 	
 	public static void main(String[] args)
