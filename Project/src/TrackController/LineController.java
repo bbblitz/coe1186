@@ -8,7 +8,8 @@ public class LineController
 	private TrackController controllers[];
 	private TrackModel model;
 	private boolean[] routeBit;
-	//private ArrayList<Integer[]> blockConversion; //for config files
+	private boolean[] closed;
+	private ArrayList<Integer[]> blockConversion; //for config files
 	
 	public LineController(TrackModel model)
 	{
@@ -30,6 +31,8 @@ public class LineController
 	public LineController(TrackController[] controllers)
 	{
 		this.controllers = controllers;
+		int blockCount = getBlockCount();
+		this.model = new TrackModel(blockCount);
 	}
 	
 	public int getBlockCount()
@@ -49,6 +52,7 @@ public class LineController
 		{
 			if(current.getInputCount()>maxInputLength) maxInputLength = current.getInputCount();
 		}
+		System.out.println("max Inputs = "+maxInputLength);
 		boolean[][] controllerInputs = new boolean[controllers.length][maxInputLength];
 		for(int i=0;i<inputs.length;i++)
 		{
@@ -105,7 +109,13 @@ public class LineController
 	
 	public void tick(double deltaT)
 	{
-		updateInputs(model.getBlockOccupancies());
+		boolean[] inputs = model.getBlockOccupancies();
+		TrackFailState[] tfs = model.getFailStates();
+		for(int i = 0;i<inputs.length;i++)
+		{
+			inputs[i] |= (tfs[i] != TrackFailState.FS_NORMAL);	//treats failstates as occupied blocks
+		}
+		updateInputs(inputs);
 		for(int i=0;i<controllers.length;i++)
 		{
 			boolean[] currentOutputs = controllers[i].getOutputs();
@@ -189,6 +199,11 @@ public class LineController
 		}
 	}
 	
+	public void closeBlock(int blockID, boolean value)
+	{
+		closed[blockID] = value;
+	}
+	
 	public static void main(String[] args)
 	{
 		Scanner keyboard = new Scanner(System.in);
@@ -198,9 +213,9 @@ public class LineController
 		for(int i=0;i<LCControllers.length;i++)
 		{
 			System.out.println("Creating TrackController "+i);
-			LCControllers[i].main(new String[0]);
+			LCControllers[i] = new TrackController();
 		}
-		
 		LineController LC = new LineController(LCControllers);
+		LC.tick(0);
 	}
 }

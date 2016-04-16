@@ -17,7 +17,7 @@ public class TrackController
 	
 	public TrackController()
 	{
-		//loadFile();
+		loadFile();
 	}
 	
 	public TrackController(File PLCFile)
