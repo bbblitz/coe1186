@@ -1,10 +1,10 @@
 import java.util.BitSet;
-//AFTER PROTOTYPE, change TrackModel communication on Distance
-//			TrackModel will call train.getDistance();
 
 public class TrainModel{
 	private double mass;
 	private double weight;
+	private final double trainMass = 37103.86;
+	private final double avgPassengerWeight = 80.7;
 	private final double eBrakeRate = -2.73;
 	private final double sBrakeRate = -1.2;
 	
@@ -28,6 +28,7 @@ public class TrainModel{
 	private double velocitySI;
 	private double position;
 	private double positionSI;
+	private double distanceOnLastTick;
 	
 	private int passengerCount;
 	private int temperature;
@@ -42,7 +43,7 @@ public class TrainModel{
 	private BitSet beaconSignal;
 	
 	public TrainModel(String ID/*, TrackModel trackModel*/){
-		this.mass = 37103.86;
+		this.mass = this.trainMass;
 		this.weight = 81628.492;
 		
 		this.power = 0;
@@ -76,14 +77,17 @@ public class TrainModel{
 		this.trainController.tick(deltaT);
 		//this.trainController.receiveSignalFromRail(this.railSignal);
 		
-		if(this.velocitySI == 0 && this.power > 0){
+		if(eBrake == true || sBrake == true){
+			this.power = 0;
+			this.oldVelocity = this.velocitySI;
+		} else if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
 		} else{
 			this.oldVelocity = this.velocitySI;
 		}
 		double distanceOnTick = calculateSpeed(deltaT);
 		
-		//this.trackModel.receiveDistance(distanceOnTick);
+		this.distanceOnLastTick = distanceOnTick;
 		convertMass();
 		convertVelocity();
 		convertAcceleration();
@@ -107,7 +111,6 @@ public class TrainModel{
 		}
 		double gravForce = gravitationalForce();
 		double totalForce = gravForce + appForce;
-		//System.out.println(String.valueOf(appForce));
 		this.accelerationSI = totalForce / this.mass;
 		
 		this.velocitySI = this.oldVelocity + this.accelerationSI * deltaT/1000.0;
@@ -160,7 +163,11 @@ public class TrainModel{
 	}
 	
 	public void receivePowerCommand(double power){
-		this.power = power;
+		if(power > 120000){
+			power = 120000.0;
+		}else{
+			this.power = power;
+		}
 	}
 	
 	public double getCurrentVelocitySI(){
@@ -196,7 +203,7 @@ public class TrainModel{
 	}
 	
 	public void receiveBeacon(BitSet beacon){
-		//this.trainController.receiveBeacon(beacon);
+		this.trainController.receiveBeacon(beacon);
 	}
 	
 	public void receiveSignalFromRail(BitSet railSignal){
@@ -297,5 +304,9 @@ public class TrainModel{
 	
 	public boolean isEmergencyBreakActivated(){
 		return eBrake;
+	}
+	
+	public double getDistance(){
+		return distanceOnLastTick;
 	}
 }
