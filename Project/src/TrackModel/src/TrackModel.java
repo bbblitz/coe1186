@@ -6,17 +6,46 @@ import java.io.IOException;
 
 public class TrackModel {
 	
-	public String line;
-	  public char   section;
-	  public int    block_number;
-	  public double block_length;
-	  public double block_grade;
-	  public int    speed_limit;
-	  public String infrastruct;
-	  public double elevation;
-	  public double cummulative_el;
-	  public String switch_block;
-	  public String direction;
+	ArrayList<BlockInterface> track; 
+	Arraylist<Train> Trains;
+	  
+	  
+	  public void tick(double deltaT){
+		  
+	  
+	  }
+	  
+	  // Get Occupanies method to output boolean array with occupancies
+	  public boolean[] getBlockOccupancies(){ 
+		  Boolean occupancy[];
+		  for(int i=0; track.size(); i++){ 
+			  occupancy[i] = track.get(i).getOccupied();			 
+		  }
+	  }
+	  
+	  //Receives distance traveled by train and increments total distance
+	  public void receiveDistance(double deltaX, int trainid) {
+		 Trains.get(trainid).distance += deltaX;
+	  }
+	  
+	  public void trainLocation(){
+		  for(int i = 0; Trains.size; i++){
+			  if (Train.get(trainid).distance > BlockInterface.get(ID).distance){
+				  Train.get(trainid).distance -= BlockInterface.get(ID).distance;
+				  track = BlockInterface[ID].head;
+			  }  
+		  }  
+	  }
+	  
+	  
+	  
+	  
+	  
+	  
+	  public void getFailState(){
+		  
+	  }
+	  
 	  
 	  
 	  
