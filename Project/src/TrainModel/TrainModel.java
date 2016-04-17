@@ -38,8 +38,6 @@ public class TrainModel{
 	private int passAndCrew;
 	private int temperature;
 	
-	//private Block currentBlock;   (add back when block class is finished)
-	
 	private TrainController trainController;
 	private TrackModel trackModel;
 	private TrainModelUI uI;
@@ -62,7 +60,7 @@ public class TrainModel{
 		this.signalFailure = false;
 		
 		this.ID = ID;
-		//this.currentBlock = trackModel.getBlock();
+		
 		this.acceleration = 0;
 		this.accelerationSI = 0;
 		this.oldVelocity = 0;
