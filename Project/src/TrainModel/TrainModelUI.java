@@ -78,11 +78,13 @@ public class TrainModelUI{
 		JLabel unitMass = new JLabel("lbs");
 		
 		train = model.getTrainID();
-		vel = new Double(model.getVelocityUS()).toString();
-		acc = new Double(model.getAccelerationUS()).toString();
-		pow = new Double(model.getPower()).toString();
+		vel = new Double(Math.round(model.getVelocityUS() * 100d) / 100d).toString();
+		acc = new Double(Math.round(model.getAccelerationUS() * 100d) / 100d).toString();
+		pow = new Double(Math.round(model.getPower() * 100d) / 100d).toString();
 		pass = new Integer(model.getPassengerCount()).toString();
-		mass = new Double(model.getWeight()).toString();
+		mass = new Double(Math.round(model.getWeight() * 100d) / 100d).toString();
+		temp = new Integer(model.getTemperature()).toString();
+		
 		if(model.getLightsStatus()){
 			lights = "On";
 		}else{
@@ -166,17 +168,21 @@ public class TrainModelUI{
 		eBrakeOff.addActionListener(buttonListener);
 		lightsOn.addActionListener(buttonListener);
 		lightsOff.addActionListener(buttonListener);
+		tempInc.addActionListener(buttonListener);
+		tempDec.addActionListener(buttonListener);
 		
 		frame.setVisible(true);
 	}
 	
 	public void tick(){
 		train = model.getTrainID();
-		vel = new Double(model.getVelocityUS()).toString();
-		acc = new Double(model.getAccelerationUS()).toString();
-		pow = new Double(model.getPower()).toString();
+		vel = new Double(Math.round(model.getVelocityUS() * 100d) / 100d).toString();
+		acc = new Double(Math.round(model.getAccelerationUS() * 100d) / 100d).toString();
+		pow = new Double(Math.round(model.getPower() * 100d) / 100d).toString();
 		pass = new Integer(model.getPassengerCount()).toString();
-		mass = new Double(model.getWeight()).toString();
+		mass = new Double(Math.round(model.getWeight() * 100d) / 100d).toString();
+		temp = new Integer(model.getTemperature()).toString();
+		
 		if(model.getLightsStatus()){
 			lights = "On";
 		}else{
@@ -198,6 +204,7 @@ public class TrainModelUI{
 		lightDisplay.setText(lights);
 		doorDisplay.setText(doors);
 		stationID.setText(station);
+		temperature.setText(temp);
 	}
 	
 	class ButtonListener implements ActionListener{
@@ -224,6 +231,10 @@ public class TrainModelUI{
 				model.turnOnLights();
 			}else if(source.equals(lightsOff)){
 				model.turnOffLights();
+			}else if(source.equals(tempInc)){
+				model.incTemp();
+			}else if(source.equals(tempDec)){
+				model.decTemp();
 			}
 		}
 	}

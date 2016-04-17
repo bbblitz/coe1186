@@ -1,4 +1,5 @@
 import java.util.BitSet;
+import java.util.Random;
 
 public class TrainModel{
 	private double mass;
@@ -7,6 +8,8 @@ public class TrainModel{
 	private final double avgPassengerWeight = 80.7;
 	private final double eBrakeRate = -2.73;
 	private final double sBrakeRate = -1.2;
+	
+	private final int maxPassengers = 222;
 	
 	private double power;
 	
@@ -18,7 +21,7 @@ public class TrainModel{
 	private boolean lights;
 	private boolean doors;
 	
-	private String ID;
+	private int ID;
 	private String nextStation;
 	
 	private double acceleration;
@@ -36,17 +39,19 @@ public class TrainModel{
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
-	//private TrackModel trackModel;
+	private TrackModel trackModel;
 	private TrainModelUI uI;
 	
 	private BitSet railSignal;
 	private BitSet beaconSignal;
 	
-	public TrainModel(String ID/*, TrackModel trackModel*/){
+	private Random random;
+	
+	public TrainModel(int ID, TrackModel trackModel){
 		this.mass = this.trainMass;
 		this.weight = 81628.492;
 		
-		this.power = 0;
+		this.power = 12000;
 		
 		this.eBrake = false;
 		this.sBrake = false;
@@ -64,28 +69,30 @@ public class TrainModel{
 		this.positionSI = 0;
 		
 		this.passengerCount = 0;
+		this.temperature = 60;
 		
 		this.trainController = new TrainController(this);
-		//this.trackModel = trackModel;
+		this.trackModel = trackModel;
 		this.uI = new TrainModelUI(this, this.trainController);
 		
 		railSignal = new BitSet(32);
 		beaconSignal = new BitSet(32);
+		
+		this.random = new Random();
 	}
 	
 	public void tick(double deltaT){
 		this.trainController.tick(deltaT);
-		//this.trainController.receiveSignalFromRail(this.railSignal);
+		this.trainController.receiveSignalFromRail(this.railSignal);
 		
-		if(eBrake == true || sBrake == true){
-			this.power = 0;
-			this.oldVelocity = this.velocitySI;
-		} else if(this.velocitySI == 0 && this.power > 0){
+		if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
 		} else{
 			this.oldVelocity = this.velocitySI;
 		}
 		double distanceOnTick = calculateSpeed(deltaT);
+		
+		trackModel.receiveDistance(distanceOnTick, this.ID);
 		
 		this.distanceOnLastTick = distanceOnTick;
 		convertMass();
@@ -132,18 +139,16 @@ public class TrainModel{
 	}
 	
 	public void notifyAtStation(int station){
-		/*
+		int passengersOff = this.random.nextInt(this.passengerCount);
+		this.passengerCount -= passengersOff;
+		int passengersOn = this.random.nextInt(this.maxPassengers);
+		if(this.passengerCount + passengersOn > this.maxPassengers){
+			this.passengerCount = this.maxPassengers;
+		} else{
+			this.passengerCount += passengersOn;
+		}
 		
-		
-		
-		
-		
-		handle adding passengers
-		
-		
-		
-		
-		*/
+		this.mass = this.trainMass + (this.passengerCount * this.avgPassengerWeight);
 	}
 	
 	private void convertVelocity(){
@@ -308,5 +313,13 @@ public class TrainModel{
 	
 	public double getDistance(){
 		return distanceOnLastTick;
+	}
+	
+	public void incTemp(){
+		this.temperature++;
+	}
+	
+	public void decTemp(){
+		this.temperature--;
 	}
 }
