@@ -32,6 +32,7 @@ public class TrainModel{
 	private double position;
 	private double positionSI;
 	private double distanceOnLastTick;
+	private double blockGrade;
 	
 	private int passengerCount;
 	private int passAndCrew;
@@ -40,7 +41,7 @@ public class TrainModel{
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
-	//private TrackModel trackModel;
+	private TrackModel trackModel;
 	private TrainModelUI uI;
 	
 	private BitSet railSignal;
@@ -48,7 +49,7 @@ public class TrainModel{
 	
 	private Random random;
 	
-	public TrainModel(int ID/*, TrackModel trackModel*/){
+	public TrainModel(int ID, TrackModel trackModel){
 		this.mass = this.trainMass;
 		this.weight = 81628.492;
 		
@@ -68,13 +69,14 @@ public class TrainModel{
 		this.velocity = 0;
 		this.velocitySI = 0;
 		this.positionSI = 0;
+		this.blockGrade = 0;
 		
 		this.passengerCount = 0;
 		this.passAndCrew = 0;
 		this.temperature = 60;
 		
 		this.trainController = new TrainController(this);
-		//this.trackModel = trackModel;
+		this.trackModel = trackModel;
 		this.uI = new TrainModelUI(this, this.trainController);
 		
 		railSignal = new BitSet(32);
@@ -94,7 +96,7 @@ public class TrainModel{
 		}
 		double distanceOnTick = calculateSpeed(deltaT);
 		
-		//trackModel.receiveDistance(distanceOnTick, this.ID);
+		trackModel.receiveDistance(distanceOnTick, this.ID);
 		
 		this.distanceOnLastTick = distanceOnTick;
 		convertMass();
@@ -132,7 +134,7 @@ public class TrainModel{
 	}
 	
 	private double gravitationalForce(){
-		double grade = /* currentBlock.getGrade(); */ 0;		//set to 0 for now, need get method from Block
+		double grade = this.blockGrade;
 		
 		double theta = Math.atan(grade/100.0);
 		double force = 9.8 * this.mass * Math.sin(theta) * -1.0;
@@ -143,7 +145,7 @@ public class TrainModel{
 	public void notifyAtStation(int station){
 		int passengersOff = this.random.nextInt(this.passengerCount);
 		this.passengerCount -= passengersOff;
-		int passengersOn = 20;//trackModel.getPassengers();
+		int passengersOn = trackModel.getPassengers();
 		if(this.passengerCount + passengersOn > this.maxPassengers){
 			this.passengerCount = this.maxPassengers;
 		} else{
@@ -324,5 +326,9 @@ public class TrainModel{
 	
 	public void decTemp(){
 		this.temperature--;
+	}
+	
+	public void receiveBlockGrade(double grade){
+		this.blockGrade = grade;
 	}
 }
