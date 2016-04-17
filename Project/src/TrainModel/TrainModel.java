@@ -126,6 +126,9 @@ public class TrainModel{
 		if(this.velocitySI < 0){
 			this.velocitySI = 0;
 		}
+		if(this.velocitySI > 70){
+			this.velocitySI = 70;
+		}
 		
 		double distanceOnTick = ((this.oldVelocity + this.velocitySI)/2) * deltaT/1000.0;
 		return distanceOnTick;
