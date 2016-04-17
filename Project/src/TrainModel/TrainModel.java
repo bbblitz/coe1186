@@ -40,7 +40,7 @@ public class TrainModel{
 	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
-	private TrackModel trackModel;
+	//private TrackModel trackModel;
 	private TrainModelUI uI;
 	
 	private BitSet railSignal;
@@ -48,11 +48,11 @@ public class TrainModel{
 	
 	private Random random;
 	
-	public TrainModel(int ID, TrackModel trackModel){
+	public TrainModel(int ID/*, TrackModel trackModel*/){
 		this.mass = this.trainMass;
 		this.weight = 81628.492;
 		
-		this.power = 12000;
+		this.power = 0;
 		
 		this.eBrake = false;
 		this.sBrake = false;
@@ -74,7 +74,7 @@ public class TrainModel{
 		this.temperature = 60;
 		
 		this.trainController = new TrainController(this);
-		this.trackModel = trackModel;
+		//this.trackModel = trackModel;
 		this.uI = new TrainModelUI(this, this.trainController);
 		
 		railSignal = new BitSet(32);
@@ -85,7 +85,7 @@ public class TrainModel{
 	
 	public void tick(double deltaT){
 		this.trainController.tick(deltaT);
-		this.trainController.receiveSignalFromRail(this.railSignal);
+		//this.trainController.receiveSignalFromRail(this.railSignal);
 		
 		if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
@@ -94,7 +94,7 @@ public class TrainModel{
 		}
 		double distanceOnTick = calculateSpeed(deltaT);
 		
-		trackModel.receiveDistance(distanceOnTick, this.ID);
+		//trackModel.receiveDistance(distanceOnTick, this.ID);
 		
 		this.distanceOnLastTick = distanceOnTick;
 		convertMass();
@@ -143,7 +143,7 @@ public class TrainModel{
 	public void notifyAtStation(int station){
 		int passengersOff = this.random.nextInt(this.passengerCount);
 		this.passengerCount -= passengersOff;
-		int passengersOn = trackModel.getPassengers();
+		int passengersOn = 20;//trackModel.getPassengers();
 		if(this.passengerCount + passengersOn > this.maxPassengers){
 			this.passengerCount = this.maxPassengers;
 		} else{
@@ -226,7 +226,7 @@ public class TrainModel{
 		this.trainController.receiveSpeed(speed);
 	}
 	
-	public String getTrainID(){
+	public int getTrainID(){
 		return this.ID;
 	}
 	
