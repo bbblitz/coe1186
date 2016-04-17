@@ -34,6 +34,7 @@ public class TrainModel{
 	private double distanceOnLastTick;
 	
 	private int passengerCount;
+	private int passAndCrew;
 	private int temperature;
 	
 	//private Block currentBlock;   (add back when block class is finished)
@@ -69,6 +70,7 @@ public class TrainModel{
 		this.positionSI = 0;
 		
 		this.passengerCount = 0;
+		this.passAndCrew = 0;
 		this.temperature = 60;
 		
 		this.trainController = new TrainController(this);
@@ -147,8 +149,9 @@ public class TrainModel{
 		} else{
 			this.passengerCount += passengersOn;
 		}
+		this.passAndCrew = this.passengerCount + 1;
 		
-		this.mass = this.trainMass + (this.passengerCount * this.avgPassengerWeight);
+		this.mass = this.trainMass + (this.passAndCrew * this.avgPassengerWeight);
 	}
 	
 	private void convertVelocity(){
@@ -240,7 +243,7 @@ public class TrainModel{
 	}
 	
 	public int getPassengerCount(){
-		return this.passengerCount;
+		return this.passAndCrew;
 	}
 	
 	public double getWeight(){

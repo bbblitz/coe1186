@@ -59,7 +59,7 @@ public class TrainModelUI{
 		JLabel wordAcc = new JLabel("Acceleration: ");
 		JLabel wordPower = new JLabel("Power Input: ");
 		JLabel wordTemp = new JLabel("Temperature: ");
-		JLabel wordPass = new JLabel("Passenger Count: ");
+		JLabel wordPass = new JLabel("Crew + Passenger Count: ");
 		JLabel wordMass = new JLabel("Total Mass: ");
 		JLabel wordLights = new JLabel("Lights: ");
 		JLabel wordDoors = new JLabel("Doors: ");
