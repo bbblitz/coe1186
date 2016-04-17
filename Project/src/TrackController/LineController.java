@@ -28,11 +28,11 @@ public class LineController
 		this.model = model;
 	}
 	
-	public LineController(TrackController[] controllers)
+	public LineController(TrackController[] controllers, TrackModel model)
 	{
 		this.controllers = controllers;
 		int blockCount = getBlockCount();
-		this.model = new TrackModel(blockCount);
+		this.model = model;
 	}
 	
 	public int getBlockCount()
@@ -71,25 +71,29 @@ public class LineController
 		return out;
 	}
 	
-	public boolean[] getSwitchStates()
+	public int getSwitchCount()
 	{
 		int totalSwitchCount = 0;
 		for(TrackController current : controllers)
 		{
 			totalSwitchCount += current.getSwitchCount();
 		}
-		boolean[] switches = new boolean[totalSwitchCount];
+		return totalSwitchCount;
+	}
+	
+	public boolean[] getSwitchStates()
+	{
+		boolean[] lineSwitches = new boolean[getSwitchCount()];
 		
-		int k=0;
 		for(int i=0;i<controllers.length;i++)
 		{
-			boolean[] newSwitches = new boolean[controllers[i].getSwitchCount()];
-			for(int j=0;i<controllers[i].getSwitchCount();j++)
+			boolean[] trackSwitches = controllers[i].getSwitchStates();
+			for(int j=0;i<lineSwitches.length;j++)
 			{
-				switches[k++] = newSwitches[j];
+				lineSwitches[convetToLineSwitch(i,j)] = trackSwitches[i];
 			}
 		}
-		return switches;
+		return lineSwitches;
 	}
 	
 	public void zeroAuthority(int blockID)
@@ -215,7 +219,7 @@ public class LineController
 			System.out.println("Creating TrackController "+i);
 			LCControllers[i] = new TrackController();
 		}
-		LineController LC = new LineController(LCControllers);
+		LineController LC = new LineController(LCControllers, new TrackModel(LC.getBlockCount()));
 		LC.tick(0);
 	}
 }
