@@ -141,7 +141,7 @@ public class TrainModel{
 	public void notifyAtStation(int station){
 		int passengersOff = this.random.nextInt(this.passengerCount);
 		this.passengerCount -= passengersOff;
-		int passengersOn = this.random.nextInt(this.maxPassengers);
+		int passengersOn = trackModel.getPassengers();
 		if(this.passengerCount + passengersOn > this.maxPassengers){
 			this.passengerCount = this.maxPassengers;
 		} else{
