@@ -1,10 +1,9 @@
 
 
-public class BlockStation extends BlockInterface{
+public class Block extends BlockInterface{
   public BlockInterface head;
   public BlockInterface tail;
   
-  public String stationName;
 
   //How long the track is
   public int length;
@@ -31,10 +30,6 @@ public class BlockStation extends BlockInterface{
 
   public BlockInterface getTail() {
 	  return this.tail;
-  }
-
-  public String getStationName() {
-	  return this.stationName;
   }
 
 }

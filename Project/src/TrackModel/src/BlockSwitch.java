@@ -1,12 +1,11 @@
 
 
-public class BlockStation extends BlockInterface{
+public class BlockSwitch extends BlockInterface{
   public BlockInterface head;
   public BlockInterface tail;
   
-  public String stationName;
 
-  //How long the track is
+  //Length of the Track
   public int length;
 
 
@@ -33,8 +32,6 @@ public class BlockStation extends BlockInterface{
 	  return this.tail;
   }
 
-  public String getStationName() {
-	  return this.stationName;
-  }
 
 }
+

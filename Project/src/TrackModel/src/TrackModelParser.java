@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ public class TrackModelParser
 {
 	private Scanner fileReader;
 	
-	public TrackModelParser(File filename)
+	public TrackModelParser(File filename) throws FileNotFoundException
 	{
 		fileReader = new Scanner(filename);
 	}
