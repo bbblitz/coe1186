@@ -1,10 +1,10 @@
 import java.util.BitSet;
 
-//package system;
 
 public class TrainController {
 	private TrainModel trainModel;
 	private PowerController powerController;
+    private PowerController powerController2;
 	private TrainControllerUI ui;
 	
 	private final double MAX_TRAIN_POWER = 120000;	// 120kW
@@ -52,7 +52,9 @@ public class TrainController {
 	public TrainController(TrainModel trainModel) {
 		this.trainModel = trainModel;
 		this.powerController = new PowerController(trainModel.getMass());
-		this.ui = new TrainControllerUI(this);
+        this.powerController2 = new PowerController(trainModel.getMass());
+		this.ui = new TrainControllerUI();
+		this.ui.initialize(this);
 		
 		this.nextStation = "";
 		this.nextStationId = -1;
@@ -96,6 +98,9 @@ public class TrainController {
 			if (this.dwellTimeRemaining <= 0) {
 				this.stationApproachStatus = StationApproachStatus.NONE;
 				this.trainModel.deactivateServiceBrake();
+
+				this.trainModel.turnOnLights();
+				this.trainModel.closeDoors();
 				this.ui.log("Leaving station.");
 			}
 		}
@@ -104,19 +109,19 @@ public class TrainController {
 		if (this.stationApproachStatus == StationApproachStatus.BRAKING_FOR_APPROACH && this.velocitySI == 0) {
 			this.stationApproachStatus = StationApproachStatus.DWELLING;
 			this.dwellTimeRemaining = STATION_DWELL_TIME;
-			this.trainModel.notifyAtStation(this.nextStationId);
 			this.ui.log("Stopped completely at station. Dwelling for " + (STATION_DWELL_TIME / 1000) + "s.");
 
-			//this.trainModel.
+			this.trainModel.notifyAtStation();	// so he can figure out passengers exiting
+			this.trainModel.turnOnLights();
+			this.trainModel.openDoors();
 		}
 
 		// calculate power if we're not at or braking for a station
 		if (this.stationApproachStatus == StationApproachStatus.NONE || this.stationApproachStatus == StationApproachStatus.DISTANCE_SET) {
-			// don't bother calculating power if we have no authority
-			if (this.authorityFromCTC > 0) {
+			// 0 power if no authority or emergency brake
+			if (this.authorityFromCTC > 0 && !this.trainModel.isEmergencyBrakeActivated()) {
 				// calculate power (power <= 0 means brake should be applied)
-				this.powerCommand = calculatePower(deltaT);
-				double power = this.powerCommand;
+				double power = calculatePower(deltaT);
 				if (power <= 0) {
 					// best action is to slow down
 					power = 0;
@@ -125,14 +130,28 @@ public class TrainController {
 					// best action is to speed up
 					this.trainModel.deactivateServiceBrake();
 				}
-				this._lastPowerCommand = power;
+				this.powerCommand = power;
 				this.trainModel.receivePowerCommand(power);
+			} else {
+				// either out of authority or ebrake applied
+				this.powerCommand = 0;
+				this.trainModel.receivePowerCommand(0);
 			}
 		} else {
 			// we're braking for a station approach or stopped at the station
 			this.trainModel.activateServiceBrake();	// if it wasn't already
 			this.trainModel.receivePowerCommand(0);
 		}
+
+		// check the temperature for AC control
+		int temperature = this.trainModel.getTemperature();
+		if (temperature > 75) {
+			this.trainModel.setTemperature(75);
+		} else if (temperature < 65) {
+			this.trainModel.setTemperature(65);
+		}
+
+        this.ui.refresh();
 	}
 	
 	/**
@@ -161,9 +180,16 @@ public class TrainController {
 			// decide best velocity to target
 			this.targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
 			
-			// calculate new power
+			// calculate new power redundantly
 			double calculatedPower = this.powerController.calculatePower(this.velocitySI, this.targetVelocity, deltaT);
-			
+			double calculatedPower2 = this.powerController2.calculatePower(this.velocitySI, this.targetVelocity, deltaT);
+
+            if (calculatedPower != calculatedPower2) {
+                // uh oh
+                this.trainModel.activateEmergencyBrake();
+                return 0;
+            }
+
 			// abs(power) should never be more than max train power
 			power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
 			return power;
@@ -217,7 +243,6 @@ public class TrainController {
 	
 	/**
 	 * First 5 bits are speed, the rest is authority
-	 * @see http://docs.oracle.com/javase/7/docs/api/java/util/BitSet.html
 	 * @param signalPackage
 	 */
 	public void receiveSignalFromRail(BitSet signalPackage) {
@@ -251,6 +276,7 @@ public class TrainController {
 			String stationName = this.stationIdToStationName(stationId);
 			this.nextStation = stationName;
 			this.nextStationId = stationId;
+			this.trainModel.displayNextStation(stationName);
 		}
 		this.ui.log("Received beacon: stationId=" + String.valueOf(stationId) + " distance=" + String.valueOf(distance));
 	}
@@ -282,85 +308,29 @@ public class TrainController {
 		this.doorsOpenRight = false;
 	}
 	
-	private void turnOnLights() {
-		this.lightsOn = true;
+	public boolean lightsAreOn() {
+		return this.trainModel.getLightsStatus();
 	}
-	
-	private void turnOffLights() {
-		this.lightsOn = false;
-	}
-	
-	private void activateEmergencyBrake() {
-		this.trainModel.activateEmergencyBrake();
-	}
-	
-	private void deactivateEmergencyBrake() {
-		this.trainModel.deactivateEmergencyBrake();
-	}
-	
-	private void activateServiceBrake() {
-		this.trainModel.activateServiceBrake();
-	}
-	
-	private void deactivateServiceBrake() {
-		this.trainModel.deactivateServiceBrake();
-	}
-		
-	private void announceStation() {
-		System.out.println("NEXT STATION: " + this.nextStation);
-	}
-	
-	
-	/**
-	 * Forced failures
-	 */
-	
-	public void forceEngineFailure() {
-		this.trainModel.setEngineFailure(true);
-	}
-	
-	public void fixEngineFailure() {
-		this.trainModel.setEngineFailure(false);
-	}
-	public void forceBrakeFailure() {
-		this.trainModel.setBrakeFailure(true);
-	}
-	
-	public void fixBrakeFailure() {
-		this.trainModel.setBrakeFailure(false);
-	}
-	public void forceSignalPickupFailure() {
-		this.trainModel.setSignalPickupFailure(true);
-	}
-	
-	public void fixSignalPickupFailure() {
-		this.trainModel.setSignalPickupFailure(false);
-	}
-	
-	
-	public double _getLastPowerCommand() {
-		return this._lastPowerCommand;
+
+	public boolean doorsAreOpen() {
+		return this.trainModel.doorsAreOpen();
 	}
 	
 	
 	/**
 	 * Forced values
 	 */
-	
-	public void hackVelocityFromTrainOperator(double newVelocity) {
-		this.velocityFromTrainOperator = newVelocity;
-	}
-	
+
 	public void hackVelocityFromCTC(double newVelocity) {
 		this.velocityFromCTC = newVelocity;
 	}
-	
+
 	public void hackAuthorityFromCTC(double newAuthority) {
 		this.authorityFromCTC = newAuthority;
 	}
 
 	/**
-	 * Helper functions for UI refreshing
+	 * Interactions with UI
 	 */
 	public double getTargetVelocity() {
 		return this.targetVelocity;
@@ -377,7 +347,58 @@ public class TrainController {
 	public double getAuthorityFromCTC() {
 		return this.authorityFromCTC;
 	}
-	
+
+	public double getVelocityFromCTC() {
+		return this.velocityFromCTC;
+	}
+
+	public double getVelocityFromTrainOperator() {
+		return this.velocityFromTrainOperator;
+	}
+
+	public int getTemperature() {
+		return this.trainModel.getTemperature();
+	}
+
+	public String getNextStation() {
+		return this.nextStation;
+	}
+
+    public void activateEmergencyBrake() {
+        this.trainModel.activateEmergencyBrake();
+    }
+
+    public void setVelocityFromTrainOperator(double velocityFromTrainOperator) {
+        this.velocityFromTrainOperator = velocityFromTrainOperator;
+    }
+
+    public void setLightsOn(boolean on) {
+        if (on) {
+            this.trainModel.turnOnLights();
+        } else {
+            this.trainModel.turnOffLights();
+        }
+    }
+
+    public void setDoorsOpen(boolean open) {
+        if (open) {
+            this.trainModel.openDoors();
+        } else {
+            this.trainModel.closeDoors();
+        }
+    }
+
+    public boolean getEngineFailure() {
+        return this.trainModel.getEngineFailure();
+    }
+
+    public boolean getBrakeFailure() {
+        return this.trainModel.getBrakeFailure();
+    }
+
+    public boolean getSignalPickupFailure() {
+        return this.trainModel.getSignalPickupFailure();
+    }
 
 	/**
 	 * Utility functions
