@@ -1,8 +1,11 @@
+import java.util.*;
+
 public class Train {
 	private int trainid;
 	private BlockInterface currentBlock;
 	private BlockInterface previousBlock;
 	private Route route;
+	public Map<String, Integer> schedule;
 	public Config c;
 
 	public Train(Config config, Integer id, BlockInterface currentBlock, BlockInterface previousBlock) {

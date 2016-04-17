@@ -9,6 +9,7 @@ public class Config{
   public static final boolean DEBUG_PARSER = false;
   public static final boolean DEBUG_COMMUNICATION = false;
   public static final boolean DEBUG_SCHEDUAL = false;
+  public static final boolean DEBUG_DRAWING = false;
   public static final int SEGMENTATION_LENGTH = 10;
 
 

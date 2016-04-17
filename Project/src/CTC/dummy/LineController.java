@@ -6,12 +6,15 @@ import java.util.*;
 public class LineController{
   Config c;
   JTextArea log;
+  JFrame frame;
   JCheckBox occupied[];
   JComboBox failstate[];
+  boolean closed[];
+  JLabel closedLabel[];
   static final int numblocks = 14;
   public LineController(Object trackmodelshouldbehere){
 
-    JFrame frame = new JFrame("Dummy TrackController window");
+    frame = new JFrame("Dummy TrackController window");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     c = new Config();
     LineParser parser = new LineParser("track.txt",c);
@@ -20,14 +23,19 @@ public class LineController{
     allrows.setLayout(new BoxLayout(allrows,BoxLayout.Y_AXIS));
     occupied = new JCheckBox[numblocks];
     failstate = new JComboBox[numblocks];
+    closed = new boolean[numblocks];
+    closedLabel = new JLabel[numblocks];
     for(BlockInterface bi : c.aldl.get(0).blocks){
       if(bi == null){continue;}
       JPanel l = new JPanel();
       l.setLayout(new BoxLayout(l,BoxLayout.X_AXIS));
       JLabel id = new JLabel("BlockID:" + bi.getID());
       occupied[bi.getID()] = new JCheckBox("Occupied");
-      String[] failstates = {"FS_NORMAL","FS_BROKEN_RAIL","FS_POWER_FAILURE","FS_TRACK_CIRCUIT_FAILURE"};
+      closed[bi.getID()] = false;
+      closedLabel[bi.getID()] = new JLabel("Block closed?:false");
+      String[] failstates = {"FS_NORMAL","FS_BROKEN_RAIL","FS_POWER_FAILURE","FS_TRACK_CIRCUIT_FAILURE","FS_RAIL_AND_POWER","FS_CIRCUIT_AND_RAIL","FS_CIRCUIT_AND_POWER","FS_CIRCUIT_RAIL_POWER"};
       failstate[bi.getID()] = new JComboBox(failstates);
+      l.add(closedLabel[bi.getID()]);
       l.add(id);
       l.add(occupied[bi.getID()]);
       l.add(failstate[bi.getID()]);
@@ -48,6 +56,7 @@ public class LineController{
   }
 
   public void tick(long delta){
+    frame.repaint();
 
   }
 
@@ -70,6 +79,14 @@ public class LineController{
       return TrackFailState.FS_POWER_FAILURE;
     }else if(fsstr.equals("FS_TRACK_CIRCUIT_FAILURE")){
       return TrackFailState.FS_TRACK_CIRCUIT_FAILURE;
+    }else if(fsstr.equals("FS_RAIL_AND_POWER")){
+      return TrackFailState.FS_RAIL_AND_POWER;
+    }else if(fsstr.equals("FS_CIRCUIT_AND_RAIL")){
+      return TrackFailState.FS_CIRCUIT_AND_RAIL;
+    }else if(fsstr.equals("FS_CIRCUIT_AND_POWER")){
+      return TrackFailState.FS_CIRCUIT_AND_POWER;
+    }else if(fsstr.equals("FS_CIRCUIT_RAIL_POWER")){
+      return TrackFailState.FS_CIRCUIT_RAIL_POWER;
     }
     return TrackFailState.FS_NORMAL;
   }
@@ -105,6 +122,12 @@ public class LineController{
 
   public void createTrain(int line){
     log.append(String.format("A train should be created on line:%d",line==0?"red":"green"));
+  }
+
+  //Call this every tick that something should be closed
+  public void setClosed(int block, boolean b){
+    closed[block] = b;
+    closedLabel[block].setText("Block closed?:" + (b?"true":"false"));
   }
 
 }

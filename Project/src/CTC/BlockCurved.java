@@ -57,13 +57,52 @@ public class BlockCurved extends BlockInterface{
 
   public void drawBlock(Graphics g){
     BlockCurved dtc = this;
-    boolean usered = false;
-    boolean usegray = false;
-    boolean useyellow = false;
-    TrackFailState tfs = this.getFailState();
-  //  if(tfs == TrackFailState.FS_BROKEN_RAIL || tfs == TrackFailState.FS_Br
-    g.setColor(Color.GREEN);
-    g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
+    int drawnnum = 0;
+    boolean drawgray = false, drawred = false, drawyellow = false;
+    if(getFailState() == TrackFailState.FS_TRACK_CIRCUIT_FAILURE || getFailState() == TrackFailState.FS_CIRCUIT_AND_RAIL || getFailState() == TrackFailState.FS_CIRCUIT_AND_POWER || getFailState() == TrackFailState.FS_CIRCUIT_RAIL_POWER){
+      drawred = true;
+      drawnnum++;
+    }
+    if(getFailState() == TrackFailState.FS_BROKEN_RAIL || getFailState() == TrackFailState.FS_CIRCUIT_AND_RAIL || getFailState() == TrackFailState.FS_RAIL_AND_POWER || getFailState() == TrackFailState.FS_CIRCUIT_RAIL_POWER){
+      drawgray = true;
+      drawnnum++;
+    }
+    if(getFailState() == TrackFailState.FS_POWER_FAILURE || getFailState() == TrackFailState.FS_CIRCUIT_AND_POWER || getFailState() == TrackFailState.FS_RAIL_AND_POWER || getFailState() == TrackFailState.FS_CIRCUIT_RAIL_POWER){
+      drawyellow = true;
+      drawnnum++;
+    }
+    Color[] allcol = new Color[drawnnum==0?1:drawnnum];
+    int ccount = 0;
+    if(drawred){
+      allcol[ccount++] = Color.RED;
+    }
+    if(drawgray){
+      allcol[ccount++] = Color.GRAY;
+    }
+    if(drawyellow){
+      allcol[ccount++] = Color.YELLOW;
+    }
+    if(ccount == 0){
+      allcol[ccount++] = Color.GREEN;
+    }
+
+    drawBySegments(allcol,g);
+    //g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
+  }
+
+  public void drawBySegments(Color[] col, Graphics g){
+    int segmentlength = ((startang+endang)-startang)/5;
+    //System.out.println("Segment length is:" + segmentlength);
+    int j = 0;
+    for(int i = startang; i != startang+endang; i+= segmentlength){
+      //System.out.printf("Drawing a bit from %d to %d\n",i,i+segmentlength);
+      g.setColor(col[(j++)%col.length]);
+      //System.out.println("Color:");
+      //System.out.println(col[j%col.length]);
+      g.drawArc(x,y,radius,radius,i,segmentlength);
+      if(i > 360)
+        return;
+    }
   }
 
   public void drawTrainOn(Graphics g, boolean on){

@@ -33,16 +33,16 @@ public class CTCWindow extends JFrame{
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = new TrackPane(config);
     config.trackpane = tp;
-    JPanel dp = new DetailPane(config);
+    //JPanel dp = new DetailPane(config);
     Dimension d = new Dimension((int)(WIDTH*0.7),HEIGHT);
     Dimension d2 = new Dimension((int)(WIDTH*0.3),HEIGHT);
     tp.setPreferredSize(d);
-    dp.setPreferredSize(d2);
+    //dp.setPreferredSize(d2);
     holder.add(tp);
-    holder.add(dp);
+    //holder.add(dp);
 
     super.getContentPane().add(holder);
-    ((DetailPane)dp).createComponent();
+    //((DetailPane)dp).createComponent();
     //JLabel label = new JLabel("Hello, world!");
     //window.getContentPane().add(label);
     super.pack();
@@ -74,14 +74,14 @@ public class CTCWindow extends JFrame{
 			ArrayList<BlockInterface> b = train.getRoute().route;
 			BlockInterface dest = b.get(b.size());
 			//Route the train the correct way if it wants to go into the yard
-			if(train.getCurrentBlock().getID() == 4){
+			if(train.getCurrentBlock().getID() == 4){ //red line
 				if(dest instanceof BlockYard || dest.getID() == 77){
 					config.lineController.routeToYard(true,0);
 				}else{
 					config.lineController.routeToYard(false,0);
 				}
-			}else if(train.getCurrentBlock().getID() == 132){
-				if(dest instanceof BlockYard || dest.getID() == 144){
+			}else if(train.getCurrentBlock().getID() == 132){ //yard block
+				if(dest instanceof BlockYard || dest.getID() == 229){
 					config.lineController.routeToYard(true,0);
 				}else{
 					config.lineController.routeToYard(false,0);
