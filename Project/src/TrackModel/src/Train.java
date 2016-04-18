@@ -7,9 +7,5 @@ public class Train {
 	boolean direction;
 	
 	TrainModel returns;
-	 
 	
-	
-	
-
 }

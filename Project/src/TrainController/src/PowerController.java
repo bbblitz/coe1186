@@ -14,7 +14,7 @@ public class PowerController {
 	public PowerController(double trainMass) {
 		//this.Kp = trainMass / 10.0;
 		this.Kp = 10000.0;
-		this.Ki = 10.0;
+		this.Ki = 50.0;
 		
 		this.ep = 0;
 		this.ep_prev = 0;
@@ -33,12 +33,13 @@ public class PowerController {
 		double power;
 		double deltaTSec = deltaT / 1000.0;
 		
-		// new errors
+		// save last tick's errors
 		this.ep_prev = this.ep;
 		this.ei_prev = this.ei;
+
+        // calculate new errors
 		this.ep = targetVelocity - currentVelocity;
 		this.ei = this.ei_prev + (deltaTSec / 2.0) * (this.ep + this.ep_prev);
-		//this.ei += this.ep * (deltaT / 1000.0);
 		
 		power = this.Kp * this.ep + this.Ki * this.ei;
 		

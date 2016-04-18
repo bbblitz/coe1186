@@ -59,7 +59,7 @@ public class TrainModelUI{
 		JLabel wordAcc = new JLabel("Acceleration: ");
 		JLabel wordPower = new JLabel("Power Input: ");
 		JLabel wordTemp = new JLabel("Temperature: ");
-		JLabel wordPass = new JLabel("Passenger Count: ");
+		JLabel wordPass = new JLabel("Crew + Passenger Count: ");
 		JLabel wordMass = new JLabel("Total Mass: ");
 		JLabel wordLights = new JLabel("Lights: ");
 		JLabel wordDoors = new JLabel("Doors: ");
@@ -77,7 +77,7 @@ public class TrainModelUI{
 		JLabel unitTemp = new JLabel("degrees F");
 		JLabel unitMass = new JLabel("lbs");
 		
-		train = model.getTrainID();
+		train = new Integer(model.getTrainID()).toString();
 		vel = new Double(Math.round(model.getVelocityUS() * 100d) / 100d).toString();
 		acc = new Double(Math.round(model.getAccelerationUS() * 100d) / 100d).toString();
 		pow = new Double(Math.round(model.getPower() * 100d) / 100d).toString();
@@ -175,7 +175,7 @@ public class TrainModelUI{
 	}
 	
 	public void tick(){
-		train = model.getTrainID();
+		train = new Integer(model.getTrainID()).toString();
 		vel = new Double(Math.round(model.getVelocityUS() * 100d) / 100d).toString();
 		acc = new Double(Math.round(model.getAccelerationUS() * 100d) / 100d).toString();
 		pow = new Double(Math.round(model.getPower() * 100d) / 100d).toString();

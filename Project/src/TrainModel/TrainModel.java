@@ -32,11 +32,11 @@ public class TrainModel{
 	private double position;
 	private double positionSI;
 	private double distanceOnLastTick;
+	private double blockGrade;
 	
 	private int passengerCount;
+	private int passAndCrew;
 	private int temperature;
-	
-	//private Block currentBlock;   (add back when block class is finished)
 	
 	private TrainController trainController;
 	private TrackModel trackModel;
@@ -51,7 +51,7 @@ public class TrainModel{
 		this.mass = this.trainMass;
 		this.weight = 81628.492;
 		
-		this.power = 12000;
+		this.power = 0;
 		
 		this.eBrake = false;
 		this.sBrake = false;
@@ -60,15 +60,17 @@ public class TrainModel{
 		this.signalFailure = false;
 		
 		this.ID = ID;
-		//this.currentBlock = trackModel.getBlock();
+		
 		this.acceleration = 0;
 		this.accelerationSI = 0;
 		this.oldVelocity = 0;
 		this.velocity = 0;
 		this.velocitySI = 0;
 		this.positionSI = 0;
+		this.blockGrade = 0;
 		
 		this.passengerCount = 0;
+		this.passAndCrew = 0;
 		this.temperature = 60;
 		
 		this.trainController = new TrainController(this);
@@ -83,7 +85,7 @@ public class TrainModel{
 	
 	public void tick(double deltaT){
 		this.trainController.tick(deltaT);
-		this.trainController.receiveSignalFromRail(this.railSignal);
+		//this.trainController.receiveSignalFromRail(this.railSignal);
 		
 		if(this.velocitySI == 0 && this.power > 0){
 			this.oldVelocity = 1;
@@ -124,15 +126,19 @@ public class TrainModel{
 		if(this.velocitySI < 0){
 			this.velocitySI = 0;
 		}
+		if(this.velocitySI > 70){
+			this.velocitySI = 70;
+		}
 		
 		double distanceOnTick = ((this.oldVelocity + this.velocitySI)/2) * deltaT/1000.0;
 		return distanceOnTick;
 	}
 	
 	private double gravitationalForce(){
-		double grade = /* currentBlock.getGrade(); */ 0;		//set to 0 for now, need get method from Block
+		double grade = this.blockGrade;
+		double gradeInRadians = (grade/100.0)*(3.14159/180);
 		
-		double theta = Math.atan(grade/100.0);
+		double theta = Math.atan(gradeInRadians);
 		double force = 9.8 * this.mass * Math.sin(theta) * -1.0;
 		
 		return force;
@@ -147,8 +153,9 @@ public class TrainModel{
 		} else{
 			this.passengerCount += passengersOn;
 		}
+		this.passAndCrew = this.passengerCount + 1;
 		
-		this.mass = this.trainMass + (this.passengerCount * this.avgPassengerWeight);
+		this.mass = this.trainMass + (this.passAndCrew * this.avgPassengerWeight);
 	}
 	
 	private void convertVelocity(){
@@ -223,7 +230,7 @@ public class TrainModel{
 		this.trainController.receiveSpeed(speed);
 	}
 	
-	public String getTrainID(){
+	public int getTrainID(){
 		return this.ID;
 	}
 	
@@ -240,7 +247,7 @@ public class TrainModel{
 	}
 	
 	public int getPassengerCount(){
-		return this.passengerCount;
+		return this.passAndCrew;
 	}
 	
 	public double getWeight(){
@@ -321,5 +328,9 @@ public class TrainModel{
 	
 	public void decTemp(){
 		this.temperature--;
+	}
+	
+	public void receiveBlockGrade(double grade){
+		this.blockGrade = grade;
 	}
 }
