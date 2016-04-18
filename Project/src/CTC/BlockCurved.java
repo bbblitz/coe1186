@@ -90,6 +90,12 @@ public class BlockCurved extends BlockInterface{
     //g.drawArc(dtc.x,dtc.y,dtc.radius,dtc.radius,dtc.startang,dtc.endang);
   }
 
+  public double getLength(){
+    double tpr = 2*Math.PI*radius;
+    double perc = endang/360;
+    return tpr*perc;
+  }
+
   public void drawBySegments(Color[] col, Graphics g){
     int segmentlength = ((startang+endang)-startang)/5;
     //System.out.println("Segment length is:" + segmentlength);

@@ -48,7 +48,7 @@ public class DetailPane extends JPanel{
 
     lh.add(sp);
     lh.add(lp);
-    lh.add(tp);
+    //lh.add(tp);
     rh.add(dp);
     rh.add(mp);
     rh.add(wp);

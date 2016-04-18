@@ -70,7 +70,7 @@ str, 50, 100, 90, 50, 0, 8, TAIL, HEAD, 6, 2
 str, 350, 150, 270, 50, 13, 5, TAIL, HEAD, 7, 1
 cur, 50, 100, 180, 90, 100, 6, 9, HEAD, TAIL, 8, 2
 str, 150, 200, 180,  50,   8, 10, HEAD, TAIL, 9, 2
-sta, 200, 200, 180,  50,   9, 12, HEAD, TAIL, 10, 2, "Kingdom Come"
+sta, 200, 200, 180,  50,   9, 12, HEAD, TAIL, 10, 2, Kingdom Come
 str, 250, 200, 180,  50,   10, 12, HEAD, TAIL, 11, 2
 str, 300, 200, 180,  50,   11, 13, HEAD, TAIL, 12, 2
 cur, 250, 100, 0, -90, 100, 12, 7, TAIL, HEAD, 13, 1

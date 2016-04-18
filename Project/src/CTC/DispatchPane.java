@@ -56,7 +56,7 @@ public class DispatchPane extends JPanel implements ActionListener{
   public int calculateAuthority(int trainid, int blockid){
     if(blockid == 228){
       JOptionPane.showMessageDialog(this, "You cannot dispatch to that block!");
-      return;
+      return 0;
     }
     int totallength = 0;
     Train train = config.pinkLineTrains.get(trainid);
@@ -79,6 +79,7 @@ public class DispatchPane extends JPanel implements ActionListener{
       int trainid = (Integer)trainlist.getSelectedItem();
       int authority = calculateAuthority(trainid, blockid);
       Train train = config.pinkLineTrains.get(trainid);
+      train.dispatched = true;
       int currentblock = train.getCurrentBlock().getID();
       config.lineController.relayAuthority(authority,currentblock);
       config.lineController.relaySpeed(10, currentblock);

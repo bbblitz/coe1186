@@ -11,7 +11,47 @@ public class Route {
 		this.train = train;
 	}
 
-	private ArrayList<BlockInterface> calculateRoute(Train train, BlockInterface destinationBlock) {
+	public static int calculateTimeTo(Train t, BlockInterface end){
+		BlockInterface sourceBlock = t.getCurrentBlock();
+		BlockInterface currentBlock = sourceBlock;
+		BlockInterface previousBlock = t.getPreviousBlock();
+
+		int trainspeed = 20;
+		int totaldistance = 0;
+
+		//If trains are stopping just short or just long of their destination, then this code is the problem.
+
+		totaldistance += currentBlock.getLength();
+		currentBlock = currentBlock.goesto(previousBlock);
+		while (currentBlock != end) {
+			totaldistance += currentBlock.getLength();
+			BlockInterface nextBlock = currentBlock.goesto(previousBlock);
+			previousBlock = currentBlock;
+			currentBlock = nextBlock;
+		}
+
+		return (totaldistance/trainspeed)*1000;
+	}
+
+	public static int calculateAuthority(Train t, int blockid){
+    if(blockid == 228){
+      return 0;
+    }
+    int totallength = 0;
+    Train train = t;
+    BlockInterface currentblock = train.getCurrentBlock();
+    BlockInterface previousblock = train.getPreviousBlock();
+    BlockInterface tmpblock = currentblock;
+    while(tmpblock.getID() != blockid){
+      BlockInterface tmp2 = tmpblock;
+      tmpblock = tmpblock.goesto(previousblock);
+      previousblock = tmp2;
+      totallength += tmpblock.getLength();
+    }
+    return totallength;
+  }
+
+	public ArrayList<BlockInterface> calculateRoute(Train train, BlockInterface destinationBlock) {
 		ArrayList<BlockInterface> route = new ArrayList<BlockInterface>();
 
 		BlockInterface sourceBlock = train.getCurrentBlock();

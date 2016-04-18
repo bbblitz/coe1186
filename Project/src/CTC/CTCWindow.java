@@ -27,19 +27,22 @@ public class CTCWindow extends JFrame{
 		System.out.println("Start block is:");
 		System.out.println(startblock.toString());
 		Train ntrain = new Train(config, 0, startblock,preblock);
+		ntrain.schedule.put("Kingdom Come",5000);
 		config.pinkLineTrains.add(ntrain);
 
 		JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
     JPanel tp = new TrackPane(config);
     config.trackpane = tp;
-    //JPanel dp = new DetailPane(config);
+    JPanel dp = new DetailPane(config);
+		//JPanel dp = new JPanel();
     Dimension d = new Dimension((int)(WIDTH*0.7),HEIGHT);
     Dimension d2 = new Dimension((int)(WIDTH*0.3),HEIGHT);
     tp.setPreferredSize(d);
-    //dp.setPreferredSize(d2);
+    dp.setPreferredSize(d2);
+
     holder.add(tp);
-    //holder.add(dp);
+    holder.add(dp);
 
     super.getContentPane().add(holder);
     //((DetailPane)dp).createComponent();
@@ -68,23 +71,55 @@ public class CTCWindow extends JFrame{
 				}
 			}
 
-			if(train == null || train.getRoute() == null){
-				continue;
-			}
-			ArrayList<BlockInterface> b = train.getRoute().route;
-			BlockInterface dest = b.get(b.size());
-			//Route the train the correct way if it wants to go into the yard
-			if(train.getCurrentBlock().getID() == 4){ //red line
-				if(dest instanceof BlockYard || dest.getID() == 77){
-					config.lineController.routeToYard(true,0);
-				}else{
-					config.lineController.routeToYard(false,0);
+			if(train != null && train.getRoute() != null){
+				ArrayList<BlockInterface> b = train.getRoute().route;
+				BlockInterface dest = b.get(b.size());
+				//Route the train the correct way if it wants to go into the yard
+				if(train.getCurrentBlock().getID() == 4){ //red line
+					if(dest instanceof BlockYard || dest.getID() == 77){
+						config.lineController.routeToYard(true,0);
+					}else{
+						config.lineController.routeToYard(false,0);
+					}
+				}else if(train.getCurrentBlock().getID() == 132){ //yard block
+					if(dest instanceof BlockYard || dest.getID() == 229){
+						config.lineController.routeToYard(true,0);
+					}else{
+						config.lineController.routeToYard(false,0);
+					}
 				}
-			}else if(train.getCurrentBlock().getID() == 132){ //yard block
-				if(dest instanceof BlockYard || dest.getID() == 229){
-					config.lineController.routeToYard(true,0);
-				}else{
-					config.lineController.routeToYard(false,0);
+
+				//Check to see if a train is at it's destination, and if it is, un-dispatch it.
+				ArrayList<BlockInterface> r = train.getRoute().route;
+				if(r.get(r.size()) == train.getCurrentBlock()){
+					train.dispatched = false;
+				}
+			}
+
+			//Check to see if the train can make it's scheduleing on time, and if it can't, disptach it.
+			BlockInterface station = null;
+			String nextstationto = (String)train.schedule.keySet().toArray()[0];
+			System.out.println("I think the next station is: " + nextstationto);
+			if(nextstationto != null && !train.dispatched){
+				int linenum = (train.getCurrentBlock().getID() < 78)?0:1;
+				for(BlockInterface bi : config.aldl.get(linenum).blocks){
+					if(bi instanceof BlockStation){
+						BlockStation bs = (BlockStation)bi;
+						if(bs.stationName.equals(nextstationto)){
+							station = bi;
+						}
+					}
+				}
+				int timeto = Route.calculateTimeTo(train,station);
+				int targettime = train.schedule.get(nextstationto);
+				System.out.printf("current time:%d\ttimeto:%d\ttarget time:%d\n",config.time,timeto,targettime);
+				if(config.time + timeto > targettime){
+					System.out.println("Dispatching a train!");
+					int auth = Route.calculateAuthority(train, station.getID());
+					int speed = 10;
+					config.lineController.relayAuthority(auth, train.getCurrentBlock().getID());
+					config.lineController.relaySpeed(speed,train.getCurrentBlock().getID());
+					train.dispatched = true;
 				}
 			}
 		}

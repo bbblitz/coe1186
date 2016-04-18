@@ -35,7 +35,6 @@ public class Config{
   public JTextArea log;
   public Object selected;
 
-
   public Config(){
     vislines = new ArrayList<Boolean>();
     aldl = new ArrayList<Line>();
