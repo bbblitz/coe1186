@@ -5,10 +5,29 @@ import java.awt.event.*;
 
 public class TrackSwitchPane extends JPanel implements MouseListener {
   public Config c;
+  public JComboBox trackselector;
+  public JButton closebutton;
+  public JButton openbutton;
   public TrackSwitchPane(Config c){
     super();
-    JLabel l = new JLabel("Track Switch:");
+    setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+    trackselector = new JComboBox();
+    closebutton = new JButton("Close");
+    openbutton = new JButton("Open");
+    int i = 0;
+    for(BlockInterface bi : c.aldl.get(0).blocks){
+      trackselector.add(new JLabel("Something" + i++));
+    }
+    /*
+    for(BlockInterface bi : c.aldl.get(1).blocks){
+      trackselector.add(new JLabel("" + i++));
+    }
+    */
+    JLabel l = new JLabel("Track Closeing:");
     add(l);
+    add(trackselector);
+    add(closebutton);
+    add(openbutton);
     addMouseListener(this);
     this.c = c;
   }
@@ -31,52 +50,5 @@ public class TrackSwitchPane extends JPanel implements MouseListener {
 
   public void mouseClicked(MouseEvent e) {
      System.out.println("Mouse clicked (# of clicks: " + e.getClickCount() + ")");
-  }
-
-  public int findoffx(BlockInterface ds){
-    if(ds instanceof BlockStraight){
-      BlockStraight dts = (BlockStraight)ds;
-      return (int)((Math.cos(dts.direction)*dts.length) + dts.x);
-    }else if(ds instanceof BlockCurved){
-      BlockCurved dtc = (BlockCurved)ds;
-      int startang = dtc.startang;
-      int endang = startang + dtc.endang;
-      boolean startisleftmost = true;
-      if(Math.cos(endang) < Math.cos(startang)){
-        startisleftmost = false;
-      }
-      int output = (int)(Math.cos(startisleftmost?startang:endang)*dtc.radius);
-      System.out.println("Returning " + output);
-      return output;
-    }else if(ds instanceof BlockSwitch){
-      BlockSwitch dds = (BlockSwitch)ds;
-      return (int) Math.min(
-        Math.min(
-          findoffx(dds.head),
-          findoffx(dds.tail)
-        ),
-        findoffx(dds.divergent)
-      );
-    }
-    return 0;
-  }
-
-  public void findoffy(BlockInterface ds){
-
-  }
-
-  /**
-   * @override
-   */
-  public void paint(Graphics g){
-    System.out.println("Selected from TSP: " + c.selected);
-    g.setColor(Color.black);
-    Dimension d = getSize();
-    g.fillRect(0,0,d.width,d.height);
-    /*
-    if(this.c.selected instanceof BlockSwitch){
-      //Find the top-left most corner
-    }
-    */
   }
 }

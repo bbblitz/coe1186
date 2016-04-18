@@ -15,7 +15,7 @@ public class TrackEditor implements ActionListener{
   static JTextArea ta;
   static JButton rb;
   static PrintWriter out;
-  public static void main(String[] args){
+  public TrackEditor(){
     JFrame window = new JFrame("Track Editor");
     config = new Config();
     config.windowDim = new Dimension(1200,600);
@@ -26,8 +26,10 @@ public class TrackEditor implements ActionListener{
     rs.setLayout(new BoxLayout(rs,BoxLayout.Y_AXIS));
     LineParser lp = new LineParser("tmp.txt",config);
     tp = new TrackPane(config);
+
     ta = new JTextArea();
     rb = new JButton("Refresh");
+    rb.addActionListener(this);
     config.aldl = new ArrayList<Line>();
     try{
       out = new PrintWriter(new BufferedWriter(new FileWriter("tmp.txt")));
@@ -35,8 +37,13 @@ public class TrackEditor implements ActionListener{
       System.out.println(e);
       System.exit(0);
     }
+    Dimension tracksize = new Dimension(800,600);
+    Dimension textsize = new Dimension(400,600);
+    ta.setPreferredSize(textsize);
+    JScrollPane sta = new JScrollPane(ta);
+    tp.setPreferredSize(tracksize);
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    rs.add(ta);
+    rs.add(sta);
     rs.add(rb);
     holder.add(tp);
     holder.add(rs);
@@ -44,8 +51,32 @@ public class TrackEditor implements ActionListener{
     window.pack();
     window.setVisible(true);
   }
+
+  public static void main(String[] args){
+    TrackEditor te = new TrackEditor();
+  }
   public static void refresh(){
+    System.out.println("Refresh pressed");
+    String tracktext = ta.getText();
+    try{
+      PrintWriter writer = new PrintWriter("tmp.txt", "UTF-8");
+      writer.print(tracktext);
+      writer.close();
+    }catch(Exception e){
+      System.out.println("Failed to create printwriter");
+    }
     LineParser lp = new LineParser("tmp.txt",config);
+    Line readline = config.aldl.get(1);
+    ArrayList<Line> arl = new ArrayList<Line>();
+    arl.add(readline);
+    for(int i = 1; i < config.aldl.size(); i++){
+      config.aldl.remove(i);
+    }
+    for(int i = 0; i < config.vislines.size(); i++){
+      System.out.println("visline(" + i + "):" + config.vislines.get(i));
+    }
+    System.out.println("ALDL size is now: " + config.aldl.size());
+    ((TrackPane)tp).lines = arl;
     tp.repaint();
   }
   public void actionPerformed(ActionEvent e){
