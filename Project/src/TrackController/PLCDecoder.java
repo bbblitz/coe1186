@@ -9,10 +9,11 @@ public class PLCDecoder
 {	
 	public static boolean[] decode(boolean[] inputs, File filename)
 	{
-		return decode(inputs,false,filename);
+		boolean[] route = {false, false};
+		return decode(inputs,route,filename);
 	}
 		
-	public static boolean[] decode(boolean[] inputs, boolean route, File filename)
+	public static boolean[] decode(boolean[] inputs, boolean[] route, File filename)
 	{
 		Scanner PLCReader = null;
 		try
@@ -25,8 +26,11 @@ public class PLCDecoder
 		}
 	
 		int inputCount = PLCReader.nextInt();
+		PLCReader.nextLine();
 		int outputCount = PLCReader.nextInt();
+		PLCReader.nextLine();
 		int switchCount = PLCReader.nextInt();
+		PLCReader.nextLine();
 		int crossingCount = PLCReader.nextInt();
 		PLCReader.nextLine();
 		boolean[] outputs = new boolean[outputCount+switchCount+crossingCount];
@@ -90,10 +94,14 @@ public class PLCDecoder
 						//System.out.println(outputs[i]);
 						break;
 					}
-					else if(operator.equals("q"))
+					else if(operator.equals("rr"))
 					{
 						//push whatever value we store that we got from the CTC's yard queue
-						operands.push(route);
+						operands.push(route[0]);
+					}
+					else if(operator.equals("rg"))
+					{
+						operands.push(route[1]);
 					}
 					else
 					{
