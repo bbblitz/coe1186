@@ -368,6 +368,18 @@ public class TrainController {
         this.trainModel.activateEmergencyBrake();
     }
 
+	public void deactivateEmergencyBrake() {
+		this.trainModel.deactivateEmergencyBrake();
+	}
+
+	public void activateServiceBrake() {
+		this.trainModel.activateServiceBrake();
+	}
+
+	public void deactivateServiceBrake() {
+		this.trainModel.deactivateServiceBrake();
+	}
+
     public void setVelocityFromTrainOperator(double velocityFromTrainOperator) {
         this.velocityFromTrainOperator = velocityFromTrainOperator;
     }

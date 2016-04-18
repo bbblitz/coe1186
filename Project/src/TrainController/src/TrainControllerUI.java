@@ -12,12 +12,15 @@ public class TrainControllerUI {
     private JPanel mainPanel;
     private JButton hackAuthorityFromCTCButton;
     private JSlider throttleSlider;
+    private JButton activateServiceBrakeButton;
+    private JButton deactivateServiceBrakeButton;
     private JButton hackSpeedFromCTCButton;
     private JCheckBox lightsOnCheckBox;
     private JCheckBox doorsOpenCheckBox;
     private JList messageList;
     private DefaultListModel<String> messageModel = new DefaultListModel<>();
     private JButton pullEmergencyBrakeButton;
+    private JButton resetEmergencyBrakeButton;
     private JLabel authorityFromCTCLabel;
     private JLabel speedFromCTCLabel;
     private JLabel targetSpeedLabel;
@@ -80,6 +83,28 @@ public class TrainControllerUI {
             public void actionPerformed(ActionEvent e) {
                 TrainControllerUI.this.trainController.activateEmergencyBrake();
                 log("Emergency brake pulled!");
+            }
+        });
+
+        this.resetEmergencyBrakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TrainControllerUI.this.trainController.deactivateEmergencyBrake();
+                log("Emergency brake reset.");
+            }
+        });
+
+        this.activateServiceBrakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TrainControllerUI.this.trainController.activateServiceBrake();
+            }
+        });
+
+        this.deactivateServiceBrakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TrainControllerUI.this.trainController.deactivateServiceBrake();
             }
         });
 
@@ -389,6 +414,23 @@ public class TrainControllerUI {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel3.add(throttleSlider, gbc);
+
+        activateServiceBrakeButton = new JButton();
+        activateServiceBrakeButton.setText("Activate Service Brake");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(activateServiceBrakeButton, gbc);
+
+        deactivateServiceBrakeButton = new JButton();
+        deactivateServiceBrakeButton.setText("Deactivate Service Brake");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(deactivateServiceBrakeButton, gbc);
+
         final JPanel spacer8 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -569,6 +611,14 @@ public class TrainControllerUI {
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(pullEmergencyBrakeButton, gbc);
+
+        resetEmergencyBrakeButton = new JButton();
+        resetEmergencyBrakeButton.setText("Reset Emergency Brake");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(resetEmergencyBrakeButton, gbc);
     }
 
 }
