@@ -5,8 +5,9 @@ Communication limit is between track model and train model
 
 Make sure all units are in miles/feet
 
-
-
-
-
 Keep deltaT under 2000 millis so we don't lose track of trains!!!
+
+For the presentation (TODO:)
+  Bug count
+  What you would do differntly
+  Lessons learned

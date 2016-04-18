@@ -6,9 +6,10 @@ import java.util.*;
 
 public class Config{
   //Why dosen't java have #define? this is so inconvinent.
-  public static final boolean DEBUG_PARSER = false;
+  public static final boolean DEBUG_PARSER = true;
   public static final boolean DEBUG_COMMUNICATION = false;
   public static final boolean DEBUG_SCHEDUAL = false;
+  public static final boolean DEBUG_DRAWING = false;
   public static final int SEGMENTATION_LENGTH = 10;
 
 
@@ -33,7 +34,6 @@ public class Config{
   //Use log.append to add stuff to the log
   public JTextArea log;
   public Object selected;
-
 
   public Config(){
     vislines = new ArrayList<Boolean>();

@@ -1,8 +1,9 @@
 
 rem dependencies
-cp "..\TrackController\TrackController.java" .
-cp "..\TrackController\PLCDecoder.java" .
-cp "..\TrackController\LineController.java" .
+rem cp "..\TrackController\TrackController.java" .
+rem cp "..\TrackController\PLCDecoder.java" .
+rem cp "..\TrackController\LineController.java" .
+cp dummy\LineController.java .
 
 javac TrackEditor.java
 java TrackEditor

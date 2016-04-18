@@ -309,14 +309,16 @@ public class LineParser{
       BlockPart headto = parsePart(vs[7]);
       BlockPart tailto = parsePart(vs[8]);
       int blockid = Integer.parseInt(vs[9]);
-      String stationname = vs[10];
+      int trackControllerId = Integer.parseInt(vs[10]);
+      String stationname = vs[11];
       BlockStation newblock = new BlockStation(x,y,direction,length, stationname);
       heads.add(blockid, headid);
       tails.add(blockid, tailid);
       newblock.setID(blockid);
       newblock.stationName = stationname;
       curline.blocks.add(blockid, newblock);
-
+      System.out.println("New station:");
+      System.out.println(newblock.toString());
     }
     else{
       System.out.printf("Error 108: Unknown block type:%s on line %d in %s\n",blockstring.substring(0,3),linenumber, fname);

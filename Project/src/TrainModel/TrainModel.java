@@ -136,8 +136,9 @@ public class TrainModel{
 	
 	private double gravitationalForce(){
 		double grade = this.blockGrade;
+		double gradeInRadians = (grade/100.0)*(3.14159/180);
 		
-		double theta = Math.atan(grade/100.0);
+		double theta = Math.atan(gradeInRadians);
 		double force = 9.8 * this.mass * Math.sin(theta) * -1.0;
 		
 		return force;

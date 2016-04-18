@@ -1,11 +1,16 @@
+import java.util.*;
+
 public class Train {
 	private int trainid;
 	private BlockInterface currentBlock;
 	private BlockInterface previousBlock;
 	private Route route;
+	public Map<String, Integer> schedule;
 	public Config c;
+	public boolean dispatched;
 
 	public Train(Config config, Integer id, BlockInterface currentBlock, BlockInterface previousBlock) {
+		this.dispatched = false;
 		this.c = config;
 		this.currentBlock = currentBlock;
 		this.previousBlock = previousBlock;
@@ -13,6 +18,7 @@ public class Train {
 		this.trainid = id;
 		// create the actual train TODO:Uncomment?
 		//TrainModel newTrain = new TrainModel(id);
+		schedule = new TreeMap<String, Integer>();
 	}
 
 	public int getID(){
