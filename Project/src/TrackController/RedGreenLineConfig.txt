@@ -1,29 +1,8 @@
 7
 RedLineTopLoop.plc
-0-27 77 in
-0-16 77 out
-6 12 switch
 RedLineTopDiverge.plc
-1-8 16-38 72-76 in
-17-33 72-76 out
-7 8 switch
 RedLineBottomDiverge.plc
-33-52 67-71 in
-34-44 67-71 out
-9 10 switch
 RedLineBottomLoop.plc
-44-66 in
-43-66 out
-11 switch
 GreenLoopTop.plc
-78-105 in
-78-104 out
-1 switch
 GreenLineMiddle.plc
-90-162 178-230 in
-105-154 178-230 out
-2 3 0 4 switch
 GreenLoopBottom.plc
-154-177 in
-156-177 232333out
-

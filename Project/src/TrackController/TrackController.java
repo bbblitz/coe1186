@@ -82,11 +82,16 @@ public class TrackController
 	public boolean updateInputs(boolean[] inputs, boolean[] routeBit)
 	{
 		this.inputs = inputs;
+		if (routeBit == null)
+		{
+			routeBit = new boolean[2];
+		}
 		return decode(routeBit);
 	}
 	
 	public boolean decode(boolean[] routeBit)
 	{
+		//System.out.println("PLC FILE = "+PLCFile);
 		boolean[] allOutputs = PLCDecoder.decode(inputs, routeBit, PLCFile);
 		boolean[] outputsRedundant = PLCDecoder.decode(inputs, routeBit, PLCFile);
 		for(int i=0;i<allOutputs.length;i++)
@@ -165,7 +170,7 @@ public class TrackController
 		crossingCount = PLCReader.nextInt();
 		if(crossingCount>0)	crossingConversion = PLCReader.nextInt();
 		PLCReader.close();
-		System.out.println("inputCount = "+inputCount+" blockCount = "+blockCount+" switchCount = "+switchCount+" crossingCount = "+crossingCount);
+		//System.out.println("inputCount = "+inputCount+" blockCount = "+blockCount+" switchCount = "+switchCount+" crossingCount = "+crossingCount);
 		inputs = new boolean[inputCount];
 		outputs = new boolean[blockCount];
 		switches = new boolean[switchCount];
@@ -183,7 +188,7 @@ public class TrackController
 			if(operation.equals("-"))
 			{
 				int end = configReader.nextInt();
-				System.out.print(start+" - "+end+",");
+				//System.out.print(start+" - "+end+",");
 				for(int j=start;j<=end;j++)
 				{
 					conversion[index++] = j;

@@ -30,7 +30,7 @@ public class LineController
 		this.model = model;
 	}
 	
-	public File[] loadConfigFile()
+	public boolean loadConfigFile()
 	{
 		try
 		{			
@@ -45,12 +45,19 @@ public class LineController
 			{
 				controllerFiles[i] = new File(lineConfig.nextLine());
 			}
-			return controllerFiles;
+			TrackController[] controllers = new TrackController[fileCount];
+			int index=0;
+			for(File current : controllerFiles)
+			{
+				controllers[index++] = new TrackController(current);
+			}
+			this.controllers = controllers;
+			return true;
 		}
 		catch(FileNotFoundException fnfe)
 		{
 			System.out.println("config file(s) invalid");
-			return null;
+			return false;
 		}
 	}
 	
@@ -95,24 +102,26 @@ public class LineController
 		return lineSwitches;
 	}
 	
-	public void updateInputs(boolean[] inputs)
+	public boolean updateInputs(boolean[] inputs)
 	{
 		int maxInputLength = 0;
+		boolean safe = true;
 		for(TrackController current : controllers)
 		{
 			if(current.getInputCount()>maxInputLength) maxInputLength = current.getInputCount();
 		}
-		System.out.println("max Inputs = "+maxInputLength);
+		//System.out.println("max Inputs = "+maxInputLength);
 		boolean[][] controllerInputs = new boolean[controllers.length][maxInputLength];
 		for(int i=0;i<inputs.length;i++)
 		{
-			int[] conversion = convertToTrackBlock(i);
-			controllerInputs[conversion[0]][conversion[i]] = inputs[i];
+			int[] conversion = convertToTrackInput(i);
+			controllerInputs[conversion[0]][conversion[1]] = inputs[i];
 		}
 		for(int i=0;i<controllers.length;i++)
 		{
-			controllers[i].updateInputs(controllerInputs[i], routeBit);
+			safe &= controllers[i].updateInputs(controllerInputs[i], routeBit);
 		}
+		return safe;
 	}
 	
 	public void zeroAuthority(int blockID)
@@ -135,22 +144,43 @@ public class LineController
 		return model.getFailStates();
 	}
 	
-	public int[] convertToTrackBlock(int blockID)
+	public int[] convertToTrackInput(int blockID)
 	{
-		//hard code blockID (Pink Line) eventually use config file to get array?
-		int[] out = new int[2];
-		out[0] = blockID/7;
-		if(out[0]==0)
+		int[] out = {-1, -1};
+		for(int i=0;i<controllers.length;i++)
 		{
-			out[1] = blockID;
-		}
-		else if(out[0]==1)
-		{
-			out[1] = blockID-7;
+			for(int j=0;j<controllers[i].getInputCount();j++)
+			{
+				if(controllers[i].inputConversion[j]==blockID)
+				{
+					out[0] = i;
+					out[1] = j;
+				}
+			}
 		}
 		return out;
-	}	
-	public int convertToLineBlock(int controllerID, int blockID)
+	}
+	public int[] convertToTrackOutput(int blockID)
+	{
+		int[] out = {-1, -1};
+		for(int i=0;i<controllers.length;i++)
+		{
+			for(int j=0;j<controllers[i].getBlockCount();j++)
+			{
+				if(controllers[i].outputConversion[j]==blockID)
+				{
+					out[0] = i;
+					out[1] = j;
+				}
+			}
+		}
+		return out;
+	}
+	public int convertToLineInput(int controllerID, int blockID)
+	{
+		return controllers[controllerID].inputConversion[blockID];
+	}
+	public int convertToLineOutput(int controllerID, int blockID)
 	{
 		return controllers[controllerID].outputConversion[blockID];
 	}
@@ -210,7 +240,7 @@ public class LineController
 			{
 				if(currentOutputs[j])
 				{
-					zeroAuthority(convertToLineBlock(i, j));
+					zeroAuthority(convertToLineOutput(i, j));
 				}
 			}
 		}
