@@ -11,7 +11,7 @@ public class LineController{
   JComboBox failstate[];
   boolean closed[];
   JLabel closedLabel[];
-  static final int numblocks = 14;
+  static final int numblocks = 90;
   public LineController(Object trackmodelshouldbehere){
 
     frame = new JFrame("Dummy TrackController window");

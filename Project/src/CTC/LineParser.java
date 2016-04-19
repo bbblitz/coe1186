@@ -178,6 +178,15 @@ public class LineParser{
         }
       }
     }
+    //Remove all null blocks
+    for(int i = 0; i < curline.blocks.size();){
+      if(curline.blocks.get(i) == null){
+        curline.blocks.remove(i);
+      }else{
+        i++;
+      }
+    }
+
     if(c.DEBUG_PARSER){
       System.out.println("\t---Ending block resolution---");
     }

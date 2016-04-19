@@ -1,10 +1,14 @@
-LINE RED
-str, 200, 100, 20, 50, 2, 2, TAIL, HEAD, 1, 1
-str, 200, 100, 40, 50, 3, 1, TAIL, HEAD, 2, 1
-str, 200, 100, 60, 50, 4, 2, TAIL, HEAD, 3, 1
-str, 200, 100, 90, 50, 5, 3, TAIL, HEAD, 4, 1
-str, 200, 100, 45, 50, 6, 4, TAIL, HEAD, 5, 1
-str, 200, 100, 0, 50, 7, 5, TAIL, HEAD, 6, 1
-str, 200 , 100, 0, 50, 1, 6, TAIL, HEAD, 7, 1
-
+LINE GREEN
+str, 400, 20, 45, 100, 79, 89, TAIL, HEAD, 78, 1
+str, 420, 20, 45, 100, 80, 78, TAIL, HEAD, 79, 1
+str, 440, 40, 45, 100, 81, 79, TAIL, HEAD, 80, 1
+str, 260, 60, 0, 100, 80, 82, TAIL, HEAD, 81, 1
+str, 360, 60, 0, 100, 81, 83, TAIL, HEAD, 82, 1
+str, 460, 60, 0, 100, 82, 84, TAIL, HEAD, 83, 1
+str, 530, 50, -135, 100, 83, 85, TAIL, HEAD, 84, 1
+str, 520, 40, -135, 100, 84, 86, TAIL, HEAD, 85, 1
+str, 510, 30, -135, 100, 85, 87, TAIL, HEAD, 86, 1
+str, 500, 20, 180, 100, 86, 88, TAIL, HEAD, 87, 1
+str, 480, 20, 180, 100, 87, 89, TAIL, HEAD, 88, 1
+str, 460, 20, 180, 100, 88, 78, TAIL, HEAD, 89, 1
 LINE END

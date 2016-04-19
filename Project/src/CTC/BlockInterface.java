@@ -17,6 +17,7 @@ public abstract class BlockInterface{
   private Line line;
   private double length;
 	private boolean isoccupied;
+	public static final double TRACK_SCALE = 0.2;
 
   /**
    * Given a Block `from`, return the Block after this one

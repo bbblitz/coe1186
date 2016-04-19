@@ -10,6 +10,7 @@ public class Config{
   public static final boolean DEBUG_COMMUNICATION = false;
   public static final boolean DEBUG_SCHEDUAL = false;
   public static final boolean DEBUG_DRAWING = false;
+  public static final int CONSTANT_SPEED = 40;
   public static final int SEGMENTATION_LENGTH = 10;
 
 

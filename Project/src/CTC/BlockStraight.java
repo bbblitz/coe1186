@@ -59,6 +59,7 @@ public class BlockStraight extends BlockInterface{
   }
 
   public void drawBlock(Graphics g){
+    System.out.println("In BlockStraight's drawBlock()");
     //Figure out what colors to draw in {}
     int drawnnum = 0;
     boolean drawgray = false, drawred = false, drawyellow = false;
@@ -101,14 +102,24 @@ public class BlockStraight extends BlockInterface{
   }
 
   public void drawBySegments(Color[] colors, Graphics g){
-    int segmentlength = length / (colors.length * 5);
-    int exoff = (int)(Math.cos(Math.toRadians(direction))*length);
-    int eyoff = (int)(Math.sin(Math.toRadians(direction))*length);
-    int ex = exoff+x;
-    int ey = eyoff+y;
-    int xadd = (exoff/length)*segmentlength;
-    int yadd = (eyoff/length)*segmentlength;
-
+    System.out.println("In BlockStraight's drawBySegments()");
+    float segmentlength =(float) ((length*super.TRACK_SCALE) / (colors.length * 5));
+    System.out.println("Finished calculations segmentlength");
+    double exoff =(Math.cos(Math.toRadians(direction))*(length*super.TRACK_SCALE));
+    double eyoff =(Math.sin(Math.toRadians(direction))*(length*super.TRACK_SCALE));
+    System.out.println("Finished calculations offsets");
+    double ex = exoff+x;
+    double ey = eyoff+y;
+    System.out.println("Finished calculations real position");
+    double xadd = (exoff/((float)length))*segmentlength;
+    double yadd = (eyoff/((float)length))*segmentlength;
+    System.out.println("Finished calculations delta positions");
+    System.out.println("Finished calculations");
+    if(xadd == 0 && yadd == 0){
+      System.out.println("Error 201: deltax and deltay is 0");
+      System.exit(-1);
+    }
+    System.out.printf("\texoff:%f\teyoff:%f\n\tex:%f\tey:%f\n\txadd:%f\tyadd:%f\n\tlength:%d\tsegmentlength:%f\n",exoff,eyoff,ex,ey,xadd,yadd,length,segmentlength);
     //Print some debug stuff
     /*
     System.out.printf("Drawing straight block:\n\toff:(%d,%d)\n\tstart:(%d,%d)\n\tend:(%d,%d)\n\tadd:(%d,%d)\n",exoff,eyoff,x,y,ex,ey,xadd,yadd);
@@ -132,10 +143,15 @@ public class BlockStraight extends BlockInterface{
       gy += yadd;
     }
     */
-    for(int gx=x, gy=y, col = 0; (gx != exoff+x) || (gy != eyoff+y); gx+= xadd, gy += yadd, col++){
+    float gx = x;
+    float gy = y;
+    int col = 0;
+
+    for(; (gx - (exoff+x) > 2) || (gy - (eyoff+y) > 2); gx+= xadd, gy += yadd, col++){
+      System.out.println("Setting color and drawing segment...");
       g.setColor(colors[col%colors.length]);
       //System.out.printf("Drawing a line from (%d,%d) to (%d,%d)",gx,gy,gx+xadd,gy+yadd);
-      g.drawLine(gx,gy,gx+xadd,gy+yadd);
+      g.drawLine((int)gx,(int)gy,(int)(gx+xadd),(int)(gy+yadd));
     }
   }
 
