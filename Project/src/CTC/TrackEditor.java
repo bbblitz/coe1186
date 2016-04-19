@@ -37,7 +37,7 @@ public class TrackEditor implements ActionListener{
     while(s.hasNextLine()){
       initstring += s.nextLine() + "\n";
     }
-    ta = new JTextArea(initstring);
+    ta = new JTextArea(initstring,200,30);
     rb = new JButton("Refresh");
     rb.addActionListener(this);
     config.aldl = new ArrayList<Line>();
@@ -48,7 +48,7 @@ public class TrackEditor implements ActionListener{
       System.exit(0);
     }
     Dimension tracksize = new Dimension(800,600);
-    Dimension textsize = new Dimension(400,600);
+    Dimension textsize = new Dimension(400,400);
     ta.setPreferredSize(textsize);
     JScrollPane sta = new JScrollPane(ta);
     tp.setPreferredSize(tracksize);

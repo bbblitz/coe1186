@@ -66,31 +66,31 @@ str, 620, 89, -60, 50, 4, 2, TAIL, HEAD, 3, 1
 str, 625, 76, -90, 50, 5, 3, TAIL, HEAD, 4, 1
 str, 625, 65, -45, 50, 6, 4, TAIL, HEAD, 5, 1
 str, 633, 56, 0, 50, 7, 5, TAIL, HEAD, 6, 1
-str, 645, 56, 0, 75, 8, 6, TAIL, HEAD, 7, 1, "ShadySide"
+sta, 645, 56, 0, 75, 8, 6, TAIL, HEAD, 7, 1, "ShadySide"
 str, 663, 56, 45, 75, 9, 7, TAIL, HEAD, 8, 1
 str, 675, 68, 90, 75, 10, 8, TAIL, HEAD, 9, 1
-str, 200, 100, 135, 75, 11, 9, TAIL, HEAD, 10, 1
-str, 200, 100, 150, 75, 12, 10, TAIL, HEAD, 11, 1
-str, 200, 100, 160, 75, 13, 11, TAIL, HEAD, 12, 1
-str, 200, 100, 170, 68, 14, 12, TAIL, HEAD, 13, 1
-str, 200, 100, 180, 60, 15, 13, TAIL, HEAD, 14, 1
-str, 200, 100, 180, 60, 16, 14, TAIL, HEAD, 15, 1
-str, 200, 100, 180, 50, 17, 1, TAIL, HEAD, 16, 1, "Herron Ave"
-str, 200, 100, 180, 200, 18, 16, TAIL, HEAD, 17, 1
-str, 200, 100, 180, 400, 19, 17, TAIL, HEAD, 18, 1
-str, 200, 100, 180, 400, 20, 18, TAIL, HEAD, 19, 1
-str, 200, 100, 180, 200, 21, 19, TAIL, HEAD, 20, 1
-str, 200, 100, 135, 100, 22, 20, TAIL, HEAD, 21, 1, "Swissville"
-str, 200, 100, 135, 100, 23, 21, TAIL, HEAD, 22, 1
-str, 200, 100, 135, 100, 24, 22, TAIL, HEAD, 23, 1
-str, 200, 100, 90, 50, 25, 23, TAIL, HEAD, 24, 1
-str, 200, 100, 90, 50, 26, 24, TAIL, HEAD, 25, 1, "Penn Station"
-str, 200, 100, 90, 50, 27, 25, TAIL, HEAD, 26, 1
-str, 200, 100, 90, 50, 28, 26, TAIL, HEAD, 27, 1
-str, 200, 100, 90, 50, 29, 27, TAIL, HEAD, 28, 1
-str, 200, 100, 90, 60, 30, 28, TAIL, HEAD, 29, 1
-str, 200, 100, 90, 60, 31, 29, TAIL, HEAD, 30, 1
-str, 200, 100, 90, 50, 32, 30, TAIL, HEAD, 31, 1
+str, 674, 87, 135, 75, 11, 9, TAIL, HEAD, 10, 1
+str, 660, 100, 150, 75, 12, 10, TAIL, HEAD, 11, 1
+str, 644, 108, 160, 75, 13, 11, TAIL, HEAD, 12, 1
+str, 626, 114, 170, 68, 14, 12, TAIL, HEAD, 13, 1
+str, 610, 116, 180, 60, 15, 13, TAIL, HEAD, 14, 1
+str, 600, 116, 180, 60, 16, 14, TAIL, HEAD, 15, 1
+sta, 580, 108, 180, 50, 17, 1, TAIL, HEAD, 16, 1, "Herron Ave"
+str, 570, 108, 180, 200, 18, 16, TAIL, HEAD, 17, 1
+str, 520, 108, 180, 400, 19, 17, TAIL, HEAD, 18, 1
+str, 420, 108, 180, 400, 20, 18, TAIL, HEAD, 19, 1
+str, 320, 108, 180, 200, 21, 19, TAIL, HEAD, 20, 1
+str, 270, 108, 135, 100, 22, 20, TAIL, HEAD, 21, 1, "Swissville"
+str, 253, 125, 135, 100, 23, 21, TAIL, HEAD, 22, 1
+str, 236, 142, 135, 100, 24, 22, TAIL, HEAD, 23, 1
+str, 218, 159, 90, 50, 25, 23, TAIL, HEAD, 24, 1
+sta, 218, 170, 90, 50, 26, 24, TAIL, HEAD, 25, 1, "Penn Station"
+str, 218, 180, 90, 50, 27, 25, TAIL, HEAD, 26, 1
+str, 218, 190, 90, 50, 28, 26, TAIL, HEAD, 27, 1
+str, 218, 200, 90, 50, 29, 27, TAIL, HEAD, 28, 1
+str, 218, 210, 90, 60, 30, 28, TAIL, HEAD, 29, 1
+str, 218, 220, 90, 60, 31, 29, TAIL, HEAD, 30, 1
+str, 218, 230, 90, 50, 32, 30, TAIL, HEAD, 31, 1
 str, 200, 100, 90, 50, 33, 31, TAIL, HEAD, 32, 1
 str, 200, 100, 90, 50, 34, 72, TAIL, HEAD, 33, 1
 str, 200, 100, 90, 50, 35, 33, TAIL, HEAD, 34, 1
@@ -137,6 +137,8 @@ str, 200, 100, -90, 50, 75, 73, TAIL, HEAD, 74, 1
 str, 200, 100, -90, 50, 76, 74, TAIL, HEAD, 75, 1
 str, 200, 100, -45, 50, 27, 75, TAIL, HEAD, 76, 1
 LINE END
+
+
 
 
 /*
