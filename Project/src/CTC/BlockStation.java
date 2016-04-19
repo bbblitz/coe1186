@@ -64,6 +64,7 @@ public class BlockStation extends BlockInterface{
 
   public void drawBlock(Graphics g){
     BlockStation bs = this;
+    float rlength = (int)(this.length*super.TRACK_SCALE);
     int starts[][] = new int[3][2];
     int ends[][] = new int[3][2];
     int xvar  = (int)(Math.sin(Math.toRadians(bs.direction))*4);
@@ -75,8 +76,8 @@ public class BlockStation extends BlockInterface{
     starts[1][1] = bs.y;
     starts[2][1] = bs.y - yvar;
 
-    int endx = bs.x + (int)(Math.cos(Math.toRadians(bs.direction))*bs.length);
-    int endy = bs.y + (int)(Math.sin(Math.toRadians(bs.direction))*bs.length);
+    int endx = bs.x + (int)(Math.cos(Math.toRadians(bs.direction))*rlength);
+    int endy = bs.y + (int)(Math.sin(Math.toRadians(bs.direction))*rlength);
     ends[0][0] = endx + xvar;
     ends[1][0] = endx;
     ends[2][0] = endx - xvar;
@@ -88,7 +89,7 @@ public class BlockStation extends BlockInterface{
     int sx2 = bs.x + 4;
     int sx3 = bs.x - 4;
     int sy = bs.y;
-    int exoff = (int)(Math.cos(Math.toRadians(bs.direction))*bs.length);
+    int exoff = (int)(Math.cos(Math.toRadians(bs.direction))*rlength);
     for(int i = 0; i < 3; i++){
       g.drawLine(starts[i][0],starts[i][1],ends[i][0],ends[i][1]);
     }
@@ -96,8 +97,9 @@ public class BlockStation extends BlockInterface{
   public void drawTrainOn(Graphics g, boolean on){
     drawBlock(g);
     //Find the middle of the track
-    int exoff = (int)(Math.cos(Math.toRadians(direction))*length);
-    int eyoff = (int)(Math.sin(Math.toRadians(direction))*length);
+    float rlength =(int) (this.length*super.TRACK_SCALE);
+    int exoff = (int)(Math.cos(Math.toRadians(direction))*rlength);
+    int eyoff = (int)(Math.sin(Math.toRadians(direction))*rlength);
     int ex = (exoff/2)+x;
     int ey = (eyoff/2)+y;
     g.setColor(Color.WHITE);
