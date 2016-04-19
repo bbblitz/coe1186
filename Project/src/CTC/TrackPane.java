@@ -84,7 +84,7 @@ public class TrackPane extends JPanel implements MouseListener {
     //System.out.println("Drawing line:");
     //System.out.println(dl.toString());
     for(BlockInterface dti : dl.blocks){
-      System.out.println("Drawing:" + dti.toString());
+      //System.out.println("Drawing:" + dti.toString());
       drawSegment(g,dti);
     }
   }
@@ -108,7 +108,7 @@ public class TrackPane extends JPanel implements MouseListener {
       }
     }
     if(!hasdrawn){
-      System.out.println("Drawing track without train");
+      //System.out.println("Drawing track without train");
       track.drawBlock(g);
     }
     //track.drawTrainOn(g, true);
@@ -209,7 +209,7 @@ public class TrackPane extends JPanel implements MouseListener {
     }
     else if(dti instanceof BlockStraight){
       //System.out.println("Found straight track");
-      System.out.println("Drawing block straight");
+      //System.out.println("Drawing block straight");
       drawStraightTrack(g,(BlockStraight)dti,c);
     }
     else if(dti instanceof BlockSwitch){

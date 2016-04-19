@@ -19,7 +19,7 @@ public class CTCWindow extends JFrame{
 		config.windowDim = new Dimension(WIDTH,HEIGHT);
 		config.lineController = lc;
 
-		LineParser parser = new LineParser("track2.txt",config);
+		LineParser parser = new LineParser("track.txt",config);
 
 		//TODO:Remove this
 		/*

@@ -35,9 +35,9 @@ public class TrackEditor implements ActionListener{
     }
     String initstring = "";
     while(s.hasNextLine()){
-      initstring += s.nextLine();
+      initstring += s.nextLine() + "\n";
     }
-    ta = new JTextArea();
+    ta = new JTextArea(initstring);
     rb = new JButton("Refresh");
     rb.addActionListener(this);
     config.aldl = new ArrayList<Line>();
