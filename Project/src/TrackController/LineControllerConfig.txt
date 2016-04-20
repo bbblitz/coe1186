@@ -1,4 +1,1 @@
-PinkLineConfig.txt 
-2
-PinkLineA.plc
-PinkLineB.plc
+RedGreenLineConfig.txt

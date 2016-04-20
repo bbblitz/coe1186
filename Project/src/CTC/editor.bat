@@ -3,7 +3,7 @@ rem dependencies
 rem cp "..\TrackController\TrackController.java" .
 rem cp "..\TrackController\PLCDecoder.java" .
 rem cp "..\TrackController\LineController.java" .
-cp dummy\LineController.java .
+copy dummy\LineController.java .
 
 javac TrackEditor.java
 java TrackEditor

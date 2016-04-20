@@ -7,22 +7,24 @@ public class BlockYard extends BlockInterface{
 
 	//The x offset from some origin
 	public int x;
-
+	public static final int width = 100;
+	public static final int height = 50;
 	//The y offset from some origin
 	public int y;
 
 	public BlockInterface goesto(BlockInterface from){
-		return null;
+		return head;
 	}
 
 	public BlockInterface getHead(){
-		return null;
+		return head;
 	}
 	public BlockInterface getTail(){
 		return null;
 	}
 	public void drawBlock(Graphics g){
-
+		g.drawRect(x,y,width,height);
+		g.drawString("YARD",x,y);
 	}
 	public void drawTrainOn(Graphics g, boolean on){
 

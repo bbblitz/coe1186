@@ -1,1 +1,119 @@
 ##A text file so I can start working on the green line and git dosen't complain.
+/*
+Straight track
+  str, x, y, rotation, length, head, tail, headto, tailto, id, trackcontroler_id
+  ex.
+    str 5, 10, 0, 100, 3, 7, TAIL, TAIL, 0, 0
+
+Curved track
+  cur, x, y, start_angle, angle_length, radius, block_clockwise, block_counterclockwise, block_clockwise_to, block_counterclockwise_to, block_id, trackcontroller_id
+  ex.
+    cur 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2, 0
+
+Switch track:
+  TODO - Look at the documentation in LineParser.java,
+  It's implemented, just needs an example here.
+
+Station track:
+  str x, y, 0, 100, 3, 7, TAIL, TAIL, 0, 0, "station_name"
+*/
+
+LINE GREEN
+str, 674, 20, 45, 100, 79, 89, TAIL, HEAD, 78, 1
+str, 691, 37, 45, 100, 80, 78, TAIL, HEAD, 79, 1, "Pioneer"
+str, 708, 54, 45, 100, 81, 79, TAIL, HEAD, 80, 1
+str, 725, 70, 0, 100, 80, 82, TAIL, HEAD, 81, 1
+str, 750, 70, 0, 100, 81, 83, TAIL, HEAD, 82, 1
+str, 775, 70, 0, 100, 82, 84, TAIL, HEAD, 83, 1
+str, 767, 37, -135, 100, 83, 85, TAIL, HEAD, 84, 1
+str, 784, 54, -135, 100, 84, 86, TAIL, HEAD, 85, 1
+str, 800, 70, -135, 100, 85, 87, TAIL, HEAD, 86, 1, "Edgebrook"
+str, 750, 20, 180, 100, 86, 88, TAIL, HEAD, 87, 1
+str, 725, 20, 180, 100, 87, 89, TAIL, HEAD, 88, 1
+str, 700, 20, 180, 100, 88, 78, TAIL, HEAD, 89, 1
+#SW1
+str, 675, 20, 180, 150, 89, 91, TAIL, HEAD, 90, 1 
+str, 640, 20, 180, 150, 90, 92, TAIL, HEAD, 91, 1
+str, 610, 20, 180, 150, 91, 93, TAIL, HEAD, 92, 1
+str, 570, 20, 180, 150, 92, 94, TAIL, HEAD, 93, 1
+str, 530, 20, -195, 150, 93, 95, TAIL, HEAD, 94, 1
+str, 492, 30, -195, 150, 94, 96, TAIL, HEAD, 95, 1
+str, 450, 40, -195, 150, 95, 97, TAIL, HEAD, 96, 1
+str, 400, 50, -195, 150, 96, 98, TAIL, HEAD, 97, 1
+str, 350, 60, -270, 300, 97, 99, TAIL, HEAD, 98, 1
+str, 0, 0, -270, 300, 98, 100, TAIL, HEAD, 99, 1
+str, 0, 0, -270, 300, 99, 101, TAIL, HEAD, 100, 1
+str, 0, 0, -270, 300, 100, 102, TAIL, HEAD, 101, 1
+str, 0, 0, -270, 200, 101, 103, TAIL, HEAD, 102, 1
+str, 0, 0, -270, 100, 102, 104, TAIL, HEAD, 103, 1
+str, 0, 0, -270, 50, 103, 105, TAIL, HEAD, 104, 1
+str, 0, 0, -270, 50, 104, 106, TAIL, HEAD, 105, 1
+str, 0, 0, -270, 50, 105, 107, TAIL, HEAD, 106, 1
+str, 0, 0, -270, 50, 106, 108, TAIL, HEAD, 107, 1
+str, 0, 0, -270, 50, 107, 109, TAIL, HEAD, 108, 1
+str, 0, 0, -270, 50, 108, 110, TAIL, HEAD, 109, 1
+str, 0, 0, -315, 50 , 109, 111, TAIL, HEAD, 110, 1
+str, 0, 0, -315, 50, 110, 112, TAIL, HEAD, 111, 1
+str, 0, 0, -315, 50, 111, 113, TAIL, HEAD, 112, 1
+str, 0, 0, 0, 50, 112, 114, TAIL, HEAD, 113, 1
+str, 0, 0, 0, 50, 113, 115, TAIL, HEAD, 114, 1
+str, 0, 0, 0, 50, 114, 116, TAIL, HEAD, 115, 1
+str, 0, 0, 0, 50, 115, 117, TAIL, HEAD, 116, 1
+str, 0, 0, 0, 50, 116, 118, TAIL, HEAD, 117, 1
+str, 0, 0, 0, 50, 117, 119, TAIL, HEAD, 118, 1
+str, 0, 0, 0, 50, 118, 120, TAIL, HEAD, 119, 1
+str, 0, 0, 0, 50, 119, 121, TAIL, HEAD, 120, 1
+str, 0, 0, 0, 50, 120, 122, TAIL, HEAD, 121, 1
+str, 0, 0, 0, 50, 121, 123, TAIL, HEAD, 122, 1
+str, 0, 0, 0, 50, 122, 124, TAIL, HEAD, 123, 1
+str, 0, 0, 0, 50, 123, 125, TAIL, HEAD, 124, 1
+str, 0, 0, 0, 50, 124, 126, TAIL, HEAD, 125, 1
+str, 0, 0, 0, 50, 125, 127, TAIL, HEAD, 126, 1
+str, 0, 0, 0, 50, 126, 128, TAIL, HEAD, 127, 1
+str, 0, 0, 0, 50, 127, 129, TAIL, HEAD, 128, 1
+str, 0, 0, 0, 50, 128, 130, TAIL, HEAD, 129, 1
+str, 0, 0, 0, 50, 129, 131, TAIL, HEAD, 130, 1
+str, 0, 0, 0, 50, 130, 132, TAIL, HEAD, 131, 1
+str, 0, 0, 0, 50, 131, 133, TAIL, HEAD, 132, 1
+str, 0, 0, 0, 50, 132, 134, TAIL, HEAD, 133, 1
+#SW3 to yard
+str, 0, 0, 0, 50, 133, 229, TAIL, HEAD, 134, 1
+str, 0, 0, 60, 50, 134, 136, TAIL, HEAD, 135, 1
+str, 0, 0, 60, 50, 135, 137, TAIL, HEAD, 136, 1
+str, 0, 0, 60, 50, 136, 138, TAIL, HEAD, 137, 1
+str, 0, 0, 60, 50, 137, 139, TAIL, HEAD, 138, 1
+str, 0, 0, 60, 50, 138, 140, TAIL, HEAD, 139, 1
+str, 0, 0, 90, 100, 139, 141, TAIL, HEAD, 140, 1
+str, 0, 0, 90, 100, 140, 142, TAIL, HEAD, 141, 1
+str, 0, 0, 90, 200, 141, 143, TAIL, HEAD, 142, 1
+str, 0, 0, 90, 200, 142, 144, TAIL, HEAD, 143, 1
+str, 0, 0, 90, 100, 143, 145, TAIL, HEAD, 144, 1
+str, 0, 0, 90, 100, 144, 146, TAIL, HEAD, 145, 1
+str, 0, 0, 120, 100, 145, 147, TAIL, HEAD, 146, 1
+str, 0, 0, 120, 100, 146, 148, TAIL, HEAD, 147, 1
+str, 0, 0, 120, 100, 147, 149, TAIL, HEAD, 148, 1
+str, 0, 0, 120, 100, 148, 150, TAIL, HEAD, 149, 1
+str, 0, 0, 120, 100, 149, 151, TAIL, HEAD, 150, 1
+str, 0, 0, 180, 100, 150, 152, TAIL, HEAD, 151, 1
+str, 0, 0, 180, 100, 151, 153, TAIL, HEAD, 152, 1
+str, 0, 0, 180, 300, 152, 154, TAIL, HEAD, 153, 1
+str, 0, 0, 180, 300, 153, 155, TAIL, HEAD, 154, 1
+str, 0, 0, 180, 300, 154, 156, TAIL, HEAD, 155, 1
+str, 0, 0, 180, 300, 155, 157, TAIL, HEAD, 156, 1
+str, 0, 0, 180, 300, 156, 158, TAIL, HEAD, 157, 1
+str, 0, 0, 180, 300, 157, 159, TAIL, HEAD, 158, 1
+str, 0, 0, 180, 300, 158, 160, TAIL, HEAD, 159, 1 
+str, 0, 0, 180, 300, 159, 161, TAIL, HEAD, 160, 1
+str, 0, 0, 180, 300, 160, 162, TAIL, HEAD, 161, 1
+str, 0, 0, 180, 300, 161, 163, TAIL, HEAD, 162, 1
+str, 0, 0, 180, 100, 162, 164, TAIL, HEAD, 163, 1
+str, 0, 0, 180, 
+str, 0, 0,
+str, 0, 0,
+str, 0, 0,
+str, 0, 0,
+str, 0, 0,
+str, 0, 0,
+str, 0, 0,
+str, 0, 0,
+LINE END

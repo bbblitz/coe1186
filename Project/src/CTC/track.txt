@@ -58,19 +58,90 @@ T     b
   T                |                            H
           "Station: Kingdom Come"
 */
-/*
+
 LINE RED
-str, 200, 100, 20, 50, 16, 2, TAIL, HEAD, 1, 1
-str, 200, 100, 40, 50, 3, 1, TAIL, HEAD, 2, 1
-str, 200, 100, 60, 50, 4, 2, TAIL, HEAD, 3, 1
-str, 200, 100, 90, 50, 5, 3, TAIL, HEAD, 4, 1
-str, 200, 100, 45, 50, 6, 4, TAIL, HEAD, 5, 1
-str, 200, 100, 0, 50, 7, 5, TAIL, HEAD, 6, 1
-str, 200 , 100, 0, 50, 8, 6, TAIL, HEAD, 7, 1
-
+str, 600, 100, -20, 50, 16, 2, TAIL, HEAD, 1, 1
+str, 610, 97, -40, 50, 3, 1, TAIL, HEAD, 2, 1
+str, 620, 89, -60, 50, 4, 2, TAIL, HEAD, 3, 1
+str, 625, 76, -90, 50, 5, 3, TAIL, HEAD, 4, 1
+str, 625, 65, -45, 50, 6, 4, TAIL, HEAD, 5, 1
+str, 633, 56, 0, 50, 7, 5, TAIL, HEAD, 6, 1
+sta, 645, 56, 0, 75, 8, 6, TAIL, HEAD, 7, 1, "ShadySide"
+str, 663, 56, 45, 75, 9, 7, TAIL, HEAD, 8, 1
+str, 675, 68, 90, 75, 10, 8, TAIL, HEAD, 9, 1
+str, 674, 87, 135, 75, 11, 9, TAIL, HEAD, 10, 1
+str, 660, 100, 150, 75, 12, 10, TAIL, HEAD, 11, 1
+str, 644, 108, 160, 75, 13, 11, TAIL, HEAD, 12, 1
+str, 626, 114, 170, 68, 14, 12, TAIL, HEAD, 13, 1
+str, 610, 116, 180, 60, 15, 13, TAIL, HEAD, 14, 1
+str, 600, 116, 180, 60, 16, 14, TAIL, HEAD, 15, 1
+sta, 580, 108, 180, 50, 17, 1, TAIL, HEAD, 16, 1, "Herron Ave"
+str, 570, 108, 180, 200, 18, 16, TAIL, HEAD, 17, 1
+str, 520, 108, 180, 400, 19, 17, TAIL, HEAD, 18, 1
+str, 420, 108, 180, 400, 20, 18, TAIL, HEAD, 19, 1
+str, 320, 108, 180, 200, 21, 19, TAIL, HEAD, 20, 1
+str, 270, 108, 135, 100, 22, 20, TAIL, HEAD, 21, 1, "Swissville"
+str, 253, 125, 135, 100, 23, 21, TAIL, HEAD, 22, 1
+str, 236, 142, 135, 100, 24, 22, TAIL, HEAD, 23, 1
+str, 218, 159, 90, 50, 25, 23, TAIL, HEAD, 24, 1
+sta, 218, 170, 90, 50, 26, 24, TAIL, HEAD, 25, 1, "Penn Station"
+str, 218, 180, 90, 50, 27, 25, TAIL, HEAD, 26, 1
+str, 218, 190, 90, 50, 28, 26, TAIL, HEAD, 27, 1
+str, 218, 200, 90, 50, 29, 27, TAIL, HEAD, 28, 1
+str, 218, 210, 90, 60, 30, 28, TAIL, HEAD, 29, 1
+str, 218, 220, 90, 60, 31, 29, TAIL, HEAD, 30, 1
+str, 218, 230, 90, 50, 32, 30, TAIL, HEAD, 31, 1
+str, 218, 240, 90, 50, 33, 31, TAIL, HEAD, 32, 1
+str, 218, 250, 90, 50, 34, 72, TAIL, HEAD, 33, 1
+str, 218, 260, 90, 50, 35, 33, TAIL, HEAD, 34, 1
+sta, 218, 270, 90, 50, 36, 34, TAIL, HEAD, 35, 1, "Steel Plaza"
+str, 218, 280, 90, 50, 37, 35, TAIL, HEAD, 36, 1
+str, 218, 290, 90, 50, 38, 36, TAIL, HEAD, 37, 1
+str, 218, 300, 90, 50, 39, 37, TAIL, HEAD, 38, 1
+str, 218, 310, 90, 50, 40, 38, TAIL, HEAD, 39, 1
+str, 218, 320, 90, 60, 41, 39, TAIL, HEAD, 40, 1
+str, 218, 330, 90, 60, 42, 40, TAIL, HEAD, 41, 1
+str, 218, 340, 90, 50, 43, 41, TAIL, HEAD, 42, 1
+str, 218, 350, 90, 50, 44, 42, TAIL, HEAD, 43, 1
+str, 218, 360, 90, 50, 45, 67, TAIL, HEAD, 44, 1
+sta, 218, 370, 90, 50, 46, 44, TAIL, HEAD, 45, 1, "First Ave"
+str, 218, 383, 135, 75, 47, 45, TAIL, HEAD, 46, 1
+str, 205, 396, 135, 75, 48, 46, TAIL, HEAD, 47, 1
+str, 193, 408, 135, 75, 49, 47, TAIL, HEAD, 48, 1, "Station Square"
+str, 180, 420, 180, 50, 50, 48, TAIL, HEAD, 49, 1
+str, 170, 420, 180, 50, 51, 49, TAIL, HEAD, 50, 1
+str, 160, 420, 180, 50, 52, 50, TAIL, HEAD, 51, 1
+str, 150, 420, 180, 43, 53, 51, TAIL, HEAD, 52, 1
+str, 140, 420, 180, 50, 54, 52, TAIL, HEAD, 53, 1
+str, 130, 420, 180, 50, 55, 53, TAIL, HEAD, 54, 1
+str, 118, 420, 225, 75, 56, 54, TAIL, HEAD, 55, 1
+str, 104, 406, 225, 75, 57, 55, TAIL, HEAD, 56, 1
+str, 90, 392, -90, 75, 58, 56, TAIL, HEAD, 57, 1
+str, 90, 382, -90, 75, 59, 57, TAIL, HEAD, 58, 1
+str, 90, 365, -45, 75, 60, 58, TAIL, HEAD, 59, 1
+sta, 103, 352, 0, 75, 61, 59, TAIL, HEAD, 60, 1, "South Hills Junction"
+str, 122, 352, 45, 75, 62, 60, TAIL, HEAD, 61, 1
+str, 132, 362, 45, 75, 63, 61, TAIL, HEAD, 62, 1
+str, 145, 375, 90, 75, 64, 62, TAIL, HEAD, 63, 1
+str, 145, 385, 90, 75, 65, 63, TAIL, HEAD, 64, 1
+str, 145, 400, 45, 75, 66, 64, TAIL, HEAD, 65, 1
+str, 155, 410, 45, 75, 52, 65, TAIL, HEAD, 66, 1
+str, 200, 100, -135, 50, 68, 44, TAIL, HEAD, 67, 1
+str, 200, 100, -90, 50, 69, 67, TAIL, HEAD, 68, 1
+str, 200, 100, -90, 50, 70, 68, TAIL, HEAD, 69, 1
+str, 200, 100, -90, 50, 71, 69, TAIL, HEAD, 70, 1
+str, 200, 100, -45, 50, 38, 70, TAIL, HEAD, 71, 1
+str, 200, 100, -135, 50, 73, 33, TAIL, HEAD, 72, 1
+str, 200, 100, -90, 50, 74, 72, TAIL, HEAD, 73, 1
+str, 200, 100, -90, 50, 75, 73, TAIL, HEAD, 74, 1
+str, 200, 100, -90, 50, 76, 74, TAIL, HEAD, 75, 1
+str, 200, 100, -45, 50, 27, 75, TAIL, HEAD, 76, 1
 LINE END
-*/
 
+
+
+
+/*
 LINE PINK
 cur, 50, 50, 90, 90, 100, 1, 6, TAIL, HEAD, 0, 1
 str, 100, 50, 0, 50, 2, 0, TAIL, HEAD, 1, 1
@@ -87,6 +158,7 @@ str, 250, 200, 180,  50,   10, 12, HEAD, TAIL, 11, 2
 str, 300, 200, 180,  50,   11, 13, HEAD, TAIL, 12, 2
 cur, 250, 100, 0, -90, 100, 12, 7, TAIL, HEAD, 13, 1
 LINE END
+*/
 
 
 /*

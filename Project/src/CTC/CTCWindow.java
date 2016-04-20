@@ -22,6 +22,7 @@ public class CTCWindow extends JFrame{
 		LineParser parser = new LineParser("track.txt",config);
 
 		//TODO:Remove this
+		/*
 		BlockInterface startblock = config.aldl.get(0).blocks.get(10);
 		BlockInterface preblock = config.aldl.get(0).blocks.get(11);
 		System.out.println("Start block is:");
@@ -29,6 +30,7 @@ public class CTCWindow extends JFrame{
 		Train ntrain = new Train(config, 0, startblock,preblock);
 		ntrain.schedule.put("Kingdom Come",5000);
 		config.pinkLineTrains.add(ntrain);
+		*/
 
 		JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
@@ -101,6 +103,13 @@ public class CTCWindow extends JFrame{
 			String nextstationto = (String)train.schedule.keySet().toArray()[0];
 			System.out.println("I think the next station is: " + nextstationto);
 			if(nextstationto != null && !train.dispatched){
+				if(train == null){
+					System.out.println("Error 1001: Train was null!");
+					System.exit(1);
+				}
+				if(train.getCurrentBlock() == null){
+					System.out.println("Error 1010: Train's current block was null!");
+				}
 				int linenum = (train.getCurrentBlock().getID() < 78)?0:1;
 				for(BlockInterface bi : config.aldl.get(linenum).blocks){
 					if(bi instanceof BlockStation){
@@ -116,7 +125,7 @@ public class CTCWindow extends JFrame{
 				if(config.time + timeto > targettime){
 					System.out.println("Dispatching a train!");
 					int auth = Route.calculateAuthority(train, station.getID());
-					int speed = 10;
+					int speed = config.CONSTANT_SPEED;
 					config.lineController.relayAuthority(auth, train.getCurrentBlock().getID());
 					config.lineController.relaySpeed(speed,train.getCurrentBlock().getID());
 					train.dispatched = true;

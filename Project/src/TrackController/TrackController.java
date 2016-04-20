@@ -14,6 +14,10 @@ public class TrackController
 	private int blockCount;
 	private int switchCount;
 	private int crossingCount;
+	int[] inputConversion;
+	int[] outputConversion;
+	int[] switchConversion;
+	int crossingConversion;
 	
 	public TrackController()
 	{
@@ -62,11 +66,34 @@ public class TrackController
 		return outputs;
 	}
 	
-	
-	public boolean decode()
+	public void loadConversion(int[] inputConversion, int[] outputConversion, int[] switchConversion)
 	{
-		boolean[] allOutputs = PLCDecoder.decode(inputs, PLCFile);
-		boolean[] outputsRedundant = PLCDecoder.decode(inputs, PLCFile);
+		this.inputConversion = inputConversion;
+		this.outputConversion = outputConversion;
+		this.switchConversion = switchConversion;
+	}
+	
+	public boolean updateInputs(boolean[] inputs)
+	{
+		boolean[] routeBit = {false, false};
+		return updateInputs(inputs, routeBit);
+	}
+	
+	public boolean updateInputs(boolean[] inputs, boolean[] routeBit)
+	{
+		this.inputs = inputs;
+		if (routeBit == null)
+		{
+			routeBit = new boolean[2];
+		}
+		return decode(routeBit);
+	}
+	
+	public boolean decode(boolean[] routeBit)
+	{
+		//System.out.println("PLC FILE = "+PLCFile);
+		boolean[] allOutputs = PLCDecoder.decode(inputs, routeBit, PLCFile);
+		boolean[] outputsRedundant = PLCDecoder.decode(inputs, routeBit, PLCFile);
 		for(int i=0;i<allOutputs.length;i++)
 		{
 			if(allOutputs[i] != outputsRedundant[i])
@@ -90,26 +117,6 @@ public class TrackController
 		return true;
 	}
 	
-	
-	/*public void tick(double deltaT)
-	{
-		//get inputs from track model
-		//send switch positions to track model
-		//
-		//zero authority on all true tracks?
-		for(int i=0;i<blockCount;i++)
-		{
-			if(outputs[i]) zeroAuthority(i);
-		}
-		//send speed to all blocks where speed changes?
-		//relay occupancies to CTC
-	}*/
-	
-	public boolean updateInputs(boolean[] inputs)
-	{
-		this.inputs = inputs;
-		return decode();
-	}
 	
 	public boolean[] getBlockOccupancies()
 	{
@@ -149,45 +156,62 @@ public class TrackController
 			System.out.println("file not found");
 		}
 		inputCount = PLCReader.nextInt();
+		inputConversion = readConversion(PLCReader, inputCount);
 		blockCount = PLCReader.nextInt();
+		outputConversion = readConversion(PLCReader, blockCount);
 		switchCount = PLCReader.nextInt();
+		switchConversion = new int[switchCount];
+		int index = 0;
+		while(PLCReader.hasNextInt())
+		{
+			switchConversion[index++] = PLCReader.nextInt();
+		}
+		PLCReader.nextLine();
 		crossingCount = PLCReader.nextInt();
-		System.out.println("inputCount = "+inputCount+" blockCount = "+blockCount+" switchCount = "+switchCount+" crossingCount = "+crossingCount);
+		if(crossingCount>0)	crossingConversion = PLCReader.nextInt();
+		PLCReader.close();
+		//System.out.println("inputCount = "+inputCount+" blockCount = "+blockCount+" switchCount = "+switchCount+" crossingCount = "+crossingCount);
 		inputs = new boolean[inputCount];
 		outputs = new boolean[blockCount];
 		switches = new boolean[switchCount];
 		crossings = new boolean[crossingCount];
-		PLCReader.close();
 	}
 	
-	public void relayAuthority(int authority, int blockID)
+	private int[] readConversion(Scanner configReader, int count)
 	{
-		//tell track model to send authority signal to block
-		
-	}
-	
-	public void zeroAuthority(int blockID)
-	{
-		relayAuthority(0, blockID);
-	}
-	
-	public void relaySpeed(float speed, int blockID)
-	{
-		//tell track model to send speed signal to block
-	}
+		int index = 0;
+		int[] conversion = new int[count];
+		while(configReader.hasNextInt())
+		{
+			int start = configReader.nextInt();
+			String operation = configReader.next();
+			if(operation.equals("-"))
+			{
+				int end = configReader.nextInt();
+				//System.out.print(start+" - "+end+",");
+				for(int j=start;j<=end;j++)
+				{
+					conversion[index++] = j;
+				}
+			}
+		}
+		configReader.nextLine();
+		return conversion;
+	} 
 	
 	public static void main(String[] args)
 	{
 		Scanner keyboard = new Scanner(System.in);
 		
 		TrackController TCA = new TrackController();
-		TCA.loadFile();
+		//TCA.loadFile();
 		boolean[] TCAInputs = new boolean[TCA.inputs.length];
 		for(int i=0;i<TCA.getInputCount();i++)
 		{
 			System.out.print("Enter a value for TrackController block "+i+": ");
 			String value = keyboard.nextLine();
-			TCAInputs[i] = value.equalsIgnoreCase("true") || value.equals('1');
+			TCAInputs[i] = value.equalsIgnoreCase("true") || value.equals("1");
+			//System.out.println(TCAInputs[i]);
 		}
 		
 		TCA.updateInputs(TCAInputs);
