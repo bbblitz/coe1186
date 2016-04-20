@@ -11,8 +11,10 @@ public class TrainController {
 	private final double DISTANCE_BUFFER = 10;	// give some buffer to make sure train will never exceed target distances
 	private final int STATION_DWELL_TIME = 60000;	// 60s
 	
-	/* signal pickups */
-	private double velocityFromTrainOperator = 20;
+	/* train operator */
+	private double velocityFromTrainOperator = 10;
+    private boolean trainOperatorServiceBrake = false;
+
 	private double velocityFromCTC;
 	private double authorityFromCTC;
 
@@ -35,9 +37,6 @@ public class TrainController {
 
 	/* train status */
 	private double velocitySI;
-	private boolean doorsOpenLeft;
-	private boolean doorsOpenRight;
-	private boolean lightsOn;
 	
 	private double odometer;
 	double _lastPowerCommand;
@@ -60,11 +59,7 @@ public class TrainController {
 		this.nextStationId = -1;
 		this.distanceToStationEnd = -1;
 
-		// train status
 		this.velocitySI = this.trainModel.getCurrentVelocitySI();
-		this.doorsOpenLeft = false;
-		this.doorsOpenRight = false;
-		this.lightsOn = false;
 		
 		this.odometer = 0;
 	}
@@ -98,6 +93,7 @@ public class TrainController {
 			if (this.dwellTimeRemaining <= 0) {
 				this.stationApproachStatus = StationApproachStatus.NONE;
 				this.trainModel.deactivateServiceBrake();
+                this.trainOperatorServiceBrake = false;
 
 				this.trainModel.turnOnLights();
 				this.trainModel.closeDoors();
@@ -120,15 +116,22 @@ public class TrainController {
 		if (this.stationApproachStatus == StationApproachStatus.NONE || this.stationApproachStatus == StationApproachStatus.DISTANCE_SET) {
 			// 0 power if no authority or emergency brake
 			if (this.authorityFromCTC > 0 && !this.trainModel.isEmergencyBrakeActivated()) {
-				// calculate power (power <= 0 means brake should be applied)
+				// calculate power and decide best action
 				double power = calculatePower(deltaT);
 				if (power <= 0) {
-					// best action is to slow down
+					// best action is to slow down, regardless of train operator's decision
 					power = 0;
 					this.trainModel.activateServiceBrake();
 				} else if (power > 0) {
-					// best action is to speed up
-					this.trainModel.deactivateServiceBrake();
+					// best action is probably to speed up, but check the train operator's decision too
+                    if (this.trainOperatorServiceBrake) {
+                        // train operator wants to brake
+                        power = 0;
+                        this.trainModel.activateServiceBrake();
+                    } else {
+                        // train operator doesn't want to brake
+                        this.trainModel.deactivateServiceBrake();
+                    }
 				}
 				this.powerCommand = power;
 				this.trainModel.receivePowerCommand(power);
@@ -139,7 +142,7 @@ public class TrainController {
 			}
 		} else {
 			// we're braking for a station approach or stopped at the station
-			this.trainModel.activateServiceBrake();	// if it wasn't already
+			this.trainModel.activateServiceBrake();	// if it wasn't already, and regardless of train operator's decision
 			this.trainModel.receivePowerCommand(0);
 		}
 
@@ -150,6 +153,11 @@ public class TrainController {
 		} else if (temperature < 65) {
 			this.trainModel.setTemperature(65);
 		}
+
+        // if the train operator is braking, tell the model
+        if (this.trainOperatorServiceBrake) {
+            this.trainModel.activateServiceBrake();
+        }
 
         this.ui.refresh();
 	}
@@ -173,9 +181,7 @@ public class TrainController {
 			}
 		}
 		if (haveEnoughAuthority()) {
-			// authority is fine, turn off service brake if applied and let the train continue
 			this.outOfAuthorityBraking = false;
-			this.trainModel.deactivateServiceBrake();
 			
 			// decide best velocity to target
 			this.targetVelocity = Math.min(this.velocityFromTrainOperator, this.velocityFromCTC);
@@ -185,7 +191,7 @@ public class TrainController {
 			double calculatedPower2 = this.powerController2.calculatePower(this.velocitySI, this.targetVelocity, deltaT);
 
             if (calculatedPower != calculatedPower2) {
-                // uh oh
+                // uh oh, safety critical check came up bad
                 this.trainModel.activateEmergencyBrake();
                 return 0;
             }
@@ -194,12 +200,11 @@ public class TrainController {
 			power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
 			return power;
 		} else {
-			// out of authority, brake the train to a stop (or until more authority is received)
+			// out of authority
 			if (!this.outOfAuthorityBraking) {
 				this.ui.log("Authority running out, starting to brake.");
 				this.outOfAuthorityBraking = true;
 			}
-			this.trainModel.activateServiceBrake();
 			return 0;
 		}
 	}
@@ -292,22 +297,6 @@ public class TrainController {
 	 * Methods to change physical train properties
 	 */
 	
-	private void openDoorsLeft() {
-		this.doorsOpenLeft = true;
-	}
-	
-	private void openDoorsRight() {
-		this.doorsOpenRight = true;
-	}
-	
-	private void closeDoorsLeft() {
-		this.doorsOpenLeft = false;
-	}
-	
-	private void closeDoorsRight() {
-		this.doorsOpenRight = false;
-	}
-	
 	public boolean lightsAreOn() {
 		return this.trainModel.getLightsStatus();
 	}
@@ -372,14 +361,6 @@ public class TrainController {
 		this.trainModel.deactivateEmergencyBrake();
 	}
 
-	public void activateServiceBrake() {
-		this.trainModel.activateServiceBrake();
-	}
-
-	public void deactivateServiceBrake() {
-		this.trainModel.deactivateServiceBrake();
-	}
-
     public void setVelocityFromTrainOperator(double velocityFromTrainOperator) {
         this.velocityFromTrainOperator = velocityFromTrainOperator;
     }
@@ -410,6 +391,14 @@ public class TrainController {
 
     public boolean getSignalPickupFailure() {
         return this.trainModel.getSignalPickupFailure();
+    }
+
+    public boolean getTrainOperatorServiceBrake() {
+        return this.trainOperatorServiceBrake;
+    }
+
+    public void setTrainOperatorServiceBrake(boolean serviceBrake) {
+        this.trainOperatorServiceBrake = serviceBrake;
     }
 
 	/**

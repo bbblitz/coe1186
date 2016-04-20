@@ -97,14 +97,20 @@ public class TrainControllerUI {
         this.activateServiceBrakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TrainControllerUI.this.trainController.activateServiceBrake();
+                log("Train operator activated service brake.");
+                trainController.setTrainOperatorServiceBrake(true);
+                activateServiceBrakeButton.setEnabled(false);
+                deactivateServiceBrakeButton.setEnabled(true);
             }
         });
 
         this.deactivateServiceBrakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TrainControllerUI.this.trainController.deactivateServiceBrake();
+                log("Train operator reset service brake.");
+                trainController.setTrainOperatorServiceBrake(false);
+                activateServiceBrakeButton.setEnabled(true);
+                deactivateServiceBrakeButton.setEnabled(false);
             }
         });
 
@@ -182,6 +188,10 @@ public class TrainControllerUI {
         boolean signalPickupFailure = trainController.getSignalPickupFailure();
         String signalPickupFailureText = signalPickupFailure ? "FAIL" : "OK";
         signalPickupFailureLabel.setText(signalPickupFailureText);
+
+        boolean trainOperatorServiceBrake = trainController.getTrainOperatorServiceBrake();
+        activateServiceBrakeButton.setEnabled(!trainOperatorServiceBrake);
+        deactivateServiceBrakeButton.setEnabled(trainOperatorServiceBrake);
     }
 
     public void log(String message) {
@@ -407,7 +417,7 @@ public class TrainControllerUI {
         throttleSlider.setMinorTickSpacing(1);
         throttleSlider.setPaintLabels(true);
         throttleSlider.setPaintTicks(true);
-        throttleSlider.setValue(15);
+        throttleSlider.setValue(10);
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -425,6 +435,7 @@ public class TrainControllerUI {
 
         deactivateServiceBrakeButton = new JButton();
         deactivateServiceBrakeButton.setText("Deactivate Service Brake");
+        deactivateServiceBrakeButton.setEnabled(false);
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;

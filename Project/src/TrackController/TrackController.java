@@ -140,7 +140,7 @@ public class TrackController
 	
 	public void loadFile()
 	{
-		TrackControllerUI tcui = new TrackControllerUI(this);
+		loadFile(TrackControllerUI.loadFile());
 	}
 	
 	public void loadFile(File PLCFile)

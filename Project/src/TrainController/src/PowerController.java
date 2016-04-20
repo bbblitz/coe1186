@@ -13,8 +13,8 @@ public class PowerController {
 	
 	public PowerController(double trainMass) {
 		//this.Kp = trainMass / 10.0;
-		this.Kp = 30000.0;
-		this.Ki = 500.0;
+		this.Kp = 100000.0;
+		this.Ki = 100.0;
 		
 		this.ep = 0;
 		this.ep_prev = 0;
