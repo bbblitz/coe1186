@@ -36,16 +36,16 @@ public class LineController
 		{			
 			File config = new File("LineControllerConfig.txt");
 			Scanner configReader = new Scanner(config);
-			Scanner lineConfig = new Scanner(new File(configReader.nextLine()));
+			/*Scanner lineConfig = new Scanner(new File(configReader.nextLine()));
 			configReader.close();
-			int fileCount = lineConfig.nextInt();
-			File controllerFiles[] = new File[fileCount];
-			lineConfig.nextLine();
+			int fileCount = lineConfig.nextInt();*/
+			File controllerFiles[] = LineControllerUI.loadFiles(new File(configReader.nextLine()));
+			/*lineConfig.nextLine();
 			for(int i=0;i<fileCount;i++)
 			{
 				controllerFiles[i] = new File(lineConfig.nextLine());
-			}
-			TrackController[] controllers = new TrackController[fileCount];
+			}*/
+			TrackController[] controllers = new TrackController[controllerFiles.length];
 			int index=0;
 			for(File current : controllerFiles)
 			{
@@ -250,8 +250,8 @@ public class LineController
 	{
 		Scanner keyboard = new Scanner(System.in);
 		//System.out.print("Enter the config file: ");
-		LineController LC = new LineController();
-		LC.loadConfigFile();
+		LineController LC = new LineController(new TrackModel());
+		//LC.loadConfigFile();
 		/*TrackController[] LCControllers = new TrackController[controllerCount];
 		for(int i=0;i<LCControllers.length;i++)
 		{
