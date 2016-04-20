@@ -1,10 +1,18 @@
 public class TrackModel
 {
-	private LineController controller;
+	int blockCount;
+	TestTrackModelUI ttmui;
 	
-	public TrackModel(LineController controller)
+	
+	public TrackModel()
 	{
-		this.controller = controller;
+		ttmui = new TestTrackModelUI(blockCount);
+	}
+	
+	public TrackModel(int blockCount)
+	{
+		ttmui = new TestTrackModelUI(blockCount);
+		this.blockCount = blockCount;
 	}
 	
 	public void relayAuthority(int authority, int blockID)
@@ -14,12 +22,16 @@ public class TrackModel
 	
 	public boolean[] getBlockOccupancies()
 	{
-		boolean[] out = new boolean[14];
-		for(int i=0;i<14;i++)
+		return ttmui.occupancy;
+	}
+	
+	public void recieveSwitchStates(boolean[] switches)
+	{
+		System.out.println("Track Model Recieved Switches");
+		for(int i=0;i<switches.length;i++)
 		{
-			out[i] = Math.random()>=0.7;
+			System.out.println("Switch "+i+" is "+(switches[i]?"flipped ":"not flipped"));
 		}
-		return out;
 	}
 	
 	public void relaySpeed(int speed, int blockID)
@@ -29,18 +41,23 @@ public class TrackModel
 	
 	public TrackFailState[] getFailStates()
 	{
-		TrackFailState[] tfs = new TrackFailState[controller.getBlockCount()];
-		int fail1 = (int)Math.random()*controller.getBlockCount();
-		int fail2 = (int)Math.random()*controller.getBlockCount();
-		int fail3 = (int)Math.random()*controller.getBlockCount();
+		TrackFailState[] tfs = new TrackFailState[blockCount];
+		/*int fail1 = (int)(Math.random()*(blockCount-1));
+		int fail2 = (int)(Math.random()*(blockCount-1));
+		int fail3 = (int)(Math.random()*(blockCount-1));
 		tfs[fail1] = TrackFailState.FS_TRACK_CIRCUIT_FAILURE;
 		tfs[fail2] = TrackFailState.FS_BROKEN_RAIL;
-		tfs[fail3] = TrackFailState.FS_POWER_FAILURE;
+		tfs[fail3] = TrackFailState.FS_POWER_FAILURE;*/
 		return tfs;		
 	} 
 	
+	public void createTrain(int line)
+	{
+		System.out.println("Created Train on Line "+line);
+	}
+	
 	public static void main(String[] args)
 	{
-		
+		TrackModel tm = new TrackModel(100);
 	}
 }

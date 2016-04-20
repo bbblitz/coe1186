@@ -13,7 +13,9 @@ public class LineController
 	
 	public LineController()
 	{
-		this.model = new TrackModel();
+		loadConfigFile();
+		this.model = new TrackModel(getBlockCount());
+		closed = new boolean[getBlockCount()];
 	}
 	
 	public LineController(TrackModel model)
@@ -94,9 +96,9 @@ public class LineController
 		for(int i=0;i<controllers.length;i++)
 		{
 			boolean[] trackSwitches = controllers[i].getSwitchStates();
-			for(int j=0;i<lineSwitches.length;j++)
+			for(int j=0;j<trackSwitches.length;j++)
 			{
-				lineSwitches[convetToLineSwitch(i,j)] = trackSwitches[i];
+				lineSwitches[convertToLineSwitch(i,j)] = trackSwitches[j];
 			}
 		}
 		return lineSwitches;
@@ -202,7 +204,7 @@ public class LineController
 		}
 		return out;
 	}
-	public int convetToLineSwitch(int controllerID, int switchID)
+	public int convertToLineSwitch(int controllerID, int switchID)
 	{
 		return controllers[controllerID].switchConversion[switchID];
 	}
@@ -232,7 +234,8 @@ public class LineController
 			inputs[i] |= (tfs[i] != TrackFailState.FS_NORMAL);	//treats failstates and closed blocks as occupied blocks
 			inputs[i] |= closed[i];
 		}
-		updateInputs(inputs);
+		boolean safe = updateInputs(inputs);
+		model.recieveSwitchStates(getSwitchStates());
 		for(int i=0;i<controllers.length;i++)
 		{
 			boolean[] currentOutputs = controllers[i].getOutputs();
@@ -250,16 +253,10 @@ public class LineController
 	{
 		Scanner keyboard = new Scanner(System.in);
 		//System.out.print("Enter the config file: ");
-		LineController LC = new LineController(new TrackModel());
-		//LC.loadConfigFile();
-		/*TrackController[] LCControllers = new TrackController[controllerCount];
-		for(int i=0;i<LCControllers.length;i++)
+		LineController LC = new LineController();
+		while(true)
 		{
-			System.out.println("Creating TrackController "+i);
-			LCControllers[i] = new TrackController();
-		}*/
-		TrackModel model = new TrackModel();
-		model.blockCount = LC.getBlockCount();
-		LC.tick(0);
+			LC.tick(0);
+		}
 	}
 }

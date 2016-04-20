@@ -59,12 +59,20 @@ public class LineControllerUI implements ActionListener
 		int fileCount = configReader.nextInt();
 		configReader.nextLine();
 		
+
+		
 		controllerFiles = new File[fileCount];
 		allrows = new JPanel();
-		allrows.setLayout(new BoxLayout(allrows,BoxLayout.Y_AXIS));
+		allrows.setLayout(new BoxLayout(allrows, BoxLayout.Y_AXIS));
 		controllerLabels = new JLabel[fileCount];
 		fileText = new JTextArea[fileCount];
 		loadButton = new JButton[fileCount];
+		
+		JPanel header = new JPanel();
+		header.add(new JLabel("Files Loaded From Config File: "+configFile.toString()));
+		
+		allrows.add(header);
+		
 		for(int i=0;i<fileCount;i++)
 		{
 			JPanel l = new JPanel();
@@ -82,7 +90,8 @@ public class LineControllerUI implements ActionListener
 		loadAll = new JButton("Load All PLC Files");
 		loadAll.addActionListener(this);
 		allrows.add(loadAll);
-		window = new JFrame();
+		
+		window = new JFrame("Load Files for Track Controller");
 		window.add(allrows);
 		window.pack();
 		window.setVisible(true);
