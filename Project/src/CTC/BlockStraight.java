@@ -59,7 +59,12 @@ public class BlockStraight extends BlockInterface{
   }
 
   public void drawBlock(Graphics g){
-    //System.out.println("In BlockStraight's drawBlock()");
+    drawBlock(g,Color.BLACK);
+  }
+
+  public void drawBlock(Graphics g, Color coloroffset){
+    System.out.println("In BlockStraight's drawBlock()");
+    System.out.println(toString());
     //Figure out what colors to draw in {}
     int drawnnum = 0;
     boolean drawgray = false, drawred = false, drawyellow = false;
@@ -90,15 +95,29 @@ public class BlockStraight extends BlockInterface{
     if(!drawred && !drawgray && !drawyellow){
       allcol[count++] = Color.GREEN;
     }
+    //Offset colors
+    for(int i = 0; i < allcol.length; i++){
+      System.out.println("Before addColors, allcol was");
+      System.out.println(allcol[i]);
+      allcol[i] = addColors(allcol[i],coloroffset);
+      System.out.println("After, allcol is:");
+      System.out.println(allcol[i]);
+    }
     //Actually draw the thing
     drawBySegments(allcol, g);
-
 
     ArrayList<Infrastructure> allinfra = this.getInfrastructure();
     if(allinfra == null) return;
     for(Infrastructure f : allinfra){
 
     }
+  }
+
+  public Color addColors(Color c1, Color c2){
+    int r = Math.min(c1.getRed()+c2.getRed(),255);
+    int g = Math.min(c1.getGreen()+c2.getGreen(),255);
+    int b = Math.min(c1.getBlue()+c2.getBlue(),255);
+    return new Color(r,g,b);
   }
 
   public void drawBySegments(Color[] colors, Graphics g){
@@ -151,6 +170,8 @@ public class BlockStraight extends BlockInterface{
     for(; Math.abs(gx - (exoff+x)) > 1 || Math.abs(gy - (eyoff+y)) > 1; gx+= xadd, gy += yadd, col++){
       //System.out.println("Setting color and drawing segment...");
       g.setColor(colors[col%colors.length]);
+      System.out.println("Setting color to...");
+      System.out.println(colors[col%colors.length]);
       int grx = (int)gx;
       int gry = (int)gy;
       int egrx = (int)(gx+xadd);

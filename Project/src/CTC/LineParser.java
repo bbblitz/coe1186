@@ -81,7 +81,10 @@ public class LineParser{
   public void resolveblocks(){
     if(c.DEBUG_PARSER)
       System.out.println("\t---Starting block resolution---");
-    for(int i = 0; curline.blocks.get(i) != null; i++){
+    for(int i = 0; i < curline.blocks.size(); i++){
+      if(curline.blocks.get(i) == null){
+        continue;
+      }
       if(curline == null){
         System.out.println("\tCurrent line does not exist!");
         System.exit(1);
@@ -99,8 +102,13 @@ public class LineParser{
         }
       }
     }
-    for(int i = 0; curline.blocks.get(i) != null; i++){
+    for(int i = 0; i < curline.blocks.size(); i++){
+      if(curline.blocks.get(i) == null){
+        continue;
+      }
       BlockInterface block = curline.blocks.get(i);
+      System.out.println("Resolveing block:");
+      System.out.println(curline.blocks.get(i).toString());
       if(block instanceof BlockStraight){
         BlockStraight blockstr = (BlockStraight)block;
         if(curline.blocks.get(heads.get(i)) == null){
@@ -156,6 +164,7 @@ public class LineParser{
         }
       }else if(block instanceof BlockSwitch){
         BlockSwitch blockswi = (BlockSwitch)block;
+        System.out.println("Found switch block to resolve");
         if(curline.blocks.get(heads.get(i)) == null){
           System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
@@ -176,8 +185,34 @@ public class LineParser{
         }else{
           blockswi.divergent = curline.blocks.get(divergents.get(i));
         }
+
+        System.out.println("Finished connecting up switch block, block is:");
+        System.out.println(blockswi.toString());
       }
     }
+
+    //Remove the blocks from the track that belong to a switch
+    boolean foundone = true;
+    while(foundone){
+      foundone = false;
+      for(int i = 0; i < curline.blocks.size();){
+        System.out.println("Before iterateing " + i);
+        if(curline.blocks.get(i) == null){
+          i++;
+          continue;
+        }
+        if(curline.blocks.get(i) instanceof BlockSwitch){
+          BlockSwitch bs = (BlockSwitch)curline.blocks.get(i);
+          if(curline.blocks.remove(bs.head)) foundone = true;
+          if(curline.blocks.remove(bs.tail)) foundone = true;
+          if(curline.blocks.remove(bs.divergent)) foundone = true;
+          i++;
+        }else{
+          i++;
+        }
+      }
+    }
+
     //Remove all null blocks
     for(int i = 0; i < curline.blocks.size();){
       if(curline.blocks.get(i) == null){
@@ -281,27 +316,32 @@ public class LineParser{
       if(c.DEBUG_PARSER)
         System.out.println("Detected switch block");
       String[] vs = blockstring.split(",");
-      int x = Integer.parseInt(vs[0]);
-      int y = Integer.parseInt(vs[1]);
-      int direction = Integer.parseInt(vs[2]);
-      int length = Integer.parseInt(vs[3]);
-      int headid = Integer.parseInt(vs[4]);
-      int tailid = Integer.parseInt(vs[5]);
-      int divergentid = Integer.parseInt(vs[6]);
-      BlockPart headto = parsePart(vs[7]);
-      BlockPart tailto = parsePart(vs[8]);
-      BlockPart divto = parsePart(vs[9]);
-      int blockid = Integer.parseInt(vs[10]);
+      for(int i = 0; i < vs.length; i++){
+        vs[i] = vs[i].trim();
+      }
+      int x = Integer.parseInt(vs[1]);
+      int y = Integer.parseInt(vs[2]);
+      int direction = Integer.parseInt(vs[3]);
+      int length = Integer.parseInt(vs[4]);
+      int headid = Integer.parseInt(vs[5]);
+      int tailid = Integer.parseInt(vs[6]);
+      int divergentid = Integer.parseInt(vs[7]);
+      BlockPart headto = parsePart(vs[8]);
+      BlockPart tailto = parsePart(vs[9]);
+      BlockPart divto = parsePart(vs[10]);
+      int blockid = Integer.parseInt(vs[11]);
 
       BlockSwitch newblock = new BlockSwitch(x,y,direction,length);
       newblock.headto = headto;
       newblock.tailto = tailto;
       newblock.divergentto = divto;
-      curline.blocks.add(newblock);
+      curline.blocks.add(blockid, newblock);
       heads.add(blockid, headid);
       tails.add(blockid, tailid);
       divergents.add(blockid, divergentid);
       newblock.setID(blockid);
+      System.out.println("Parsed switch block:");
+      System.out.println(newblock.toString());
     }else if(blockstring.substring(0,3).equals("sta")){
       if(c.DEBUG_PARSER)
         System.out.println("Detected station block");
