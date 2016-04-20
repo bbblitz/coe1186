@@ -41,8 +41,8 @@ public class LineController{
       l.add(failstate[bi.getID()]);
       //JLabel l = new JLabel(bi.toString());
       allrows.add(l);
-      System.out.println("LC block:");
-      System.out.println(bi.toString());
+      //System.out.println("LC block:");
+      //System.out.println(bi.toString());
     }
     log = new JTextArea();
     log.append("Message log started\n");

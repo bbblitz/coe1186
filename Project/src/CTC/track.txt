@@ -1,7 +1,9 @@
 #this is a comment!
+#Comments must be on their own line with no white space in front
 /*
 This is a
 Multi-line comment
+The /* and */ must be on their own line, with no white space in front
 */
 
 /*
@@ -17,8 +19,9 @@ Track formats:
       cur 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2, 0
 
   Switch track:
-    TODO - Look at the documentation in LineParser.java,
-    It's implemented, just needs an example here.
+    x, y, direction, length, head, tail, divergent, headto, tailto, divergentto, blockid
+  ex.
+    swi 20, 20, 90, 1, 2, 3, TAIL, HEAD, TAIL, 0
 
   Station track:
     str x, y, 0, 100, 3, 7, TAIL, TAIL, 0, 0, "station_name"
@@ -80,7 +83,7 @@ str, 570, 108, 180, 200, 18, 16, TAIL, HEAD, 17, 1
 str, 520, 108, 180, 400, 19, 17, TAIL, HEAD, 18, 1
 str, 420, 108, 180, 400, 20, 18, TAIL, HEAD, 19, 1
 str, 320, 108, 180, 200, 21, 19, TAIL, HEAD, 20, 1
-str, 270, 108, 135, 100, 22, 20, TAIL, HEAD, 21, 1, "Swissville"
+sta, 270, 108, 135, 100, 22, 20, TAIL, HEAD, 21, 1, "Swissville"
 str, 253, 125, 135, 100, 23, 21, TAIL, HEAD, 22, 1
 str, 236, 142, 135, 100, 24, 22, TAIL, HEAD, 23, 1
 str, 218, 159, 90, 50, 25, 23, TAIL, HEAD, 24, 1
@@ -107,7 +110,7 @@ str, 218, 360, 90, 50, 45, 67, TAIL, HEAD, 44, 1
 sta, 218, 370, 90, 50, 46, 44, TAIL, HEAD, 45, 1, "First Ave"
 str, 218, 383, 135, 75, 47, 45, TAIL, HEAD, 46, 1
 str, 205, 396, 135, 75, 48, 46, TAIL, HEAD, 47, 1
-str, 193, 408, 135, 75, 49, 47, TAIL, HEAD, 48, 1, "Station Square"
+sta, 193, 408, 135, 75, 49, 47, TAIL, HEAD, 48, 1, "Station Square"
 str, 180, 420, 180, 50, 50, 48, TAIL, HEAD, 49, 1
 str, 170, 420, 180, 50, 51, 49, TAIL, HEAD, 50, 1
 str, 160, 420, 180, 50, 52, 50, TAIL, HEAD, 51, 1
@@ -137,6 +140,7 @@ str, 200, 100, -90, 50, 75, 73, TAIL, HEAD, 74, 1
 str, 200, 100, -90, 50, 76, 74, TAIL, HEAD, 75, 1
 str, 200, 100, -45, 50, 27, 75, TAIL, HEAD, 76, 1
 LINE END
+
 
 
 

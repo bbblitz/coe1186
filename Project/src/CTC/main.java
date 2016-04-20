@@ -14,7 +14,7 @@ public class main{
     ctc = new CTCWindow(lc);
 
     java.util.Timer timer = new java.util.Timer();
-    timer.scheduleAtFixedRate(new Ticker(), 0, 1000);
+    //timer.scheduleAtFixedRate(new Ticker(), 0, 1000);
   }
 
   public static LineController makeDummyTrackController(){

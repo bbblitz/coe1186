@@ -1,9 +1,31 @@
+/*
+Track formats:
+  Straight track
+    str, x, y, rotation, length, head, tail, headto, tailto, id, trackcontroler_id
+    ex.
+      str 5, 10, 0, 100, 3, 7, TAIL, TAIL, 0, 0
+
+  Curved track
+    cur, x, y, start_angle, angle_length, radius, block_clockwise, block_counterclockwise, block_clockwise_to, block_counterclockwise_to, block_id, trackcontroller_id
+    ex.
+      cur 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2, 0
+
+  Switch track:
+    x, y, direction, length, head, tail, divergent, headto, tailto, divergentto, blockid
+  ex.
+    swi 20, 20, 90, 1, 2, 3, TAIL, HEAD, TAIL, 0
+
+  Station track:
+    str x, y, 0, 100, 3, 7, TAIL, TAIL, 0, 0, "station_name"
+
+*/
+
 LINE TEST
-sta, 100, 100, 0, 100, 1, 1, TAIL, HEAD, 1, 1, "Kingdom Come"
-sta, 100, 100, 15, 100, 1, 1, TAIL, HEAD, 1, 1, "Kingdom Come"
-sta, 100, 100, 30, 100, 1, 1, TAIL, HEAD, 1, 1, "Kingdom Come"
-sta, 100, 100, 45, 100, 1, 1, TAIL, HEAD, 1, 1, "Kingdom Come"
-sta, 100, 100, 60, 100, 1, 1, TAIL, HEAD, 1, 1, "Kingdom Come"
-sta, 100, 100, 75, 100, 1, 1, TAIL, HEAD, 1, 1, "Kingdom Come"
-sta, 100, 100, 90, 100, 1, 1, TAIL, HEAD, 1, 1, "Kingdom Come"
+str, 100, 100, 0, 100, 1, 1, TAIL, HEAD, 0, 1
+str, 300, 100, 15, 100, 1, 1, TAIL, HEAD, 1, 1
+swi, 500, 100, 30, 100, 3, 4, 5, HEAD, TAIL, HEAD, 2, 1
+str, 700, 100, 45, 100, 1, 1, TAIL, HEAD, 3, 1
+str, 100, 300, 60, 100, 1, 1, TAIL, HEAD, 4, 1
+str, 300, 300, 75, 100, 1, 1, TAIL, HEAD, 5, 1
+str, 500, 300, 90, 100, 1, 1, TAIL, HEAD, 6, 1
 LINE END

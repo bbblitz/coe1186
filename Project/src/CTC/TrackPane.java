@@ -85,10 +85,20 @@ public class TrackPane extends JPanel implements MouseListener {
     //System.out.println(dl.toString());
     for(BlockInterface dti : dl.blocks){
       //System.out.println("Drawing:" + dti.toString());
-      drawSegment(g,dti);
+      //drawSegment(g,dti);
+      boolean draw = false;
+      for(Train t : c.pinkLineTrains){
+        if(t.getCurrentBlock() == dti){
+          dti.drawTrainOn(g,true);
+          draw = true;
+        }
+      }
+      if(!draw){
+        dti.drawBlock(g);
+      }
     }
   }
-
+  /*
   public void drawSegment(Graphics g, BlockInterface dti){
     //System.out.println("Drawing segment:" + (dti!=null?dti.toString():"Null dti"));
     if(dti == null) return;
@@ -108,7 +118,7 @@ public class TrackPane extends JPanel implements MouseListener {
       }
     }
     if(!hasdrawn){
-      //System.out.println("Drawing track without train");
+      System.out.println("Drawing track without train");
       track.drawBlock(g);
     }
     //track.drawTrainOn(g, true);
@@ -182,7 +192,7 @@ public class TrackPane extends JPanel implements MouseListener {
     for(int i = 0; i < 3; i++){
       g.drawLine(starts[i][0],starts[i][1],ends[i][0],ends[i][1]);
     }
-    */
+
   }
 
   public void drawCurvedTrack(Graphics g, BlockCurved dti){
@@ -209,14 +219,20 @@ public class TrackPane extends JPanel implements MouseListener {
     }
     else if(dti instanceof BlockStraight){
       //System.out.println("Found straight track");
-      //System.out.println("Drawing block straight");
+      System.out.println("Drawing block straight");
       drawStraightTrack(g,(BlockStraight)dti,c);
     }
     else if(dti instanceof BlockSwitch){
-
-
+      System.out.println("--------------Found a switch block--------------");
+      System.out.println(dti.toString());
       BlockSwitch ds = (BlockSwitch)dti;
       Color cn = c.darker();
+      System.out.println("Color for the switch block is:");
+      System.out.println(c);
+      ds.head.drawBlock(g);
+      ds.tail.drawBlock(g);
+      ds.divergent.drawBlock(g);
+      /*
       if(ds.flipped){
         drawSegment(g,ds.head,c);
         drawSegment(g,ds.divergent,cn);
@@ -225,12 +241,19 @@ public class TrackPane extends JPanel implements MouseListener {
         drawSegment(g,ds.divergent,c);
       }
       drawSegment(g,ds.tail,c);
+
+      System.out.println("-------------Finished drawing switch block----------");
     }
     else if(dti instanceof BlockStation){
       drawStationTrack(g,(BlockStation)dti,c);
     }
     else{
       System.out.println("Did not understand kind of track!");
+      if(dti == null){
+        System.out.println("dti was null!");
+      }else{
+        System.out.println("Type was:" + dti.toString());
+      }
     }
   }
 
@@ -254,4 +277,5 @@ public class TrackPane extends JPanel implements MouseListener {
         return Color.blue;
     }
   }
+  */
 }

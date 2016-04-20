@@ -67,7 +67,7 @@ public class BlockStation extends BlockInterface{
     float rlength = (int)(this.length*super.TRACK_SCALE);
     int starts[][] = new int[3][2];
     int ends[][] = new int[3][2];
-    int xvar  = (int)(Math.sin(Math.toRadians(bs.direction))*4);
+    int xvar  = -(int)(Math.sin(Math.toRadians(bs.direction))*4);
     int yvar = (int)(Math.cos(Math.toRadians(bs.direction))*4);
     starts[0][0] = bs.x + xvar;
     starts[1][0] = bs.x;
