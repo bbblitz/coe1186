@@ -1,0 +1,8 @@
+ShadySide, 222000
+Herron Ave, 138000
+Swissville, 90000
+Penn Station, 108000
+Steel Plaza, 126000
+First Ave, 126000
+Station Square, 102000
+South Hills Junction, 138000

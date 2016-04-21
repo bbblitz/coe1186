@@ -17,6 +17,7 @@ public abstract class BlockInterface{
   private Line line;
   private double length;
 	private boolean isoccupied;
+	public boolean ispartofswitch = false;
 	public static final double TRACK_SCALE = 0.25;
 
   /**

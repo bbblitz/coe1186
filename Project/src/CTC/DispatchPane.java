@@ -12,7 +12,7 @@ public class DispatchPane extends JPanel implements ActionListener{
   JComboBox blocklist;
   public DispatchPane(Config c) {
     config = c;
-    for(Train t : config.pinkLineTrains){
+    for(Train t : config.alltrains){
       trains.add(t.getID());
     }
 
@@ -75,14 +75,28 @@ public class DispatchPane extends JPanel implements ActionListener{
 
   public void actionPerformed(ActionEvent e){
     if(e.getSource() == dispatchbutton){
-      int blockid = (Integer)blocklist.getSelectedItem();
-      int trainid = (Integer)trainlist.getSelectedItem();
-      int authority = calculateAuthority(trainid, blockid);
-      Train train = config.pinkLineTrains.get(trainid);
-      train.dispatched = true;
-      int currentblock = train.getCurrentBlock().getID();
-      config.lineController.relayAuthority(authority,currentblock);
-      config.lineController.relaySpeed(10, currentblock);
+      if(trainlist.getSelectedItem() instanceof String){
+        System.out.println("Item:");
+        System.out.println(blocklist.getSelectedItem());
+        int blockid = (Integer)blocklist.getSelectedItem();
+        int line = blockid>78?1:0;
+        config.lineController.createTrain(blockid>78?1:0);
+        if(line == 0){
+          Train newtrain = new Train(config,config.trainid++,config.aldl.get(0).blocks.get(0),null);
+          config.alltrains.add(newtrain);
+          trainlist.addItem(newtrain.getID());
+          ((SchedulePane)config.schedulepane).trainnum.addItem(newtrain.getID());
+        }
+      }else{
+        int blockid = (Integer)blocklist.getSelectedItem();
+        int trainid = (Integer)trainlist.getSelectedItem();
+        int authority = calculateAuthority(trainid, blockid);
+        Train train = config.pinkLineTrains.get(trainid);
+        train.dispatched = true;
+        int currentblock = train.getCurrentBlock().getID();
+        config.lineController.relayAuthority(authority,currentblock);
+        config.lineController.relaySpeed(10, currentblock);
+      }
     }
   }
 

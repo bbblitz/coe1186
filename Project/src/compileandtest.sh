@@ -21,7 +21,7 @@ javac -sourcepath ./build main.java -d ./bin
 cp CTC/track.txt .
 
 # Run the program
-java -classpath ./bin main
+java -classpath ./bin main 1
 
 # Ask if the user wants to compile a javadoc, and do it if they do
 read  -p "Do you want to compile the javadoc?(Y/N):" GEN_JAVADOC

@@ -1,8 +1,9 @@
 
 
 public class BlockStation extends BlockInterface{
-  public BlockInterface head;
-  public BlockInterface tail;
+  public int head;
+  public int tail;
+  public String BlockType;
   
   public String stationName;
 
@@ -14,7 +15,7 @@ public class BlockStation extends BlockInterface{
   /**
    *@override
    */
-  public BlockInterface goesto(BlockInterface from){
+  /*public BlockInterface goesto(BlockInterface from){
     //System.out.println("Calling goesto on station block" + this.toString());
     if(from == head){
       //System.out.println("Returning " + tail.toString());
@@ -24,17 +25,38 @@ public class BlockStation extends BlockInterface{
       return head;
     }
   }
+*/
+  public String getBlockType(){
+	    return this.BlockType;
+	  }
 
-  public BlockInterface getHead() {
-	  return this.head;
+	  public void setBlockType(String BlockType){
+	    this.BlockType = BlockType;
+	  }
+	
+	  public int getHead(){
+		    return this.head;
+		  }
+	  
+	  public int getTail(){
+		    return this.tail;
+		  }
+	  
+	  public int setHead(int head) {
+		  this.head = head;
+		  return head;
+	  }
+
+	  public int setTail(int tail) {
+		  this.tail = tail;
+		  return tail;
+	  }
+  
+  public String setStationName(String stationName) {
+	  this.stationName = stationName;
+	  return stationName;
   }
 
-  public BlockInterface getTail() {
-	  return this.tail;
-  }
 
-  public String getStationName() {
-	  return this.stationName;
-  }
 
 }
