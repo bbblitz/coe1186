@@ -216,7 +216,7 @@ public class TrainModel{
 		return signalFailure;
 	}
 	
-	public void receiveBeacon(BitSet beacon){
+	public void receiveBeacon(Beacon beacon){
 		this.trainController.receiveBeacon(beacon);
 	}
 	
