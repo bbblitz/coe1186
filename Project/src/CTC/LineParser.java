@@ -115,10 +115,10 @@ public class LineParser{
         continue;
       }
       BlockInterface block = curline.blocks.get(i);
-      System.out.println("Resolveing block:");
-      System.out.println(curline.blocks.get(i).toString());
+      //System.out.println("Resolveing block:");
+      //System.out.println(curline.blocks.get(i).toString());
       if(block instanceof BlockStraight){
-        System.out.println("Found block straight!");
+        //System.out.println("Found block straight!");
         BlockStraight blockstr = (BlockStraight)block;
         if(curline.blocks.get(heads.get(i)) == null){
           System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
@@ -173,7 +173,7 @@ public class LineParser{
         }
       }else if(block instanceof BlockSwitch){
         BlockSwitch blockswi = (BlockSwitch)block;
-        System.out.println("Found switch block to resolve");
+        //System.out.println("Found switch block to resolve");
         if(curline.blocks.get(heads.get(i)) == null){
           System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
           return;
@@ -195,8 +195,8 @@ public class LineParser{
           blockswi.divergent = curline.blocks.get(divergents.get(i));
         }
 
-        System.out.println("Finished connecting up switch block, block is:");
-        System.out.println(blockswi.toString());
+        //System.out.println("Finished connecting up switch block, block is:");
+        //System.out.println(blockswi.toString());
       }else if(block instanceof BlockYard){
         BlockYard blockyrd = (BlockYard)block;
         if(curline.blocks.get(heads.get(i)) == null){
@@ -205,12 +205,12 @@ public class LineParser{
           blockyrd.head = curline.blocks.get(heads.get(i));
         }
       }
-      System.out.println("Test1234");
+      //System.out.println("Test1234");
     }
 
     //Remove the blocks from the track that belong to a switch
     boolean foundone = true;
-    System.out.println("About to go into switch removal loop");
+    //System.out.println("About to go into switch removal loop");
     for(int i = 0; i < curline.blocks.size();i++){
       if(curline.blocks.get(i) == null){
         continue;
@@ -356,8 +356,8 @@ public class LineParser{
       tails.add(blockid, tailid);
       divergents.add(blockid, divergentid);
       newblock.setID(blockid);
-      System.out.println("Parsed switch block:");
-      System.out.println(newblock.toString());
+      //System.out.println("Parsed switch block:");
+      //System.out.println(newblock.toString());
     }else if(blockstring.substring(0,3).equals("sta")){
       if(c.DEBUG_PARSER)
         System.out.println("Detected station block");
@@ -382,8 +382,8 @@ public class LineParser{
       newblock.setID(blockid);
       newblock.stationName = stationname;
       curline.blocks.add(blockid, newblock);
-      System.out.println("New station:");
-      System.out.println(newblock.toString());
+      //System.out.println("New station:");
+      //System.out.println(newblock.toString());
     }else if(blockstring.substring(0,3).equals("yrd")){
       String[] vs = blockstring.split(",");
       for(int i = 0; i < vs.length; i++){
