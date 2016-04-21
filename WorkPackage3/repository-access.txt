@@ -1,0 +1,1 @@
+Our project repository is hosted on GitHub, and available for cloning with the url https://github.com/bbblitz/coe1186.git or viewable online at https://github.com/bbblitz/coe1186
