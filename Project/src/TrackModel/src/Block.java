@@ -1,9 +1,9 @@
 
 
 public class Block extends BlockInterface{
-  public BlockInterface head;
-  public BlockInterface tail;
-  
+  public int head;
+  public int tail;
+  public String BlockType;
 
   //How long the track is
   public int length;
@@ -13,7 +13,7 @@ public class Block extends BlockInterface{
   /**
    *@override
    */
-  public BlockInterface goesto(BlockInterface from){
+  /*public BlockInterface goesto(BlockInterface from){
     //System.out.println("Calling goesto on station block" + this.toString());
     if(from == head){
       //System.out.println("Returning " + tail.toString());
@@ -23,13 +23,27 @@ public class Block extends BlockInterface{
       return head;
     }
   }
-
-  public BlockInterface getHead() {
-	  return this.head;
+*/
+  
+  
+	
+	  
+  public int getHead(){
+	    return this.head;
+	  }
+  
+  public int getTail(){
+	    return this.tail;
+	  }
+  
+  public int setHead(int head) {
+	  this.head = head;
+	  return head;
   }
 
-  public BlockInterface getTail() {
-	  return this.tail;
+  public int setTail(int tail) {
+	  this.tail = tail;
+	  return tail;
   }
 
 }
