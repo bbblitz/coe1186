@@ -10,6 +10,7 @@ public class TrackControllerWindow implements ActionListener
 	public JLabel[] failLabel;
 	public JLabel[] occupancyLabel;
 	public JLabel[] lightLabel;
+	public JLabel[] switchLabel;
 	public JToggleButton[] switchButton;
 	public boolean[] suggestedSwitch;
 	
@@ -28,6 +29,7 @@ public class TrackControllerWindow implements ActionListener
 		JPanel allRows = new JPanel();
 		allRows.setLayout(new BoxLayout(allRows, BoxLayout.Y_AXIS));
 		
+		switchLabel = new JLabel[switchCount];
 		blockLabel = new JLabel[blockCount];
 		failLabel = new JLabel[blockCount];
 		lightLabel = new JLabel[blockCount];
@@ -54,16 +56,35 @@ public class TrackControllerWindow implements ActionListener
 			JPanel subPanel = new JPanel();
 			switchButton[i] = new JToggleButton("Switch "+i);
 			switchButton[i].addActionListener(this);
+			switchLabel[i] = new JLabel("Switch "+i+" straight");
+			subPanel.add(switchLabel[i]);
 			subPanel.add(switchButton[i]);
 			allRows.add(subPanel);
 		}
 		
-		window = new JFrame("Track Model Test");
+		window = new JFrame("Track Controller");
 		JScrollPane scroller = new JScrollPane(allRows);
 		window.add(scroller);
 		window.pack();
 		window.setSize(400, 600);
 		window.setVisible(true);
+	}
+	
+	public void updateSwitches(boolean[] switches)
+	{		
+		for(int i=0;i<switches.length;i++)
+		{
+			if(switches[i])
+			{
+				switchLabel[i].setText("Switch "+i+" divergent");
+				switchLabel[i].setForeground(Color.red);
+			}
+			else
+			{
+				switchLabel[i].setText("Switch "+i+" straight");
+				switchLabel[i].setForeground(Color.green);				
+			}
+		}
 	}
 	
 	public void updateFailStates(TrackFailState[] failStates)
@@ -78,8 +99,17 @@ public class TrackControllerWindow implements ActionListener
 	{
 		for(int i=0;i<lights.length;i++)
 		{
-			if(lights[i]) lightLabel[i].setText("Lights: On");
-			else lightLabel[i].setText("Lights: Off");
+			if(lights[i]) 
+			{
+				lightLabel[i].setText("Lights: On");
+				lightLabel[i].setForeground(Color.red);
+			}
+			else
+			{
+				 lightLabel[i].setText("Lights: Off");
+				lightLabel[i].setForeground(Color.black);
+				 
+			}
 		}
 	}
 
@@ -100,7 +130,8 @@ public class TrackControllerWindow implements ActionListener
 			if(action.getSource() == switchButton[i])
 			{
 				//System.out.println("button pressed");
-				suggestedSwitch[i] = ! suggestedSwitch[i]; 
+				suggestedSwitch[i] = ! suggestedSwitch[i];
+				updateSwitches(suggestedSwitch);
 				//System.out.println("Block "+i+" set to "+occupancy[i]);
 			}
 		}

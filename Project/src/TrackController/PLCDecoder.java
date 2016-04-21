@@ -129,9 +129,13 @@ public class PLCDecoder
 			System.err.println("File not found");
 		}
 		int inputCount = PLCReader.nextInt();
+		PLCReader.nextLine();
 		int outputCount = PLCReader.nextInt();
+		PLCReader.nextLine();
 		int switchCount = PLCReader.nextInt();
+		PLCReader.nextLine();
 		int crossingCount = PLCReader.nextInt();
+		PLCReader.nextLine();
 		boolean[] inputs = new boolean[inputCount];
 		boolean[] outputs = new boolean[outputCount+switchCount+crossingCount];
 		
