@@ -28,6 +28,7 @@ public class TrainControllerUI {
     private JLabel calculatedPowerLabel;
     private JLabel temperatureLabel;
     private JLabel nextStationLabel;
+    private JButton simulateBeaconButton;
     private JLabel engineFailureLabel;
     private JLabel brakeFailureLabel;
     private JLabel signalPickupFailureLabel;
@@ -137,6 +138,16 @@ public class TrainControllerUI {
                 TrainControllerUI.this.trainController.setLightsOn(on);
             }
         });
+
+        // hopefully this is temporary...
+        simulateBeaconButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BeaconSimulatorDialog beaconSimulatorDialog = new BeaconSimulatorDialog();
+                Beacon simulatedBeacon = beaconSimulatorDialog.showDialog();
+                trainController.receiveBeacon(simulatedBeacon);
+            }
+        });;
 
     }
 
@@ -510,12 +521,22 @@ public class TrainControllerUI {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel5.add(spacer11, gbc);
         nextStationLabel = new JLabel();
-        nextStationLabel.setText("Steel Plaza");
+        nextStationLabel.setText("{{nextStation}}");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         panel5.add(nextStationLabel, gbc);
+
+        simulateBeaconButton = new JButton();
+        simulateBeaconButton.setText("Simulate Beacon");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel5.add(simulateBeaconButton, gbc);
+
         final JPanel panel6 = new JPanel();
         panel6.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         gbc = new GridBagConstraints();

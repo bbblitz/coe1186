@@ -6,42 +6,84 @@ public class TrainController {
 	private PowerController powerController;
     private PowerController powerController2;
 	private TrainControllerUI ui;
-	
+
+	/* constants */
 	private final double MAX_TRAIN_POWER = 120000;	// 120kW
-	private final double DISTANCE_BUFFER = 10;	// give some buffer to make sure train will never exceed target distances
+	private final double DISTANCE_BUFFER = 10;		// 10m - give some buffer to make sure train will never exceed target distances
 	private final int STATION_DWELL_TIME = 60000;	// 60s
 	
 	/* train operator */
+    /**
+     * Current value of the train operator's throttle.
+     */
 	private double velocityFromTrainOperator = 10;
+
+    /**
+     * Does the train operator have the service brake engaged?
+     */
     private boolean trainOperatorServiceBrake = false;
 
+    /* signal pickups from rail */
+    /**
+     * Velocity in m/s.
+     */
 	private double velocityFromCTC;
-	private double authorityFromCTC;
+
+    /**
+     * Authority in m.
+     */
+    private double authorityFromCTC;
 
 	/* intermediate calculations to display on UI */
+    /**
+     * The velocity setpoint; minimum of train operator throttle velocity and CTC velocity.
+     */
 	private double targetVelocity;
+
+    /**
+     * Current calculated power command sent to train model.
+     */
 	private double powerCommand;
 	
-	/* station stuff */
-	private String nextStation;
-	private int nextStationId;
-	private int distanceToStationEnd;
+	/* station approaches and targetting */
+    /**
+     * The human-readable value of the next station.
+     */
+    private String nextStation;
+
+    /**
+     * The ID of the next station.
+     */
+    private int nextStationId;
+
+    /**
+     * How far until the end of the station? Used to brake appropriately for station approaches.
+     */
+    private int distanceToStationEnd;
 	private enum StationApproachStatus {
 		NONE,
-		DISTANCE_SET,
-		BRAKING_FOR_APPROACH,
-		DWELLING
+		DISTANCE_SET,   // picked up a beacon with the distance to the station, but it's too early to start braking
+		BRAKING_FOR_APPROACH,   // braking with service brake to stop perfectly at station end
+		DWELLING    // stopped at station
 	}
 	private StationApproachStatus stationApproachStatus = StationApproachStatus.NONE;
-	private int dwellTimeRemaining; 
 
-	/* train status */
+    /**
+     * Milliseconds remaining to dwell at a station.
+     */
+	private int dwellTimeRemaining;
+
+
+    /**
+     * Current velocity of the train in m/s. Updated from the Train Model every tick.
+     */
 	private double velocitySI;
-	
-	private double odometer;
-	double _lastPowerCommand;
 
-	/* internal logging and event tracking */
+	private double odometer;
+
+    /**
+     * Is the train braking because it's out of authority? Used for UI logging.
+     */
 	boolean outOfAuthorityBraking = false;
 	
 	/**
@@ -65,7 +107,8 @@ public class TrainController {
 	}
 	
 	/**
-	 * Update train's odometer and authority, and send a new power command to train
+	 * Update train's odometer and authority, and send a new power command to train.
+     * Also check/update the station approach status, and tweak the temperature if necessary.
 	 * @param deltaT double Milliseconds since last update
 	 */
 	public void tick(double deltaT) {
@@ -173,6 +216,7 @@ public class TrainController {
 			// distance to station is set but we're not braking yet - should we start braking?
 			double stoppingDistance = this.calculateServiceBrakeStoppingDistance();
 			if (stoppingDistance + DISTANCE_BUFFER >= this.distanceToStationEnd) {
+                // time to start braking for a station approach
 				double feetToEnd = Math.round(this.metersToFeet(this.distanceToStationEnd) * 100.0) / 100.0;
 				this.ui.log("Starting to brake for station " + String.valueOf(feetToEnd) + " ft away.");
 				// give 0 power to start braking and begin station approach
@@ -191,7 +235,7 @@ public class TrainController {
 			double calculatedPower2 = this.powerController2.calculatePower(this.velocitySI, this.targetVelocity, deltaT);
 
             if (calculatedPower != calculatedPower2) {
-                // uh oh, safety critical check came up bad
+                // uh oh, one of the controllers is behaving oddly - stop this train now
                 this.trainModel.activateEmergencyBrake();
                 return 0;
             }
@@ -200,7 +244,7 @@ public class TrainController {
 			power = calculatedPower > 0 ? Math.min(calculatedPower, this.MAX_TRAIN_POWER) : Math.max(calculatedPower, -1 * this.MAX_TRAIN_POWER);
 			return power;
 		} else {
-			// out of authority
+			// out of authority, don't calculate power, just brake
 			if (!this.outOfAuthorityBraking) {
 				this.ui.log("Authority running out, starting to brake.");
 				this.outOfAuthorityBraking = true;
@@ -226,46 +270,57 @@ public class TrainController {
 	 * If the service brake is applied now, how far will it be until we completely stop?
 	 */
 	private double calculateServiceBrakeStoppingDistance() {
-		// v^2 = 0 = v0^2 + 2*a*deltaX
 		// deltaX = -(v0^2) / (2*a)
 		double stoppingDistance = -1 * Math.pow(this.velocitySI, 2) / (2.0 * -1.2);	// service brake decceleration = 1.2m/s^2
 		return stoppingDistance;
-	}
-
-	// temporary - combined into one bit package later
-	public void receiveAuthority(int authority) {
-		double authFeet = Math.round(this.metersToFeet(authority) * 100.0) / 100.0;
-		this.ui.log("Received authority command: " + String.valueOf(authFeet) + " ft");
-		this.authorityFromCTC = authority;
-	}
-
-	// temporary - combined into one bit package later
-	public void receiveSpeed(int speed) {
-		double speedMph = Math.round(this.mpsToMph(speed) * 100.0) / 100.0;
-		this.ui.log("Received speed command from CTC: " + String.valueOf(speedMph) + " mph");
-		this.velocityFromCTC = speed;
 	}
 	
 	/**
 	 * First 5 bits are speed, the rest is authority
 	 * @param signalPackage
+     *
+     * Not enough time for Track Model + Train Model to implement this communication bitwise :(
+     * see receiveAuthority() and receiveSpeed() for oversimplified interger workaround
 	 */
-	public void receiveSignalFromRail(BitSet signalPackage) {
+	/*public void receiveBitwiseSignalFromRail(BitSet signalPackage) {
 		BitSet bitSpeed = signalPackage.get(0, 5);	// bits 0-4 are speed
 		BitSet bitAuthority = signalPackage.get(5, signalPackage.length());	// the rest is authority
 		int speed = this.bitsetToInt(bitSpeed);
 		int authority = this.bitsetToInt(bitAuthority);
-		
+
+        // convert to US units to display
+        double speedMph = Math.round(this.mpsToMph(speed) * 100.0) / 100.0;
+        double authFeet = Math.round(this.metersToFeet(authority) * 100.0) / 100.0;
+        this.ui.log("Received speed command from CTC: " + String.valueOf(speedMph) + " mph");
+        this.ui.log("Received authority command: " + String.valueOf(authFeet) + " ft");
+
 		this.velocityFromCTC = speed;
 		this.authorityFromCTC = authority;
-	}
+	}*/
+
+    // temporary - combined into one bit package ideally
+    public void receiveAuthority(int authority) {
+        double authFeet = Math.round(this.metersToFeet(authority) * 100.0) / 100.0;
+        this.ui.log("Received authority command: " + String.valueOf(authFeet) + " ft");
+        this.authorityFromCTC = authority;
+    }
+
+    // temporary - combined into one bit package ideally
+    public void receiveSpeed(int speed) {
+        double speedMph = Math.round(this.mpsToMph(speed) * 100.0) / 100.0;
+        this.ui.log("Received speed command from CTC: " + String.valueOf(speedMph) + " mph");
+        this.velocityFromCTC = speed;
+    }
 	
 	/**
-	 * Bit 0-5: station id
-	 * Bit 6-end: distance to end of station
+	 * Bit 0-4: station id
+	 * Bit 5-end: distance to end of station
 	 * Note: bits 6-end are irrelevant if station id is new (leaving station)
+     *
+     * Not enough time for Track Model to implement this bitwise :(
+     * see receiveBeacon() for size-ignorant workaround
 	 */
-	public void receiveBeacon(BitSet beaconPackage) {
+	/*public void receiveBitwiseBeacon(BitSet beaconPackage) {
 		BitSet bitStationId = beaconPackage.get(0, 5);
 		BitSet bitDistance = beaconPackage.get(5, beaconPackage.length());
 		int stationId = this.bitsetToInt(bitStationId);
@@ -276,26 +331,47 @@ public class TrainController {
 			// we are entering a station
 			this.distanceToStationEnd = distance;
 			this.stationApproachStatus = StationApproachStatus.DISTANCE_SET;
+
+            double distanceFeet = Math.round(this.metersToFeet(distance) * 100.0) / 100.0;
+            this.ui.log("Picked up a beacon: distance to '" + this.nextStation + "' is " + String.valueOf(distanceFeet) + " ft");
 		} else {
-			// we are leaving a station, don't care about distance back to station
+			// we are leaving a station
 			String stationName = this.stationIdToStationName(stationId);
 			this.nextStation = stationName;
 			this.nextStationId = stationId;
 			this.trainModel.displayNextStation(stationName);
+
+            this.ui.log("Picked up a beacon: next station is '" + this.nextStation + "'");
 		}
-		this.ui.log("Received beacon: stationId=" + String.valueOf(stationId) + " distance=" + String.valueOf(distance));
 	}
 
-	private String stationIdToStationName(int stationId) {
+    private String stationIdToStationName(int stationId) {
 
-		return "Steel Plaza";
-	}
+        return "";
+    }*/
+
+    public void receiveBeacon(Beacon beacon) {
+        String stationName = beacon.stationName;
+        int distanceToStationEnd = beacon.distanceToStationEnd;
+
+        if (stationName == this.nextStation || this.nextStation == "") {
+            // we are entering a station
+            this.nextStation = stationName;
+            this.distanceToStationEnd = distanceToStationEnd;
+            this.stationApproachStatus = StationApproachStatus.DISTANCE_SET;
+
+            double distanceFeet = Math.round(this.metersToFeet(distanceToStationEnd) * 100.0) / 100.0;
+            this.ui.log("Picked up a beacon: distance to '" + String.valueOf(this.nextStation) + "' is " + String.valueOf(distanceFeet) + " ft");
+        } else {
+            // we are leaving a station
+            this.nextStation = stationName;
+            this.trainModel.displayNextStation(stationName);
+
+            this.ui.log("Picked up a beacon: next station is '" + this.nextStation + "'");
+        }
+    }
 
 
-
-	/**
-	 * Methods to change physical train properties
-	 */
 	
 	public boolean lightsAreOn() {
 		return this.trainModel.getLightsStatus();
