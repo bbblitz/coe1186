@@ -1,0 +1,40 @@
+Test                Pass/                    Test                   Fix
+                    Fail                     Date                   Date
+-------------------------------------------------------------------------------
+Track pane
+displays track
+-------------------------------------------------------------------------------
+Dispatch pane
+generates signal    Pass
+(displays to
+console)
+-----
+Dispatch pane
+sends dispatch
+signal to track     Pass
+controller
+correctly
+-------------------------------------------------------------------------------
+Track file parser
+reads in file       Pass
+-----
+Track parser
+generates errors
+correctly (see      Fail
+user manual)
+-----
+Green line is
+generated correctly Fail
+-----
+Red line is
+generated correctly Pass
+-------------------------------------------------------------------------------
+Open/close pane
+generates signals   Pass
+correctly (to
+console)
+-----
+Open/close pane
+sends signal to
+track controller    Pass
+correctly

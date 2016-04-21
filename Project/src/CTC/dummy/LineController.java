@@ -30,7 +30,7 @@ public class LineController{
       JPanel l = new JPanel();
       l.setLayout(new BoxLayout(l,BoxLayout.X_AXIS));
       JLabel id = new JLabel("BlockID:" + bi.getID());
-      occupied[bi.getID()] = new JCheckBox("Occupied",true);
+      occupied[bi.getID()] = new JCheckBox("Occupied",false);
       closed[bi.getID()] = false;
       closedLabel[bi.getID()] = new JLabel("Block closed?:false");
       String[] failstates = {"FS_NORMAL","FS_BROKEN_RAIL","FS_POWER_FAILURE","FS_TRACK_CIRCUIT_FAILURE","FS_RAIL_AND_POWER","FS_CIRCUIT_AND_RAIL","FS_CIRCUIT_AND_POWER","FS_CIRCUIT_RAIL_POWER"};
@@ -124,7 +124,6 @@ public class LineController{
     log.append(String.format("A train should be created on line:%d",line==0?"red":"green"));
   }
 
-  //Call this every tick that something should be closed
   public void setClosed(int block, boolean b){
     closed[block] = b;
     closedLabel[block].setText("Block closed?:" + (b?"true":"false"));

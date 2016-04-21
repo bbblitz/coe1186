@@ -99,6 +99,12 @@ public class LineParser{
         if(c.DEBUG_PARSER){
           System.out.printf("\t%3d :",i);
           System.out.printf("%3s\n", curline.blocks.get(i).toString());
+          if(heads.get(i)!=-1){
+            System.out.printf("\t\tHead:%d\n",heads.get(i));
+          }
+          if(tails.get(i)!=-1){
+            System.out.printf("\t\tTail:%d\n",tails.get(i));
+          }
         }
       }
     }
@@ -110,6 +116,7 @@ public class LineParser{
       System.out.println("Resolveing block:");
       System.out.println(curline.blocks.get(i).toString());
       if(block instanceof BlockStraight){
+        System.out.println("Found block straight!");
         BlockStraight blockstr = (BlockStraight)block;
         if(curline.blocks.get(heads.get(i)) == null){
           System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
@@ -189,27 +196,27 @@ public class LineParser{
         System.out.println("Finished connecting up switch block, block is:");
         System.out.println(blockswi.toString());
       }
+      System.out.println("Test1234");
     }
 
     //Remove the blocks from the track that belong to a switch
     boolean foundone = true;
-    while(foundone){
-      foundone = false;
-      for(int i = 0; i < curline.blocks.size();){
-        System.out.println("Before iterateing " + i);
-        if(curline.blocks.get(i) == null){
-          i++;
-          continue;
-        }
-        if(curline.blocks.get(i) instanceof BlockSwitch){
-          BlockSwitch bs = (BlockSwitch)curline.blocks.get(i);
-          if(curline.blocks.remove(bs.head)) foundone = true;
-          if(curline.blocks.remove(bs.tail)) foundone = true;
-          if(curline.blocks.remove(bs.divergent)) foundone = true;
-          i++;
-        }else{
-          i++;
-        }
+    System.out.println("About to go into switch removal loop");
+    for(int i = 0; i < curline.blocks.size();i++){
+      if(curline.blocks.get(i) == null){
+        continue;
+      }
+      if(curline.blocks.get(i) instanceof BlockSwitch){
+        BlockSwitch bs = (BlockSwitch)curline.blocks.get(i);
+        bs.head.ispartofswitch = true;
+        //bs.tail.ispartofswitch = true;
+        bs.divergent.ispartofswitch = true;
+        /*
+        if(curline.blocks.remove(bs.head)) foundone = true;
+        if(curline.blocks.remove(bs.tail)) foundone = true;
+        if(curline.blocks.remove(bs.divergent)) foundone = true;
+        i++;
+        */
       }
     }
 

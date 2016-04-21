@@ -87,7 +87,7 @@ public class TrackPane extends JPanel implements MouseListener {
       //System.out.println("Drawing:" + dti.toString());
       //drawSegment(g,dti);
       boolean draw = false;
-      for(Train t : c.pinkLineTrains){
+      for(Train t : c.redLineTrains){
         if(t.getCurrentBlock() == dti){
           dti.drawTrainOn(g,true);
           draw = true;
