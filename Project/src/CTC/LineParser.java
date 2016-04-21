@@ -62,6 +62,8 @@ public class LineParser{
     }
     if(c.DEBUG_PARSER)
       System.out.println("-------PARSER DEBUG END----------");
+
+    //Fuck it, just manually add the yard block.
     //resolveblocks();
     //config.aldl.add(linenum,newline);
   }
@@ -195,6 +197,13 @@ public class LineParser{
 
         System.out.println("Finished connecting up switch block, block is:");
         System.out.println(blockswi.toString());
+      }else if(block instanceof BlockYard){
+        BlockYard blockyrd = (BlockYard)block;
+        if(curline.blocks.get(heads.get(i)) == null){
+          System.out.printf("Error 104: While parseing %s, track section %d's head is connected to %d, but it dosen't exist!\n",fname,i,heads.get(i));
+        }else{
+          blockyrd.head = curline.blocks.get(heads.get(i));
+        }
       }
       System.out.println("Test1234");
     }
@@ -375,6 +384,21 @@ public class LineParser{
       curline.blocks.add(blockid, newblock);
       System.out.println("New station:");
       System.out.println(newblock.toString());
+    }else if(blockstring.substring(0,3).equals("yrd")){
+      String[] vs = blockstring.split(",");
+      for(int i = 0; i < vs.length; i++){
+        vs[i] = vs[i].trim();
+      }
+      int x = Integer.parseInt(vs[1]);
+      int y = Integer.parseInt(vs[2]);
+      int headid = Integer.parseInt(vs[3]);
+      int blockid = Integer.parseInt(vs[4]);
+      BlockYard newblock = new BlockYard();
+      newblock.setID(blockid);
+      newblock.x = x;
+      newblock.y = y;
+      curline.blocks.add(blockid,newblock);
+      heads.add(blockid,headid);
     }
     else{
       System.out.printf("Error 108: Unknown block type:%s on line %d in %s\n",blockstring.substring(0,3),linenumber, fname);

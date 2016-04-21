@@ -1,4 +1,5 @@
 LINE RED
+yrd, 600, 150, 1, 0
 str, 600, 100, -20, 50, 16, 2, TAIL, HEAD, 1, 1
 str, 610, 97, -40, 50, 3, 1, TAIL, HEAD, 2, 1
 str, 620, 89, -60, 50, 4, 2, TAIL, HEAD, 3, 1
@@ -7,7 +8,7 @@ str, 625, 65, -45, 50, 6, 4, TAIL, HEAD, 5, 1
 str, 633, 56, 0, 50, 7, 5, TAIL, HEAD, 6, 1
 sta, 645, 56, 0, 75, 8, 6, TAIL, HEAD, 7, 1, ShadySide
 str, 663, 56, 45, 75, 9, 7, TAIL, HEAD, 8, 1
-str, 675, 68, 90, 75, 10, 8, TAIL, HEAD, 9, 1
+swi, 675, 68, 90, 75, 77, 8, 10, HEAD, TAIL, HEAD, 9, 1
 str, 674, 87, 135, 75, 11, 9, TAIL, HEAD, 10, 1
 str, 660, 100, 150, 75, 12, 10, TAIL, HEAD, 11, 1
 str, 644, 108, 160, 75, 13, 11, TAIL, HEAD, 12, 1
@@ -75,4 +76,5 @@ str, 208, 240, -90, 50, 74, 72, TAIL, HEAD, 73, 1
 str, 208, 230, -90, 50, 75, 73, TAIL, HEAD, 74, 1
 str, 208, 220, -90, 50, 76, 74, TAIL, HEAD, 75, 1
 str, 208, 210, -45, 50, 27, 75, TAIL, HEAD, 76, 1
+str, 675, 115, 90, 50,  0, 9, TAIL, HEAD, 77, 1
 LINE END

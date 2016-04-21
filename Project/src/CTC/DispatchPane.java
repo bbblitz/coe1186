@@ -81,11 +81,10 @@ public class DispatchPane extends JPanel implements ActionListener{
         int blockid = (Integer)blocklist.getSelectedItem();
         int line = blockid>78?1:0;
         config.lineController.createTrain(blockid>78?1:0);
-        //Train newtrain = new Train(config,config.trainid++,);
-        //config.redLineTrains.add(newtrain;
-        //Train ntrain = new Train(config, 0, startblock,preblock);
-    		//ntrain.schedule.put("Kingdom Come",5000);
-    		//config.pinkLineTrains.add(ntrain);
+        if(line == 0){
+          Train newtrain = new Train(config,config.trainid++,config.aldl.get(0).blocks.get(0),null);
+          config.alltrains.add(newtrain);
+        }
       }else{
         int blockid = (Integer)blocklist.getSelectedItem();
         int trainid = (Integer)trainlist.getSelectedItem();

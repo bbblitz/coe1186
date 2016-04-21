@@ -22,14 +22,15 @@ public class CTCWindow extends JFrame{
 		LineParser parser = new LineParser("track.txt",config);
 
 		//TODO:Remove this
-
+		/*
 		BlockInterface startblock = config.aldl.get(0).blocks.get(10);
 		BlockInterface preblock = config.aldl.get(0).blocks.get(11);
 		System.out.println("Start block is:");
 		System.out.println(startblock.toString());
 		Train ntrain = new Train(config, 0, startblock,preblock);
 		//ntrain.schedule.put("First Ave",5000);
-		config.redLineTrains.add(ntrain);
+		config.alltrains.add(ntrain);
+		*/
 
 
 		JPanel holder = new JPanel();
@@ -57,7 +58,7 @@ public class CTCWindow extends JFrame{
 	public void tick(double deltaT) {
 		boolean[] blocksoccupied = config.lineController.getBlockOccupancies();
 		TrackFailState[] failstates = config.lineController.getBlockFailStates();
-		ArrayList<Train> alltrains = config.redLineTrains;
+		ArrayList<Train> alltrains = config.alltrains;
 		for(Train train : alltrains){
 			//System.out.println("Looping over alltrains");
 			//The train is not on an occupied block, move it forward

@@ -121,7 +121,7 @@ public class LineController{
   }
 
   public void createTrain(int line){
-    log.append(String.format("A train should be created on line:%d",line==0?"red":"green"));
+    log.append(String.format("A train should be created on line:%s",line==0?"red":"green"));
   }
 
   public void setClosed(int block, boolean b){
