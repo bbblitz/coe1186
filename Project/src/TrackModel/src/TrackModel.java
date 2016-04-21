@@ -8,17 +8,20 @@ public class TrackModel {
 	
 	ArrayList<BlockInterface> track; 
 	ArrayList<Train> Trains;
+	TrackModelUI TModel;
 	  
 	  public TrackModel(String filename){
 		  TrackModelParser Parser = new TrackModelParser(filename);
 		  track = Parser.readFile();
 		  track.get(3).getLength();
+		  TModel = new TrackModelUI(0);
 	  }
 	  
 	  
   public void tick(double deltaT){
 		 
-	    receiveBlockGrade(deltaT);
+	    //receiveBlockGrade(deltaT);
+	  receiveBlockGrade();
 			  
   }
   
@@ -29,6 +32,18 @@ public class TrackModel {
 		  double traingrade = track.get(tblockid).getGrade();
   }
   
+  //Method to create train
+  public void createTrain(int line){
+	  
+	  if (line == 0){
+		  Trains.add(new Train(0));
+	  }
+	  else {
+		  Trains.add(new Train(230));
+	  }
+	  
+  }
+  
   // Get Occupanies method to output boolean array with occupancies
   public boolean[] getBlockOccupancies(){ 
 	  boolean[] occupancy = new boolean[track.size()];
@@ -37,6 +52,20 @@ public class TrackModel {
 	  }
 	  return occupancy;
   }
+  
+  //Method to give Grade
+  public void receiveBlockGrade(){
+	  for(int i=0; i < Trains.size(); i++){ 
+		  if (Trains.get(i).previous == track.get(Trains.get(i).block).head)
+		  {
+			  Trains.get(i).instance.receiveBlockGrade((-1)*track.get(Trains.get(i).block).getGradeTailToHead());
+		  }
+		  else{
+			  Trains.get(i).instance.receiveBlockGrade(track.get(Trains.get(i).block).getGradeTailToHead());
+		  }
+	  }
+  }
+  
   
   //Receives distance traveled by train and increments total distance
   public void receiveDistance(double deltaX, int trainid) {
@@ -71,8 +100,7 @@ public class TrackModel {
 				   Trains.get(trainID).block = divergent;
 			   }
 		   }
-		   
-			  
+		   	  
 		  }
 	  		//Else statement to handle straight blocks
 			  else if(track.get(currentBlock) instanceof Block){
@@ -108,7 +136,7 @@ public class TrackModel {
   }
   
   //Output the type of failure that occured.
-  public enum getFailState {
+  public TrackFailState[] getFailState() {
 	  BrokenRail, TrackCircuitFailure, PowerFailure
   }
   

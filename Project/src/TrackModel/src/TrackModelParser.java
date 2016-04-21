@@ -119,7 +119,5 @@ public class TrackModelParser
 		System.out.println(out.get(3).getLength());
 		//for(BlockInterface current : out)
 		//System.out.println(out);
-	}
-	
-	
+	}	
 }
