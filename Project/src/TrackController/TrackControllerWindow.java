@@ -11,24 +11,26 @@ public class TrackControllerWindow implements ActionListener
 	public JLabel[] occupancyLabel;
 	public JLabel[] lightLabel;
 	public JLabel[] switchLabel;
+	public JLabel[] crossingLabel;
 	public JToggleButton[] switchButton;
 	public boolean[] suggestedSwitch;
 	
 	public TrackControllerWindow()
 	{
-		prepareGUI(10,4);
+		prepareGUI(10,4,1);
 	}
 	
-	public TrackControllerWindow(int blockCount, int switchCount)
+	public TrackControllerWindow(int blockCount, int switchCount, int crossingCount)
 	{
-		prepareGUI(blockCount, switchCount);
+		prepareGUI(blockCount, switchCount, crossingCount);
 	}
 	
-	public void prepareGUI(int blockCount, int switchCount)
+	public void prepareGUI(int blockCount, int switchCount, int crossingCount)
 	{
 		JPanel allRows = new JPanel();
 		allRows.setLayout(new BoxLayout(allRows, BoxLayout.Y_AXIS));
 		
+		crossingLabel = new JLabel[crossingCount];
 		switchLabel = new JLabel[switchCount];
 		blockLabel = new JLabel[blockCount];
 		failLabel = new JLabel[blockCount];
@@ -59,6 +61,13 @@ public class TrackControllerWindow implements ActionListener
 			switchLabel[i] = new JLabel("Switch "+i+" straight");
 			subPanel.add(switchLabel[i]);
 			subPanel.add(switchButton[i]);
+			allRows.add(subPanel);
+		}
+		for(int i=0;i<crossingCount;i++)
+		{
+			JPanel subPanel = new JPanel();
+			crossingLabel[i] = new JLabel("Crossing "+i+" open");
+			subPanel.add(crossingLabel[i]);
 			allRows.add(subPanel);
 		}
 		
@@ -107,7 +116,7 @@ public class TrackControllerWindow implements ActionListener
 			else
 			{
 				 lightLabel[i].setText("Lights: Off");
-				lightLabel[i].setForeground(Color.black);
+				lightLabel[i].setForeground(Color.green);
 				 
 			}
 		}
@@ -121,6 +130,24 @@ public class TrackControllerWindow implements ActionListener
 			else occupancyLabel[i].setText("Not Occupied");
 		}		
 	}
+	
+	public void updateCrossings(boolean[] crossings)
+	{
+		for (int i=0;i<crossings.length;i++)
+		{
+			if(crossings[i])
+			{
+				crossingLabel[i].setText("Crossing "+i+" Closed");
+				lightLabel[i].setForeground(Color.orange);
+			}
+			else
+			{
+				crossingLabel[i].setText("Crossing "+i+" Open");
+				lightLabel[i].setForeground(Color.black);
+			}
+		}
+	}	
+	
 	
 	public void actionPerformed(ActionEvent action)
 	{

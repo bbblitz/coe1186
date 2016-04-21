@@ -24,11 +24,12 @@ public class LineController
 		loadConfigFile();
 		int blockCount = getBlockCount();
 		int switchCount = getSwitchCount();
+		int crossingCount = getCrossingCount();
 		if(model == null) model = new TrackModel(blockCount, switchCount); //initializer for testing purposes
-		tcw = new TrackControllerWindow(blockCount, switchCount);
+		tcw = new TrackControllerWindow(blockCount, switchCount, crossingCount);
 		closed = new boolean[blockCount];
 		outputs = new boolean[blockCount];
-		routeBit = new boolean[2];
+		routeBit = new boolean[crossingCount];
 		this.model = model;
 	}
 	
@@ -89,10 +90,36 @@ public class LineController
 		return totalSwitchCount;
 	}
 	
+	public int getCrossingCount()
+	{
+		int totalCrossingCount = 0;
+		for(TrackController current : controllers)
+		{
+			totalCrossingCount += current.getCrossingCount();
+		}
+		return totalCrossingCount;
+	}
+	
+	
 	public boolean[] getBlockOccupancies()
 	{
 		boolean[] out = model.getBlockOccupancies();
 		return out;
+	}
+	
+	
+	public boolean[] getCrossings()
+	{
+		boolean[] crossings = new boolean[getCrossingCount()];
+		for(int i=0;i<controllers.length;i++)
+		{
+			if(controllers[i].getCrossingCount()==1)
+			{
+				int lineCrossingID = controllers[i].crossingConversion;
+				crossings[lineCrossingID] = controllers[i].getCrossingStates()[controllers[i].getCrossingCount()-1];
+			}
+		}
+		return crossings;
 	}
 	
 	public boolean[] getSwitchStates()
@@ -258,6 +285,7 @@ public class LineController
 		boolean[] switchStates = getSwitchStates();
 		model.recieveSwitchStates(switchStates);
 		tcw.updateSwitches(switchStates);
+		tcw.updateCrossings(getCrossings());
 		boolean[] outputs = new boolean[getBlockCount()];
 		for(int i=0;i<controllers.length;i++)
 		{
