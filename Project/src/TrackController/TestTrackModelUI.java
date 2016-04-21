@@ -41,6 +41,7 @@ public class TestTrackModelUI implements ActionListener
 			occupied[i] = new JCheckBox("Occupied");
 			String[] failstates = {"FS_NORMAL","FS_BROKEN_RAIL","FS_POWER_FAILURE","FS_TRACK_CIRCUIT_FAILURE","FS_RAIL_AND_POWER","FS_CIRCUIT_AND_RAIL","FS_CIRCUIT_AND_POWER","FS_CIRCUIT_RAIL_POWER"};
 			failstate[i] = new JComboBox(failstates);
+			tfs[i] = TrackFailState.FS_NORMAL;
 			occupied[i].addActionListener(this);
 			failstate[i].addActionListener(this);
 		
@@ -54,6 +55,7 @@ public class TestTrackModelUI implements ActionListener
 		JScrollPane scroller = new JScrollPane(allRows);
 		window.add(scroller);
 		window.pack();
+		window.setSize(400, 600);
 		window.setVisible(true);
 		
 	}

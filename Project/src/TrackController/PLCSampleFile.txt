@@ -1,0 +1,18 @@
+PLC File Format
+
+file extension doesn't matter
+each line after header represents each output in order
+switches follow block outputs, and crossings follow switches
+switches point to divergent when true
+crossings close and light up when true
+
+
+Header
+3 0 - 2 in			inputBlockCount inputBlockIDs(must be startID - endID can be multiple groups) in
+3 0 - 1 1 - 2 out	outputBlockCount outputBlockIDs out
+3 1 2 3 switch		switchCount switch0ID switch1ID ... switch
+1 0 crossing		crossingCount crossingID (only supports 1 crossingID per PLC file)
+0 1 + 2 + 3 + ;			inputBlockIDs are represented as Numbers, all values must have spaces
+0 1 & 2 + ! ; 			operands are post fix ex: 0 1 & 2 + ! = NOT((0 AND 1) OR 2 ) in prefix
+v g + rg & rr ! + ; 	special characters: v = true, g = false, rg = CTC route bit green line, rr = CTC route bit red line
+9 10 + ; 				each line represents one output of the PLC files, the 
