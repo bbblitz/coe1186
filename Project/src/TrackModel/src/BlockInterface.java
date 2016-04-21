@@ -39,6 +39,7 @@ public abstract class BlockInterface{
 	    this.BlockType = BlockType;
 	  }
 	  
+	  
 	  public String getStation(){
 		    return this.station;
 		  }
@@ -112,9 +113,4 @@ public abstract class BlockInterface{
 	  this.length = length;
   }
 
-	/*Overload this in each type of track
-public String toString(){
-	//return String.format("Block interface string should not be used!");
-}
-*/
 }

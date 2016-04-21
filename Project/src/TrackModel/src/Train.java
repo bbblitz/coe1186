@@ -5,8 +5,12 @@ public class Train {
 	int previous;
 	double distance;
 	boolean direction;
+	TrainModel instance;
 	
+	public Train(int startblock){
+		
 	
-	//TrainModel returns;
+	}
+	
 	
 }

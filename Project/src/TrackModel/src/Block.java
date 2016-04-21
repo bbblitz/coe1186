@@ -8,8 +8,6 @@ public class Block extends BlockInterface{
   //How long the track is
   public int length;
 
-
-
   /**
    *@override
    */
