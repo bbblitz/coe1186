@@ -62,12 +62,12 @@ public class CTCWindow extends JFrame{
 		boolean[] switchstates = config.lineController.getSwitchStates();
 		//The wierd switch mapping
 		//((BlockSwitch)config.aldl.get(0).blocks.get(16)).flipped = switchstates[6];
-		((BlockSwitch)config.aldl.get(0).blocks.get(27)).flipped = switchstates[7];
-		((BlockSwitch)config.aldl.get(0).blocks.get(33)).flipped = switchstates[8];
-		((BlockSwitch)config.aldl.get(0).blocks.get(38)).flipped = switchstates[9];
-		((BlockSwitch)config.aldl.get(0).blocks.get(44)).flipped = switchstates[10];
-		((BlockSwitch)config.aldl.get(0).blocks.get(52)).flipped = switchstates[11];
-		((BlockSwitch)config.aldl.get(0).blocks.get(9)).flipped = switchstates[12];
+		((BlockSwitch)config.aldl.get(0).blocks.get(27)).flipped = switchstates[1];
+		((BlockSwitch)config.aldl.get(0).blocks.get(33)).flipped = switchstates[2];
+		((BlockSwitch)config.aldl.get(0).blocks.get(38)).flipped = switchstates[3];
+		((BlockSwitch)config.aldl.get(0).blocks.get(44)).flipped = switchstates[4];
+		((BlockSwitch)config.aldl.get(0).blocks.get(52)).flipped = switchstates[5];
+		((BlockSwitch)config.aldl.get(0).blocks.get(9)).flipped = switchstates[6];
 
 		try{
 		for(Train train : alltrains){
@@ -123,8 +123,16 @@ public class CTCWindow extends JFrame{
 				//Check to see if the train can make it's scheduleing on time, and if it can't, disptach it.
 				BlockInterface station = null;
 				String nextstationto = null;
-				if(train.schedule.size() > 0)
-					nextstationto = (String)train.schedule.keySet().toArray()[0];
+				if(train.schedule.size() > 0){
+					Integer lowtime = 99999999;
+					for(Map.Entry<String, Integer> entry : train.schedule.entrySet()) {
+			      Integer time = entry.getValue();
+			      if(time < lowtime){
+							nextstationto = entry.getKey();
+							lowtime = time;
+						}
+			    }
+				}
 				//System.out.println("I think the next station is: " + nextstationto);
 				if(nextstationto != null && !train.dispatched){
 					if(train == null){

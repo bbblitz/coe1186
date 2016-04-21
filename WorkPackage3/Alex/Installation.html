@@ -15,6 +15,37 @@
   <p id="s2">To substitue in a different Track Controller module, be sure that your track controller implements all the methods specified in the example Track Controller module located at /src/CTC/dummy/TrackController.java. Once you have your real track controller class, paste it over the example class and double click compile.bat, found in /src/CTC/compile.bat.</p>
   <h2>Modification of track</h2>
   <p id="s3">To modify the track file, open track.txt in your favorite text editor. Documentation on how the track is written is at the top. If, after changes and running the software you are getting an error within the range 101-199, see section 3.2.1 of the Users Manual</p>
+  <p>For referance, these are they way track segments are formated.
+    <code>
+      Track formats:<br/>
+        Straight track<br/>
+          str, x, y, rotation, length, head, tail, headto(Depreciated), tailto(Depreciated), id, trackcontroler_id<br/>
+          ex.<br/>
+            str, 5, 10, 0, 100, 3, 7, TAIL, TAIL, 0, 0<br/>
+<br/>
+        Curved track<br/>
+          cur, x, y, start_angle, angle_length, radius, block_clockwise, block_counterclockwise, block_clockwise_to(Depreciated), block_counterclockwise_to(Depreciated), block_id, trackcontroller_id<br/>
+          ex.<br/>
+            cur, 20, 20, 0, 90, 100, 4, 8, HEAD, TAIL, 2, 0<br/>
+<br/>
+        Switch track:<br/>
+          x, y, direction, length, head, tail, divergent, headto(Depreciated), tailto(Depreciated), divergentto(Depreciated), blockid<br/>
+        ex.<br/>
+          swi, 20, 20, 90, 1, 2, 3, TAIL, HEAD, TAIL, 0<br/>
+<br/>
+        Station track:<br/>
+          sta, x, y, rotation, length, head, tail, headto(Depreciated), tailto(Depreciated), id, trackcontrollerid(Depreciated), station_name<br/>
+        ex.<br/>
+          sta, 20, 20, 0, 200, 3,5 TAIL, TAIL, 3, 1, Kingdom Come<br/>
+<br/>
+        Yard track:<br/>
+          yrd, x, y, head, blockid<br/>
+        ex.<br/>
+          yrd, 600, 150, 77, 0<br/>
+    </code>
+  </p>
+  <h2>Modification of schedule</h2>
+  <p id="s4">To modify the schedule, open red.txt or green.txt, depending on the default schedule you want to change. Station names are seperated from their time (in miliseconds) that the train should target arival. Be sure to spell station names correctly (capitalization matters).</p>
 </div>
 </body>
 </html>

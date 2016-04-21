@@ -46,6 +46,13 @@ public class Train {
 		BlockInterface nextBlock = this.currentBlock.goesto(previousBlock);
 		this.previousBlock = this.currentBlock;
 		this.currentBlock = nextBlock;
+		if(nextBlock instanceof BlockStation){
+			String nbname = ((BlockStation)nextBlock).getStationName();
+			if(schedule.containsKey(nbname)){
+				schedule.remove(nbname);
+				((SchedulePane)c.schedulepane).reloadSchedual();
+			}
+		}
 	}
 
 	public BlockInterface getPreviousBlock() {

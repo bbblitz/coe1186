@@ -139,12 +139,12 @@ public class LineController{
   public boolean[] getSwitchStates(){
     boolean[] out = new boolean[13];
     //out[6] = flipped[16].isSelected();
-    out[7] = flipped[27].isSelected();
-    out[8] = flipped[33].isSelected();
-    out[9] = flipped[38].isSelected();
-    out[10] = flipped[44].isSelected();
-    out[11] = flipped[52].isSelected();
-    out[12] = flipped[9].isSelected();
+    out[1] = flipped[27].isSelected();
+    out[2] = flipped[33].isSelected();
+    out[3] = flipped[38].isSelected();
+    out[4] = flipped[44].isSelected();
+    out[5] = flipped[52].isSelected();
+    out[6] = flipped[9].isSelected();
     return out;
   }
 
