@@ -1,0 +1,18 @@
+Pioneer, 138000
+Edgebrook, 138000
+Station, 144000
+Whited, 162000
+South Bank, 156000
+Central, 114000
+Inglewood, 120000
+Overbrook, 120000
+Glenbury, 132000
+Dormont, 150000
+Mt Lebanon, 132000
+Poplar, 264000
+Castle Shannon, 132000
+Dormont, 138000
+Glenbury, 144000
+Overbrook, 126000
+Inglewood, 120000
+Central, 120000

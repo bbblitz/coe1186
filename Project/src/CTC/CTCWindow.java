@@ -84,6 +84,7 @@ public class CTCWindow extends JFrame{
 							if(train.getAnticipatedNextBlock() instanceof BlockYard){
 								alltrains.remove(train);
 								((DispatchPane)config.dispatchpane).trainlist.removeItem(train.getID());
+								((SchedulePane)config.schedulepane).trainnum.removeItem(train.getID());
 							}else{
 								//System.out.println("Moveing train forward one block!");
 								train.moveForwardOneBlock();

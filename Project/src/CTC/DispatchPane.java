@@ -85,6 +85,7 @@ public class DispatchPane extends JPanel implements ActionListener{
           Train newtrain = new Train(config,config.trainid++,config.aldl.get(0).blocks.get(0),null);
           config.alltrains.add(newtrain);
           trainlist.addItem(newtrain.getID());
+          ((SchedulePane)config.schedulepane).trainnum.addItem(newtrain.getID());
         }
       }else{
         int blockid = (Integer)blocklist.getSelectedItem();
