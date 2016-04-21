@@ -91,17 +91,86 @@ public class TrackControllerTester
 		{
 			message = "Error";
 			if(!LC.updateInputs(new boolean[LC.getBlockCount()])) throw new Exception("Safety Critical Architecthture caught inconsistant result from PLC file");
+			System.out.println("Test "+test+" Passed");
 		}
 		catch(Exception e)
 		{
 			System.out.println("Test "+test+" failed: "+message+" - "+e);
 		}
 		test++;
-		System.out.println("Test "+test+": ");
+		System.out.println("Test "+test+": PLC Decoder OR operation");
+		try
+		{
+			boolean[] inputs = {true, false, false, false, false};
+			boolean[] outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(!outputs[0]) throw new Exception("OR operation with true resulted in false");
+			inputs = new boolean[5];
+			inputs[4] = true;
+			outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(!outputs[0]) throw new Exception("OR operation with true resulted in false");
+			inputs = new boolean[5];
+			//for(boolean out : inputs) System.out.println(out);
+			outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(outputs[0]) throw new Exception("OR operation with all false resulted in true");
+			System.out.println("Test "+test+" Passed");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Test "+test+" failed: "+message+" - "+e);
+		}
 		test++;
-		System.out.println("Test "+test+": ");
+		System.out.println("Test "+test+": PLCDecoder AND Operation");
+		try
+		{
+			boolean[] inputs = {true, true, true, true, true};
+			boolean[] outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(!outputs[1]) throw new Exception("AND operation with all true resulted in false");
+			inputs = new boolean[5];
+			inputs[4] = true;
+			outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(outputs[1]) throw new Exception("AND operation with one true resulted in true");
+			inputs = new boolean[5];
+			outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(outputs[1]) throw new Exception("AND operation with all false resulted in true");
+			System.out.println("Test "+test+" Passed");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Test "+test+" failed: "+message+" - "+e);
+		}
 		test++;
-		System.out.println("Test "+test+": ");
+		System.out.println("Test "+test+": PLCDecoder NOT Operation");
+		try
+		{
+			boolean[] inputs = {true, false, true, false, true};
+			boolean[] outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(outputs[2]) throw new Exception("NOT true resulted in false");
+			outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(!outputs[3]) throw new Exception("NOT false resulted in true");
+			outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(!outputs[4]) throw new Exception("NOT NOT true resulted in false");
+			System.out.println("Test "+test+" Passed");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Test "+test+" failed: "+message+" - "+e);
+		}
+		test++;
+		System.out.println("Test "+test+": PLCDecoder Route Information");	//PLCDecoder should output the value of each route bit for outputs 5 and 6, plc keyword rr and rg
+		try
+		{
+			boolean[] inputs = {true, false, true, false, true};
+			boolean[] routeBit = {true, false};
+			boolean[] outputs = PLCDecoder.decode(inputs, routeBit, new File("test2.plc"));
+			if(!outputs[5]) throw new Exception("true route bit read as false");
+			outputs = PLCDecoder.decode(inputs, new File("test2.plc"));
+			if(outputs[6]) throw new Exception("false route bit read as true");
+			System.out.println("Test "+test+" Passed");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Test "+test+" failed: "+message+" - "+e);
+		}
 		test++;
 		System.out.println("Test "+test+": ");
 	}

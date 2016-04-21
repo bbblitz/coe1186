@@ -176,7 +176,9 @@ public class TrainModel{
 	
 	public void receivePowerCommand(double power){
 		if(power > 120000){
-			power = 120000.0;
+			this.power = 120000.0;
+		}else if(power < 0){
+			this.power = 0;
 		}else{
 			this.power = power;
 		}
