@@ -11,6 +11,7 @@ public class LineController{
   JComboBox failstate[];
   boolean closed[];
   JLabel closedLabel[];
+  JCheckBox flipped[];
   static final int numblocks = 90;
   public LineController(Object trackmodelshouldbehere){
 
@@ -25,18 +26,23 @@ public class LineController{
     failstate = new JComboBox[numblocks];
     closed = new boolean[numblocks];
     closedLabel = new JLabel[numblocks];
+    flipped = new JCheckBox[numblocks];
     for(BlockInterface bi : c.aldl.get(0).blocks){
       if(bi == null){continue;}
       JPanel l = new JPanel();
       l.setLayout(new BoxLayout(l,BoxLayout.X_AXIS));
       JLabel id = new JLabel("BlockID:" + bi.getID());
-      occupied[bi.getID()] = new JCheckBox("Occupied",true);
+      occupied[bi.getID()] = new JCheckBox("Occupied",false);
       closed[bi.getID()] = false;
       closedLabel[bi.getID()] = new JLabel("Block closed?:false");
       String[] failstates = {"FS_NORMAL","FS_BROKEN_RAIL","FS_POWER_FAILURE","FS_TRACK_CIRCUIT_FAILURE","FS_RAIL_AND_POWER","FS_CIRCUIT_AND_RAIL","FS_CIRCUIT_AND_POWER","FS_CIRCUIT_RAIL_POWER"};
       failstate[bi.getID()] = new JComboBox(failstates);
-      l.add(closedLabel[bi.getID()]);
       l.add(id);
+      if(bi instanceof BlockSwitch){
+        flipped[bi.getID()] = new JCheckBox("Switch flipped?",false);
+        l.add(flipped[bi.getID()]);
+      }
+      l.add(closedLabel[bi.getID()]);
       l.add(occupied[bi.getID()]);
       l.add(failstate[bi.getID()]);
       //JLabel l = new JLabel(bi.toString());
@@ -121,13 +127,25 @@ public class LineController{
   }
 
   public void createTrain(int line){
-    log.append(String.format("A train should be created on line:%d",line==0?"red":"green"));
+    log.append(String.format("A train should be created on line:%s",line==0?"red":"green"));
   }
 
-  //Call this every tick that something should be closed
   public void setClosed(int block, boolean b){
+    log.append(String.format("Block " + block + (b?"closed\n":"opened\n")));
     closed[block] = b;
     closedLabel[block].setText("Block closed?:" + (b?"true":"false"));
+  }
+
+  public boolean[] getSwitchStates(){
+    boolean[] out = new boolean[13];
+    //out[6] = flipped[16].isSelected();
+    out[7] = flipped[27].isSelected();
+    out[8] = flipped[33].isSelected();
+    out[9] = flipped[38].isSelected();
+    out[10] = flipped[44].isSelected();
+    out[11] = flipped[52].isSelected();
+    out[12] = flipped[9].isSelected();
+    return out;
   }
 
 }

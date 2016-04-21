@@ -56,17 +56,36 @@ public class BlockSwitch extends BlockInterface{
 	  return this.flipped;
   }
   public void drawBlock(Graphics g){
-    System.out.println("In BlockSwitch's drawBlock()");
-    System.out.println(toString());
-    if(flipped)
-      ((BlockStraight)head).drawBlock(g,new Color(200,200,200));
-    else
-      head.drawBlock(g);
+    //System.out.println("In BlockSwitch's drawBlock()");
+    //System.out.println(toString());
+    if(flipped){
+      if(head instanceof BlockStraight){
+        ((BlockStraight)head).drawBlock(g,Color.BLUE);
+      }else{
+        head.drawBlock(g);
+      }
+    }else{
+      if(head instanceof BlockStraight){
+        ((BlockStraight)head).drawBlock(g,Color.BLACK);
+      }else{
+        head.drawBlock(g);
+      }
+    }
     tail.drawBlock(g);
-    if(flipped)
-      divergent.drawBlock(g);
-    else
-      ((BlockStraight)divergent).drawBlock(g,new Color(200,200,200));
+    if(flipped){
+      if(divergent instanceof BlockStraight){
+        ((BlockStraight)divergent).drawBlock(g,Color.BLACK);
+      }else{
+        divergent.drawBlock(g);
+      }
+    }
+    else{
+      if(divergent instanceof BlockStraight){
+        ((BlockStraight)divergent).drawBlock(g,Color.BLUE);
+      }else{
+        divergent.drawBlock(g);
+      }
+    }
     //Figure out what colors to draw in {}
     int drawnnum = 0;
     boolean drawgray = false, drawred = false, drawyellow = false;
@@ -168,16 +187,17 @@ public class BlockSwitch extends BlockInterface{
 
     drawBlock(g);
     //Find the middle of the track
-    int exoff = (int)(Math.cos(Math.toRadians(dir))*length);
-    int eyoff = (int)(Math.sin(Math.toRadians(dir))*length);
+    int exoff = (int)(Math.cos(Math.toRadians(dir))*(length*super.TRACK_SCALE));
+    int eyoff = (int)(Math.sin(Math.toRadians(dir))*(length*super.TRACK_SCALE));
     int ex = (exoff/2)+x;
     int ey = (eyoff/2)+y;
     g.setColor(Color.WHITE);
+    //System.out.println("Drawing train...");
     g.drawOval(ex-5,ey-5,10,10);
   }
 
   public String toString(){
-    String s = String.format("(switch)x:%d y:%d dir:%d len:%d flipped:%s\n",x,y,dir,length,flipped?"true":"false");
+    String s = String.format("(switch)x:%d y:%d dir:%d len:%d flipped:%s id:%d\n",x,y,dir,length,flipped?"true":"false", getID());
     if(head!=null){
       s+= String.format("\t%s\n",head.toString());
     }

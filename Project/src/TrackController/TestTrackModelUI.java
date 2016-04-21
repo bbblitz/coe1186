@@ -6,7 +6,9 @@ public class TestTrackModelUI implements ActionListener
 {
 	public JFrame window;
 	public JPanel allRows;
+	public JTextArea log;
 	public JLabel[] blockLabel;
+	public JLabel[] switchLabel;
 	public JCheckBox[] occupied;
 	public JComboBox[] failstate;
 	public boolean[] occupancy;
@@ -15,19 +17,22 @@ public class TestTrackModelUI implements ActionListener
 	
 	public TestTrackModelUI()
 	{
-		prepareGUI(100);
+		prepareGUI(100, 3);
 	}
 	
-	public TestTrackModelUI(int blockCount)
+	public TestTrackModelUI(int blockCount, int switchCount)
 	{
-		prepareGUI(blockCount);
+		prepareGUI(blockCount, switchCount);
 	}
 	
-	public void prepareGUI(int blockCount)
+	public void prepareGUI(int blockCount, int switchCount)
 	{
 		JPanel allRows = new JPanel();
 		allRows.setLayout(new BoxLayout(allRows, BoxLayout.Y_AXIS));
+		log = new JTextArea(5,30);
+		allRows.add(new JScrollPane(log));
 		
+		switchLabel = new JLabel[switchCount];
 		blockLabel = new JLabel[blockCount];
 		occupied = new JCheckBox[blockCount];
 		failstate = new JComboBox[blockCount];
@@ -41,6 +46,7 @@ public class TestTrackModelUI implements ActionListener
 			occupied[i] = new JCheckBox("Occupied");
 			String[] failstates = {"FS_NORMAL","FS_BROKEN_RAIL","FS_POWER_FAILURE","FS_TRACK_CIRCUIT_FAILURE","FS_RAIL_AND_POWER","FS_CIRCUIT_AND_RAIL","FS_CIRCUIT_AND_POWER","FS_CIRCUIT_RAIL_POWER"};
 			failstate[i] = new JComboBox(failstates);
+			tfs[i] = TrackFailState.FS_NORMAL;
 			occupied[i].addActionListener(this);
 			failstate[i].addActionListener(this);
 		
@@ -49,13 +55,38 @@ public class TestTrackModelUI implements ActionListener
 			subPanel.add(failstate[i]);
 			allRows.add(subPanel);
 		}
+		for(int i=0;i<switchCount;i++)
+		{
+			JPanel subPanel = new JPanel();
+			switchLabel[i] = new JLabel("Switch "+i+" straight");
+			subPanel.add(switchLabel[i]);
+			allRows.add(subPanel);
+		}
 		
 		window = new JFrame("Track Model Test");
 		JScrollPane scroller = new JScrollPane(allRows);
 		window.add(scroller);
 		window.pack();
+		window.setSize(400, 600);
 		window.setVisible(true);
 		
+	}
+	
+	public void updateSwitches(boolean[] switches)
+	{		
+		for(int i=0;i<switches.length;i++)
+		{
+			if(switches[i])
+			{
+				switchLabel[i].setText("Switch "+i+" divergent");
+				switchLabel[i].setForeground(Color.red);
+			}
+			else
+			{
+				switchLabel[i].setText("Switch "+i+" straight");
+				switchLabel[i].setForeground(Color.green);				
+			}
+		}
 	}
 	
 	public TrackFailState getFailStateFromString(String fsstr){

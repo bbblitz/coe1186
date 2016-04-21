@@ -9,21 +9,27 @@ public class LineController
 	private TrackModel model;
 	private boolean[] routeBit;
 	private boolean[] closed;
-	private ArrayList<Integer[]> blockConversion; //for config files
+	private boolean[] outputs;
+	//private ArrayList<Integer[]> blockConversion; //for config files
+	private TrackControllerWindow tcw;
 	
-	public LineController()
+	public LineController()	//for testing purposes only
 	{
-		loadConfigFile();
-		this.model = new TrackModel(getBlockCount());
-		closed = new boolean[getBlockCount()];
+		this(null);
 	}
 	
 	public LineController(TrackModel model)
 	{
-		this.model = model;
-		loadConfigFile();
-		//use GUI to load all files for TrackController
 		//load config file to get defaults
+		loadConfigFile();
+		int blockCount = getBlockCount();
+		int switchCount = getSwitchCount();
+		if(model == null) model = new TrackModel(blockCount, switchCount); //initializer for testing purposes
+		tcw = new TrackControllerWindow(blockCount, switchCount);
+		closed = new boolean[blockCount];
+		outputs = new boolean[blockCount];
+		routeBit = new boolean[2];
+		this.model = model;
 	}
 	
 	public LineController(TrackController[] controllers, TrackModel model)
@@ -32,7 +38,7 @@ public class LineController
 		this.model = model;
 	}
 	
-	public boolean loadConfigFile()
+	public boolean loadConfigFile()		//use GUI to load all files for TrackController
 	{
 		try
 		{			
@@ -106,8 +112,20 @@ public class LineController
 	
 	public boolean updateInputs(boolean[] inputs)
 	{
-		int maxInputLength = 0;
 		boolean safe = true;
+		for(int i=0;i<controllers.length;i++)
+		{
+			//get the conversion
+			boolean[] controllerInputs = new boolean[controllers[i].getInputCount()];
+			int[] conversion = controllers[i].inputConversion;
+			//add all inputs needed 
+			for(int j=0;j<conversion.length;j++)
+			{
+				controllerInputs[j] = inputs[conversion[j]];
+			}
+			safe &= controllers[i].updateInputs(controllerInputs);
+		}
+		/*int maxInputLength = 0;
 		for(TrackController current : controllers)
 		{
 			if(current.getInputCount()>maxInputLength) maxInputLength = current.getInputCount();
@@ -122,7 +140,7 @@ public class LineController
 		for(int i=0;i<controllers.length;i++)
 		{
 			safe &= controllers[i].updateInputs(controllerInputs[i], routeBit);
-		}
+		}*/
 		return safe;
 	}
 	
@@ -146,7 +164,7 @@ public class LineController
 		return model.getFailStates();
 	}
 	
-	public int[] convertToTrackInput(int blockID)
+	public int[] convertToTrackInput(int blockID)	//only finds first trackController that has blockID as input
 	{
 		int[] out = {-1, -1};
 		for(int i=0;i<controllers.length;i++)
@@ -229,24 +247,32 @@ public class LineController
 	{
 		boolean[] inputs = model.getBlockOccupancies();
 		TrackFailState[] tfs = model.getFailStates();
+		tcw.updateOccupancies(inputs);
+		tcw.updateFailStates(tfs);
 		for(int i = 0;i<inputs.length;i++)
 		{
 			inputs[i] |= (tfs[i] != TrackFailState.FS_NORMAL);	//treats failstates and closed blocks as occupied blocks
 			inputs[i] |= closed[i];
 		}
 		boolean safe = updateInputs(inputs);
-		model.recieveSwitchStates(getSwitchStates());
+		boolean[] switchStates = getSwitchStates();
+		model.recieveSwitchStates(switchStates);
+		tcw.updateSwitches(switchStates);
+		boolean[] outputs = new boolean[getBlockCount()];
 		for(int i=0;i<controllers.length;i++)
 		{
 			boolean[] currentOutputs = controllers[i].getOutputs();
 			for(int j=0;j<controllers[i].getBlockCount();j++)
 			{
+				int outBlock = convertToLineOutput(i, j);
+				outputs[outBlock] = currentOutputs[j];
 				if(currentOutputs[j])
 				{
-					zeroAuthority(convertToLineOutput(i, j));
+					zeroAuthority(outBlock);
 				}
 			}
 		}
+		tcw.updateLights(outputs);
 	}
 	
 	public static void main(String[] args)
@@ -254,6 +280,7 @@ public class LineController
 		Scanner keyboard = new Scanner(System.in);
 		//System.out.print("Enter the config file: ");
 		LineController LC = new LineController();
+		//System.out.println(LC.convertToLineInput(0,28));
 		while(true)
 		{
 			LC.tick(0);

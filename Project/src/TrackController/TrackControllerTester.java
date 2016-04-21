@@ -156,7 +156,7 @@ public class TrackControllerTester
 			System.out.println("Test "+test+" failed: "+message+" - "+e);
 		}
 		test++;
-		System.out.println("Test "+test+": PLCDecoder Route Information");
+		System.out.println("Test "+test+": PLCDecoder Route Information");	//PLCDecoder should output the value of each route bit for outputs 5 and 6, plc keyword rr and rg
 		try
 		{
 			boolean[] inputs = {true, false, true, false, true};

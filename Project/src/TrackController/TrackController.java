@@ -125,12 +125,7 @@ public class TrackController
 	
 	public boolean[] getSwitchStates()
 	{
-		boolean[] out = new boolean[switchCount];
-		for(int i=0;i<switchCount;i++)
-		{
-			out[i] = outputs[i];
-		}
-		return out;
+		return switches;
 	}
 	
 	public boolean[] getCrossingStates()

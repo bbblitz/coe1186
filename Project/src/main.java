@@ -7,7 +7,7 @@ import java.util.TimerTask;
 public class main{
 
   static final double deltaT = 100;
-  static final int speedupFactor = 1;
+  static int speedupFactor = 1;
 
 
   static TrackModel trackModel;
@@ -36,6 +36,8 @@ public class main{
   }
 
   public static void main(String[] args){
+  	this.speedupFactor = Integer.parseInt(args[0]);
+
     //Order is important!
     trackModel = createTrackModel();
     tcm = createTrackControllers(trackModel);
