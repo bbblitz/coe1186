@@ -1,9 +1,9 @@
-/*The pane used to flip the direction of a switch on the track*/
+/*The pane used to close sections of track*/
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TrackSwitchPane extends JPanel implements MouseListener {
+public class TrackSwitchPane extends JPanel implements ActionListener {
   public Config c;
   public JComboBox trackselector;
   public JButton closebutton;
@@ -28,27 +28,10 @@ public class TrackSwitchPane extends JPanel implements MouseListener {
     add(trackselector);
     add(closebutton);
     add(openbutton);
-    addMouseListener(this);
     this.c = c;
   }
 
-  public void mousePressed(MouseEvent e) {
-   System.out.println("Mouse pressed; # of clicks: " + e.getClickCount());
-  }
+  public void actionPerformed(ActionEvent e){
 
-  public void mouseReleased(MouseEvent e) {
-    System.out.println("Mouse released; # of clicks: " + e.getClickCount());
-  }
-
-  public void mouseEntered(MouseEvent e) {
-    System.out.println("Mouse entered");
-  }
-
-  public void mouseExited(MouseEvent e) {
-    System.out.println("Mouse exited");
-  }
-
-  public void mouseClicked(MouseEvent e) {
-     System.out.println("Mouse clicked (# of clicks: " + e.getClickCount() + ")");
   }
 }

@@ -59,12 +59,13 @@ public class BlockStraight extends BlockInterface{
   }
 
   public void drawBlock(Graphics g){
+    if(ispartofswitch) return;
     drawBlock(g,Color.BLACK);
   }
 
   public void drawBlock(Graphics g, Color coloroffset){
-    System.out.println("In BlockStraight's drawBlock()");
-    System.out.println(toString());
+    //System.out.println("In BlockStraight's drawBlock()");
+    //System.out.println(toString());
     //Figure out what colors to draw in {}
     int drawnnum = 0;
     boolean drawgray = false, drawred = false, drawyellow = false;
@@ -97,11 +98,11 @@ public class BlockStraight extends BlockInterface{
     }
     //Offset colors
     for(int i = 0; i < allcol.length; i++){
-      System.out.println("Before addColors, allcol was");
-      System.out.println(allcol[i]);
+      //System.out.println("Before addColors, allcol was");
+      //System.out.println(allcol[i]);
       allcol[i] = addColors(allcol[i],coloroffset);
-      System.out.println("After, allcol is:");
-      System.out.println(allcol[i]);
+      //System.out.println("After, allcol is:");
+      //System.out.println(allcol[i]);
     }
     //Actually draw the thing
     drawBySegments(allcol, g);
@@ -170,8 +171,8 @@ public class BlockStraight extends BlockInterface{
     for(; Math.abs(gx - (exoff+x)) > 1 || Math.abs(gy - (eyoff+y)) > 1; gx+= xadd, gy += yadd, col++){
       //System.out.println("Setting color and drawing segment...");
       g.setColor(colors[col%colors.length]);
-      System.out.println("Setting color to...");
-      System.out.println(colors[col%colors.length]);
+      //System.out.println("Setting color to...");
+      //System.out.println(colors[col%colors.length]);
       int grx = (int)gx;
       int gry = (int)gy;
       int egrx = (int)(gx+xadd);
@@ -183,10 +184,10 @@ public class BlockStraight extends BlockInterface{
 
   public void drawTrainOn(Graphics g, boolean on){
 
-    drawBlock(g);
+    drawBlock(g,Color.BLACK);
     //Find the middle of the track
-    int exoff = (int)(Math.cos(Math.toRadians(direction))*length);
-    int eyoff = (int)(Math.sin(Math.toRadians(direction))*length);
+    int exoff = (int)(Math.cos(Math.toRadians(direction))*(length*super.TRACK_SCALE));
+    int eyoff = (int)(Math.sin(Math.toRadians(direction))*(length*super.TRACK_SCALE));
     int ex = (exoff/2)+x;
     int ey = (eyoff/2)+y;
     g.setColor(Color.WHITE);

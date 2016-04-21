@@ -76,8 +76,8 @@ public class BlockStation extends BlockInterface{
     starts[1][1] = bs.y;
     starts[2][1] = bs.y - yvar;
 
-    int endx = bs.x + (int)(Math.cos(Math.toRadians(bs.direction))*rlength);
-    int endy = bs.y + (int)(Math.sin(Math.toRadians(bs.direction))*rlength);
+    int endx = bs.x + (int)(Math.cos(Math.toRadians(bs.direction))*(this.length*super.TRACK_SCALE));
+    int endy = bs.y + (int)(Math.sin(Math.toRadians(bs.direction))*(this.length*super.TRACK_SCALE));
     ends[0][0] = endx + xvar;
     ends[1][0] = endx;
     ends[2][0] = endx - xvar;
@@ -89,8 +89,9 @@ public class BlockStation extends BlockInterface{
     int sx2 = bs.x + 4;
     int sx3 = bs.x - 4;
     int sy = bs.y;
-    int exoff = (int)(Math.cos(Math.toRadians(bs.direction))*rlength);
+    int exoff = (int)(Math.cos(Math.toRadians(bs.direction))*(this.length*super.TRACK_SCALE));
     for(int i = 0; i < 3; i++){
+      g.setColor(Color.GREEN);
       g.drawLine(starts[i][0],starts[i][1],ends[i][0],ends[i][1]);
     }
   }
@@ -98,8 +99,8 @@ public class BlockStation extends BlockInterface{
     drawBlock(g);
     //Find the middle of the track
     float rlength =(int) (this.length*super.TRACK_SCALE);
-    int exoff = (int)(Math.cos(Math.toRadians(direction))*rlength);
-    int eyoff = (int)(Math.sin(Math.toRadians(direction))*rlength);
+    int exoff = (int)(Math.cos(Math.toRadians(direction))*(this.length*super.TRACK_SCALE));
+    int eyoff = (int)(Math.sin(Math.toRadians(direction))*(this.length*super.TRACK_SCALE));
     int ex = (exoff/2)+x;
     int ey = (eyoff/2)+y;
     g.setColor(Color.WHITE);

@@ -23,6 +23,7 @@ public class BlockYard extends BlockInterface{
 		return null;
 	}
 	public void drawBlock(Graphics g){
+		g.setColor(Color.GREEN);
 		g.drawRect(x,y,width,height);
 		g.drawString("YARD",x,y);
 	}

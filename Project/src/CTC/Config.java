@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Config{
   //Why dosen't java have #define? this is so inconvinent.
-  public static final boolean DEBUG_PARSER = false;
+  public static final boolean DEBUG_PARSER = true;
   public static final boolean DEBUG_COMMUNICATION = false;
   public static final boolean DEBUG_SCHEDUAL = false;
   public static final boolean DEBUG_DRAWING = false;
@@ -16,8 +16,10 @@ public class Config{
 
   //The red line is the first line in aldl, the green line is the second.
   public ArrayList<Line> aldl;
-  public ArrayList<Train> greenLineTrains;
-  public ArrayList<Train> redLineTrains;
+  public ArrayList<Train> alltrains = new ArrayList<Train>();
+  public ArrayList<Train> greenLineTrains = new ArrayList<Train>();
+  public ArrayList<Train> redLineTrains = new ArrayList<Train>();
+  public static int trainid = 0;
   //TODO:Delete this
   public ArrayList<Train> pinkLineTrains = new ArrayList<Train>();
   public LineController lineController;
@@ -32,6 +34,7 @@ public class Config{
   public JFrame window;
   public JPanel trackpane;
   public JPanel switchpane;
+  public JPanel schedulepane;
   //Use log.append to add stuff to the log
   public JTextArea log;
   public Object selected;
@@ -63,21 +66,6 @@ public class Config{
 
   public Line getGreenLine() {
 	  return aldl.get(1);
-  }
-
-  public ArrayList<Train> getAllTrains() {
-	  ArrayList<Train> allTrains = new ArrayList<Train>();
-
-	  for (Train train : this.greenLineTrains) {
-		  allTrains.add(train);
-
-	  }
-
-	  for (Train train : this.redLineTrains) {
-		  allTrains.add(train);
-	  }
-
-	  return allTrains;
   }
 
   // TODO: implement this

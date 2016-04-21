@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class SchedulePane extends JPanel{
+public class SchedulePane extends JPanel implements ActionListener{
 
   //A 2 by x arraylist, formated Time,Station
   Map<String, Integer> schedule = new TreeMap<String, Integer>();
@@ -68,6 +68,13 @@ public class SchedulePane extends JPanel{
     butpanel.add(delbut);
     add(butpanel);
 
+  }
+
+  public void actionPerformed(ActionEvent e){
+    if(e.getSource() == trainnum){
+      Integer num = (Integer) trainnum.getSelectedItem();
+
+    }
   }
 
   public void bogusSchedule(){

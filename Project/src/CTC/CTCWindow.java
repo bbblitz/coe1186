@@ -19,7 +19,7 @@ public class CTCWindow extends JFrame{
 		config.windowDim = new Dimension(WIDTH,HEIGHT);
 		config.lineController = lc;
 
-		LineParser parser = new LineParser("track3.txt",config);
+		LineParser parser = new LineParser("track.txt",config);
 
 		//TODO:Remove this
 		/*
@@ -28,9 +28,10 @@ public class CTCWindow extends JFrame{
 		System.out.println("Start block is:");
 		System.out.println(startblock.toString());
 		Train ntrain = new Train(config, 0, startblock,preblock);
-		ntrain.schedule.put("Kingdom Come",5000);
-		config.pinkLineTrains.add(ntrain);
+		//ntrain.schedule.put("First Ave",5000);
+		config.alltrains.add(ntrain);
 		*/
+
 
 		JPanel holder = new JPanel();
     holder.setLayout(new BoxLayout(holder,BoxLayout.X_AXIS));
@@ -57,8 +58,9 @@ public class CTCWindow extends JFrame{
 	public void tick(double deltaT) {
 		boolean[] blocksoccupied = config.lineController.getBlockOccupancies();
 		TrackFailState[] failstates = config.lineController.getBlockFailStates();
-		ArrayList<Train> alltrains = config.pinkLineTrains;
+		ArrayList<Train> alltrains = config.alltrains;
 		for(Train train : alltrains){
+			//System.out.println("Looping over alltrains");
 			//The train is not on an occupied block, move it forward
 			if(train == null){
 				System.out.println("Train was null!");
@@ -68,7 +70,10 @@ public class CTCWindow extends JFrame{
 					System.exit(-1);
 				}else{
 					if(!blocksoccupied[train.getCurrentBlock().getID()]){
+						System.out.println("Moveing train forward one block!");
 						train.moveForwardOneBlock();
+						System.out.println("Train is now on block:");
+						System.out.println(train.getCurrentBlock());
 					}
 				}
 			}
@@ -100,7 +105,9 @@ public class CTCWindow extends JFrame{
 
 			//Check to see if the train can make it's scheduleing on time, and if it can't, disptach it.
 			BlockInterface station = null;
-			String nextstationto = (String)train.schedule.keySet().toArray()[0];
+			String nextstationto = null;
+			if(train.schedule.size() > 0)
+				nextstationto = (String)train.schedule.keySet().toArray()[0];
 			System.out.println("I think the next station is: " + nextstationto);
 			if(nextstationto != null && !train.dispatched){
 				if(train == null){
