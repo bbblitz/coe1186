@@ -5,36 +5,36 @@ Track pane
 displays track
 -------------------------------------------------------------------------------
 Dispatch pane
-generates signal    Pass
+generates signal    Pass                    4/19/16                   4/19/16
 (displays to
 console)
 -----
 Dispatch pane
 sends dispatch
-signal to track     Pass
+signal to track     Pass                    4/20/16                   4/20/16
 controller
 correctly
 -------------------------------------------------------------------------------
 Track file parser
-reads in file       Pass
+reads in file       Pass                    4/19/16                   4/20/16
 -----
 Track parser
 generates errors
-correctly (see      Fail
+correctly (see      Fail                    4/19/16
 user manual)
 -----
 Green line is
-generated correctly Fail
+generated correctly Fail                    4/21/16
 -----
 Red line is
-generated correctly Pass
+generated correctly Pass                    4/19/16                  4/21/16
 -------------------------------------------------------------------------------
 Open/close pane
-generates signals   Pass
+generates signals   Pass                    4/20/16                  4/21/16
 correctly (to
 console)
 -----
 Open/close pane
 sends signal to
-track controller    Pass
+track controller    Pass                    4/20/16                 4/21/16
 correctly
