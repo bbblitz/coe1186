@@ -192,7 +192,7 @@ public class BlockSwitch extends BlockInterface{
     int ex = (exoff/2)+x;
     int ey = (eyoff/2)+y;
     g.setColor(Color.WHITE);
-    System.out.println("Drawing train...");
+    //System.out.println("Drawing train...");
     g.drawOval(ex-5,ey-5,10,10);
   }
 

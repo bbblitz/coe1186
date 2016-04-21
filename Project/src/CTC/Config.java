@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Config{
   //Why dosen't java have #define? this is so inconvinent.
-  public static final boolean DEBUG_PARSER = true;
+  public static final boolean DEBUG_PARSER = false;
   public static final boolean DEBUG_COMMUNICATION = false;
   public static final boolean DEBUG_SCHEDUAL = false;
   public static final boolean DEBUG_DRAWING = false;
@@ -35,6 +35,7 @@ public class Config{
   public JPanel trackpane;
   public JPanel switchpane;
   public JPanel schedulepane;
+  public JPanel dispatchpane;
   //Use log.append to add stuff to the log
   public JTextArea log;
   public Object selected;

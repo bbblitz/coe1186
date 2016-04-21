@@ -12,7 +12,7 @@ public class DispatchPane extends JPanel implements ActionListener{
   JComboBox blocklist;
   public DispatchPane(Config c) {
     config = c;
-    for(Train t : config.pinkLineTrains){
+    for(Train t : config.alltrains){
       trains.add(t.getID());
     }
 
@@ -84,6 +84,7 @@ public class DispatchPane extends JPanel implements ActionListener{
         if(line == 0){
           Train newtrain = new Train(config,config.trainid++,config.aldl.get(0).blocks.get(0),null);
           config.alltrains.add(newtrain);
+          trainlist.addItem(newtrain.getID());
         }
       }else{
         int blockid = (Integer)blocklist.getSelectedItem();

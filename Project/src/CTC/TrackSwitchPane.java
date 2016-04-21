@@ -14,15 +14,18 @@ public class TrackSwitchPane extends JPanel implements ActionListener {
     trackselector = new JComboBox();
     closebutton = new JButton("Close");
     openbutton = new JButton("Open");
+    closebutton.addActionListener(this);
+    openbutton.addActionListener(this);
     int i = 0;
     for(BlockInterface bi : c.aldl.get(0).blocks){
-      trackselector.add(new JLabel("Something" + i++));
+      trackselector.addItem(new Integer(bi.getID()));
     }
     /*
     for(BlockInterface bi : c.aldl.get(1).blocks){
-      trackselector.add(new JLabel("" + i++));
+      trackselector.addItem(new JLabel("" + i++));
     }
     */
+
     JLabel l = new JLabel("Track Closeing:");
     add(l);
     add(trackselector);
@@ -32,6 +35,13 @@ public class TrackSwitchPane extends JPanel implements ActionListener {
   }
 
   public void actionPerformed(ActionEvent e){
-
+    if(e.getSource() == closebutton){
+      int block = (Integer)trackselector.getSelectedItem();
+      c.lineController.setClosed(block,true);
+    }
+    if(e.getSource() == openbutton){
+      int block = (Integer)trackselector.getSelectedItem();
+      c.lineController.setClosed(block,false);
+    }
   }
 }

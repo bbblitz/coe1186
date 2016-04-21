@@ -32,6 +32,9 @@ public class DetailPane extends JPanel{
     ((JPanel)tp).setPreferredSize(paneDim);
     ((JPanel)sp).setPreferredSize(paneDim);
 
+    config.schedulepane = sp;
+    config.dispatchpane = dp;
+
     Dimension hsize = new Dimension((int)(1200/2),600);
     lh.setPreferredSize(hsize);
     rh.setPreferredSize(hsize);
