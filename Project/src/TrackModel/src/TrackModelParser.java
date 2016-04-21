@@ -28,40 +28,74 @@ public class TrackModelParser
 	{
 		ArrayList<BlockInterface> track = new ArrayList<BlockInterface>();
 		if(fileReader==null) return null;
+		while(fileReader.hasNextLine()){
 		int blockID = fileReader.nextInt();
 		String type = fileReader.next();
+		
 		switch(type)
 		{
 			case "block":
 			case "b":
 				Block addBlock = new Block();
+				addBlock.setTail(fileReader.nextInt());
+				addBlock.setHead(fileReader.nextInt());
 				addBlock.setLength(fileReader.nextDouble());
 				addBlock.setGradeTailToHead(fileReader.nextDouble());
-				addBlock.setHead(fileReader.nextInt());
-				addBlock.setTail(fileReader.nextInt());
+				addBlock.setSpeedLimit(fileReader.nextInt());
+				addBlock.setBlockType(fileReader.next());
+				addBlock.setStation(fileReader.next());
+				addBlock.setCrossing(fileReader.next());
+				addBlock.setElevation(fileReader.nextDouble());
+				addBlock.setUnderground(fileReader.next());
 				track.add(blockID, addBlock);
-				fileReader.nextLine();
+			    System.out.println("Added Block ID type block  " + blockID + " " + 
+				addBlock.getTail() + " " + addBlock.getHead() + " " +  
+				addBlock.getLength() + " " + addBlock.getGradeTailToHead() + " " + addBlock.getSpeedLimit()
+				+ " " + addBlock.getBlockType()+ " " + addBlock.getStation()+ " " +
+				addBlock.getCrossing()+ " " + addBlock.getElevation()+ " " + addBlock.getUnderground());
+				if(fileReader.hasNextLine())fileReader.nextLine();
 				break;
 			case "switch":
 			case "sw":
 				BlockSwitch addSwitch = new BlockSwitch();
+				addSwitch.setTail(fileReader.nextInt());
+				addSwitch.setHead(fileReader.nextInt());
+				addSwitch.setDivergent(fileReader.nextInt());
 				addSwitch.setLength(fileReader.nextDouble());
 				addSwitch.setGradeTailToHead(fileReader.nextDouble());
-				addSwitch.setHead(fileReader.nextInt());
-				addSwitch.setTail(fileReader.nextInt());
-				addSwitch.setDivergent(fileReader.nextInt());
+				addSwitch.setSpeedLimit(fileReader.nextInt());
+				addSwitch.setBlockType(fileReader.next());
+				addSwitch.setStation(fileReader.next());
+				addSwitch.setCrossing(fileReader.next());
+				addSwitch.setElevation(fileReader.nextDouble());
+				addSwitch.setUnderground(fileReader.next());
 				track.add(blockID, addSwitch);
-				fileReader.nextLine();
+				System.out.println("Added Block ID type Switch  " + blockID + " " + 
+				addSwitch.getTail() + " " + addSwitch.getHead() + " " + addSwitch.getDivergent() + " " +
+				addSwitch.getLength() + " " + addSwitch.getGradeTailToHead() + " " + addSwitch.getSpeedLimit()
+				+ " " + addSwitch.getBlockType()+ " " + addSwitch.getStation()+ " " +
+				addSwitch.getCrossing()+ " " + addSwitch.getElevation()+ " " + addSwitch.getUnderground());
+				if(fileReader.hasNextLine())fileReader.nextLine();
 				break;
 			case "station":
 			case "st":
 				BlockStation addStation = new BlockStation();
+				addStation.setTail(fileReader.nextInt());
+				addStation.setHead(fileReader.nextInt());
 				addStation.setLength(fileReader.nextDouble());
 				addStation.setGradeTailToHead(fileReader.nextDouble());
-				addStation.setHead(fileReader.nextInt());
-				addStation.setTail(fileReader.nextInt());
-				addStation.setStationName(fileReader.nextLine());
+				addStation.setSpeedLimit(fileReader.nextInt());
+				addStation.setBlockType(fileReader.next());
+				addStation.setStation(fileReader.next());
+				addStation.setCrossing(fileReader.next());
+				addStation.setElevation(fileReader.nextDouble());
+				addStation.setUnderground(fileReader.next());
 				track.add(blockID, addStation);
+				System.out.println("Added Block ID type Station  " + blockID + " " + 
+	            addStation.getTail() + " " + addStation.getHead() + " " +  
+				addStation.getLength() + " " + addStation.getGradeTailToHead() + " " + addStation.getSpeedLimit()
+				+ " " + addStation.getBlockType()+ " " + addStation.getStation()+ " " +
+				addStation.getCrossing()+ " " + addStation.getElevation()+ " " + addStation.getUnderground());
 				break;
 			case "yard":
 			case "y":
@@ -69,18 +103,23 @@ public class TrackModelParser
 				addYard.setHead(fileReader.nextInt());
 				track.add(blockID, addYard);
 				fileReader.nextLine();
+				System.out.print("Added Block ID type yard  " + blockID + "\n");
 				break;
-		}		
+		}	
+		}
+		return track;	
 	}
+	
+	
 	
 	public static void main(String[] args)
 	{
-		TrackModelParser tmp = new TrackModelParser("dummyTrack.txt");
+		TrackModelParser tmp = new TrackModelParser("TrackM.txt");
 		ArrayList<BlockInterface> out = tmp.readFile();
-		for(BlockInterface current : out)
-		{
-			System.out.println("block "+current.getID());
-		}
+		System.out.println(out.get(3).getLength());
+		//for(BlockInterface current : out)
+		//System.out.println(out);
 	}
+	
 	
 }

@@ -1,8 +1,8 @@
 
 
 public class BlockYard extends BlockInterface{
-  public BlockInterface head;
-  public BlockInterface tail;
+  public int head;
+  public int tail;
   
 
   //How long the track is
@@ -13,7 +13,7 @@ public class BlockYard extends BlockInterface{
   /**
    *@override
    */
-  public BlockInterface goesto(BlockInterface from){
+/*  public BlockInterface goesto(BlockInterface from){
     //System.out.println("Calling goesto on station block" + this.toString());
     if(from == head){
       //System.out.println("Returning " + tail.toString());
@@ -23,13 +23,23 @@ public class BlockYard extends BlockInterface{
       return head;
     }
   }
+*/
+  public int getHead(){
+	    return this.head;
+	  }
 
-  public BlockInterface getHead() {
-	  return this.head;
+public int getTail(){
+	    return this.tail;
+	  }
+
+  public int setHead(int head) {
+	  this.head = head;
+	  return head;
   }
 
-  public BlockInterface getTail() {
-	  return this.tail;
+  public int setTail(int tail) {
+	  this.tail = tail;
+	  return tail;
   }
 
 

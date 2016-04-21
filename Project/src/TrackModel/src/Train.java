@@ -6,6 +6,7 @@ public class Train {
 	double distance;
 	boolean direction;
 	
-	TrainModel returns;
+	
+	//TrainModel returns;
 	
 }
